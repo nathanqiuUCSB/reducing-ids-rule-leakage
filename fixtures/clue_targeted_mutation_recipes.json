@@ -1,0 +1,1101 @@
+{
+  "version": 1,
+  "recipes": [
+    {
+      "recipe_id": "et-2044143-endpoint-boundary-vendor-root",
+      "fixture": "et-2044143",
+      "clue_ids": [
+        "et-2044143-major-1-license-bundle-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/retain_boundary_prefix",
+      "params": {
+        "boundary": "/goanywhere/"
+      },
+      "category": "semantic",
+      "rationale": "The rank 1 clue is carried by three stacked tokens: the vendor root, the licensing subsystem, and the bundle parameter. The generic matrix cuts at 22, 15 and 7 bytes, which straddles those tokens, so this reduction keeps the vendor root alone and asks whether GoAnywhere as a product name is still enough to reach CVE-2023-0669 without the licensing endpoint.",
+      "expected_negative_firings": [
+        "N-uri-endpoint-changed",
+        "N-uri-parameter-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2044143-endpoint-boundary-without-parameter",
+      "fixture": "et-2044143",
+      "clue_ids": [
+        "et-2044143-major-1-license-bundle-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/retain_boundary_prefix",
+      "params": {
+        "boundary": "/goanywhere/lic/accept?"
+      },
+      "category": "semantic",
+      "rationale": "The graded partner of the vendor-root reduction. It keeps the licensing endpoint and drops only the bundle parameter that names the serialized object, separating the value of the endpoint from the value of the deserialization hint that follows it.",
+      "expected_negative_firings": [
+        "N-uri-parameter-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2044143-endpoint-hex-vendor-token",
+      "fixture": "et-2044143",
+      "clue_ids": [
+        "et-2044143-major-1-license-bundle-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "goanywhere"
+      },
+      "category": "representation",
+      "rationale": "Every matched byte is preserved and only the vendor token is respelled as hex. If the attacker still names Fortra GoAnywhere from this rule then the clue survives byte-identical obfuscation, which separates real obscurity from mere unreadability."
+    },
+    {
+      "recipe_id": "et-2044143-endpoint-split-at-vendor-root",
+      "fixture": "et-2044143",
+      "clue_ids": [
+        "et-2044143-major-1-license-bundle-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/split_at_token",
+      "params": {
+        "boundary": "/goanywhere/"
+      },
+      "category": "representation",
+      "rationale": "Splitting on the vendor boundary rather than at the midpoint keeps the matched bytes and the match endpoint intact while removing the single contiguous string an attacker can quote. It is the representation-level control for the two boundary reductions above."
+    },
+    {
+      "recipe_id": "et-2044143-uri-anchor-relaxed-to-window",
+      "fixture": "et-2044143",
+      "clue_ids": [
+        "et-2044143-major-3-uri-prefix-anchor"
+      ],
+      "target_predicate_ids": [
+        "content-1-startswith"
+      ],
+      "operator": "content_modifier/relax_startswith_to_depth",
+      "params": {
+        "depth": 64
+      },
+      "category": "semantic",
+      "rationale": "The generic matrix can only delete this anchor outright. Replacing it with a leading window keeps the statement that the licensing path is near the start of the URI while dropping the exact request-root claim, so the two candidates grade the anchor clue instead of testing only its absence.",
+      "expected_negative_firings": [
+        "N-uri-not-at-start"
+      ]
+    },
+    {
+      "recipe_id": "et-2044585-country-form-boundary-parameter",
+      "fixture": "et-2044585",
+      "clue_ids": [
+        "et-2044585-major-1-locale-country-form"
+      ],
+      "target_predicate_ids": [
+        "content-2"
+      ],
+      "operator": "content/retain_boundary_prefix",
+      "params": {
+        "boundary": "|3b|stok=/locale?"
+      },
+      "category": "semantic",
+      "rationale": "Keeps the session-token separator and the locale endpoint and drops the form selector that names the country field. This is the boundary between the Archer web endpoint and the specific injectable form, which the fraction-based cuts of the generic matrix do not land on.",
+      "expected_negative_firings": [
+        "N-uri-locale-form-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2044585-country-form-hex-locale-token",
+      "fixture": "et-2044585",
+      "clue_ids": [
+        "et-2044585-major-1-locale-country-form"
+      ],
+      "target_predicate_ids": [
+        "content-2"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "locale"
+      },
+      "category": "representation",
+      "rationale": "A byte-identical respelling of the endpoint token inside an already mixed literal and hex content. It tests whether the locale endpoint is read from the rule text or reconstructed from the surrounding stok and form parameters."
+    },
+    {
+      "recipe_id": "et-2044585-write-country-boundary-drops-substitution",
+      "fixture": "et-2044585",
+      "clue_ids": [
+        "et-2044585-major-2-country-command-substitution"
+      ],
+      "target_predicate_ids": [
+        "content-4"
+      ],
+      "operator": "content/retain_boundary_prefix",
+      "params": {
+        "boundary": "country="
+      },
+      "category": "semantic",
+      "rationale": "The command-substitution bytes are the exploit evidence; the parameter name alone is ordinary router traffic. Cutting exactly at that boundary asks whether the attacker needs the shell metacharacters or only the injectable parameter to reach CVE-2023-1389.",
+      "expected_negative_firings": [
+        "N-body-country-not-command"
+      ]
+    },
+    {
+      "recipe_id": "et-2045307-endpoint-boundary-rejected-by-relative-pcre",
+      "fixture": "et-2045307",
+      "clue_ids": [
+        "et-2045307-major-1-filereceiver-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/retain_boundary_prefix",
+      "params": {
+        "boundary": "/Operajserv/"
+      },
+      "category": "semantic",
+      "rationale": "Recorded so the review is visible rather than silent: trimming this endpoint's tail would move the match endpoint that the relative MICROS PCRE anchors to. The operator refuses it from parser truth, which is why this clue is reached by representation edits instead."
+    },
+    {
+      "recipe_id": "et-2045307-endpoint-hex-product-token",
+      "fixture": "et-2045307",
+      "clue_ids": [
+        "et-2045307-major-1-filereceiver-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "Operajserv"
+      },
+      "category": "representation",
+      "rationale": "Opera is the product name inside the Oracle MICROS servlet path and is the part of the endpoint that identifies the vendor. Hexing it preserves every matched byte and the match endpoint, so the relative PCRE that follows still anchors correctly."
+    },
+    {
+      "recipe_id": "et-2045307-endpoint-split-at-product-root",
+      "fixture": "et-2045307",
+      "clue_ids": [
+        "et-2045307-major-1-filereceiver-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/split_at_token",
+      "params": {
+        "boundary": "/Operajserv/"
+      },
+      "category": "representation",
+      "rationale": "Splits the servlet path at the product root into adjacent checks. The final fragment ends where the original content ended, so the relative MICROS PCRE keeps its anchor while no single quoted string names the endpoint."
+    },
+    {
+      "recipe_id": "et-2045307-micros-path-generalized",
+      "fixture": "et-2045307",
+      "clue_ids": [
+        "et-2045307-major-2-micros-install-path"
+      ],
+      "target_predicate_ids": [
+        "pcre-0"
+      ],
+      "operator": "pcre/generalize_literal_run",
+      "params": {
+        "literal": "MICROS"
+      },
+      "category": "semantic",
+      "rationale": "The PCRE exists to prove a Windows MICROS installation path. Replacing the product directory with an equal-length wildcard keeps the drive-letter and backslash shape, keeps the match length so the following distance zero content still lands, and removes the only Oracle-specific token.",
+      "expected_negative_firings": [
+        "N-pcre-other-six-byte-install-path"
+      ]
+    },
+    {
+      "recipe_id": "et-2045307-micros-path-removed-with-release",
+      "fixture": "et-2045307",
+      "clue_ids": [
+        "et-2045307-major-2-micros-install-path"
+      ],
+      "target_predicate_ids": [
+        "pcre-0"
+      ],
+      "operator": "pcre/remove_with_relative_release",
+      "params": {},
+      "category": "semantic",
+      "rationale": "The generic matrix refuses to delete this PCRE because the jndiname content anchors to it with distance zero. Releasing that anchor together with the removal is the compensated edit that lets the strongest level of this clue be measured at all.",
+      "expected_negative_firings": [
+        "N-pcre-not-micros-path",
+        "N-pcre-other-six-byte-install-path"
+      ]
+    },
+    {
+      "recipe_id": "et-2048541-exploit-step-bit-anonymized",
+      "fixture": "et-2048541",
+      "clue_ids": [
+        "et-2048541-major-3-exploit-step-flowbit"
+      ],
+      "target_predicate_ids": [
+        "flowbits-0"
+      ],
+      "operator": "flowbits/anonymize_name",
+      "params": {
+        "name": "bit1"
+      },
+      "category": "representation",
+      "rationale": "The bit name states that this request is step one of a known exploit chain. Renaming it keeps the multi-stage mechanism visible while removing the vendor ruleset vocabulary, so the two flowbits candidates separate the naming leak from the staging leak."
+    },
+    {
+      "recipe_id": "et-2048541-exploit-step-bit-removed",
+      "fixture": "et-2048541",
+      "clue_ids": [
+        "et-2048541-major-3-exploit-step-flowbit"
+      ],
+      "target_predicate_ids": [
+        "flowbits-0"
+      ],
+      "operator": "flowbits/remove_state_set",
+      "params": {},
+      "category": "semantic",
+      "rationale": "This was one of only three reviewed majors with no executable candidate at all. The set action never gates this rule, so removing it preserves recall exactly while deleting the statement that the request is a tracked stage of a larger CVE-2023-22515 chain.",
+      "match_set_effect": "state_side_effect_only",
+      "match_set_effect_rationale": "Removing the Confluence chain-stage bit deletes a state side effect, not a match condition: flowbits:set never constrains which packets this rule fires on, so the mutated rule matches exactly the same traffic as the baseline and no capture can distinguish them. The edit is semantic because it changes what the rule does to ruleset state, and it removes the clue an attacker reads, but it is not evidence that this rule's matching behaviour moved."
+    },
+    {
+      "recipe_id": "et-2048541-server-info-hex-endpoint-token",
+      "fixture": "et-2048541",
+      "clue_ids": [
+        "et-2048541-major-2-server-info-action"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "server-info"
+      },
+      "category": "representation",
+      "rationale": "Byte-identical respelling of the Confluence action name. The endpoint is the part an attacker recognises, and the surrounding setupComplete content stays untouched, so this isolates recognition of the action from recognition of the parameter."
+    },
+    {
+      "recipe_id": "et-2048541-server-info-removed-with-release",
+      "fixture": "et-2048541",
+      "clue_ids": [
+        "et-2048541-major-2-server-info-action"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/remove_with_relative_release",
+      "params": {},
+      "category": "semantic",
+      "rationale": "The generic matrix cannot delete this endpoint because the setupComplete content anchors to it with distance zero. Releasing that anchor lets the endpoint clue be removed entirely while the parameter, and therefore positive recall, survives.",
+      "expected_negative_firings": [
+        "N-action-endpoint-changed",
+        "N-parameter-before-endpoint"
+      ]
+    },
+    {
+      "recipe_id": "et-2049007-injection-window-widened",
+      "fixture": "et-2049007",
+      "clue_ids": [
+        "et-2049007-major-2-injection-metacharacter-pcre"
+      ],
+      "target_predicate_ids": [
+        "pcre-0"
+      ],
+      "operator": "pcre/widen_quantifier",
+      "params": {
+        "quantifier": "{0,5}",
+        "upper": 64
+      },
+      "category": "semantic",
+      "rationale": "Between keeping the PCRE and deleting it there is a real middle level: the proximity window that says a shell metacharacter must appear within five bytes of the JSON value. Widening it keeps the metacharacter alternation while removing the tight layout claim.",
+      "expected_negative_firings": [
+        "N-body-metacharacter-beyond-pcre-bound"
+      ]
+    },
+    {
+      "recipe_id": "et-2049007-install-endpoint-boundary-rest-root",
+      "fixture": "et-2049007",
+      "clue_ids": [
+        "et-2049007-major-1-install-add-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/retain_boundary_prefix",
+      "params": {
+        "boundary": "/webui/rest/"
+      },
+      "category": "semantic",
+      "rationale": "Keeps the IOS XE web UI REST root and drops the software-management endpoint that names the vulnerable operation. That is the boundary between knowing the product and knowing the specific CVE-2023-20273 privilege escalation path.",
+      "expected_negative_firings": [
+        "N-uri-endpoint-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2049007-install-endpoint-hex-operation-token",
+      "fixture": "et-2049007",
+      "clue_ids": [
+        "et-2049007-major-1-install-add-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "softwareMgmt"
+      },
+      "category": "representation",
+      "rationale": "Respells only the software-management path segment while preserving every matched byte, so the endpoint still matches identically and the question becomes whether the attacker reads the operation name or infers it from the surrounding web UI path."
+    },
+    {
+      "recipe_id": "et-2049007-ipaddress-key-removed-with-release",
+      "fixture": "et-2049007",
+      "clue_ids": [
+        "et-2049007-major-3-ipaddress-json-key"
+      ],
+      "target_predicate_ids": [
+        "content-4"
+      ],
+      "operator": "content/remove_with_relative_release",
+      "params": {},
+      "category": "semantic",
+      "rationale": "The JSON key is followed by a chain of within-anchored quote and colon checks, so the generic matrix can only shorten it. Releasing the first anchor allows the key itself to be deleted, which is the only edit that removes this clue rather than trimming it.",
+      "expected_negative_firings": [
+        "N-body-json-key-changed",
+        "N-body-third-separator-absent",
+        "N-body-value-quote-absent",
+        "N-body-value-quote-beyond-within"
+      ]
+    },
+    {
+      "recipe_id": "et-2049080-meta-tag-boundary-generic-attribute",
+      "fixture": "et-2049080",
+      "clue_ids": [
+        "et-2049080-major-1-ajs-version-meta-tag"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/retain_boundary_suffix",
+      "params": {
+        "boundary": "|20|content|3d 22|"
+      },
+      "category": "semantic",
+      "rationale": "Retains only the generic HTML attribute tail and drops the Atlassian version meta-tag name. The match endpoint is unchanged so the relative version PCRE still anchors, which makes this a clean test of the banner name in isolation.",
+      "expected_negative_firings": [
+        "N-meta-tag-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2049080-meta-tag-hex-product-token",
+      "fixture": "et-2049080",
+      "clue_ids": [
+        "et-2049080-major-1-ajs-version-meta-tag"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "ajs"
+      },
+      "category": "representation",
+      "rationale": "The ajs prefix is what identifies the banner as Atlassian rather than any other version meta tag. Hexing it preserves every byte, so a surviving identification means the attacker used the version window rather than the product marker."
+    },
+    {
+      "recipe_id": "et-2049080-version-window-broadened",
+      "fixture": "et-2049080",
+      "clue_ids": [
+        "et-2049080-major-2-affected-version-window"
+      ],
+      "target_predicate_ids": [
+        "pcre-0"
+      ],
+      "operator": "pcre/broaden_character_class",
+      "params": {
+        "character_class": "[1-6]",
+        "replacement": "[0-9]"
+      },
+      "category": "semantic",
+      "rationale": "The affected major-version range is the CVE fingerprint of this rule and the only thing separating it from its sibling banner rule. Broadening the class to every digit is a proven superset, so the banner still matches while the advisory-specific window is gone.",
+      "expected_negative_firings": [
+        "N-version-out-of-range"
+      ]
+    },
+    {
+      "recipe_id": "et-2049623-meta-tag-boundary-generic-attribute",
+      "fixture": "et-2049623",
+      "clue_ids": [
+        "et-2049623-major-1-ajs-version-meta-tag"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/retain_boundary_suffix",
+      "params": {
+        "boundary": "|20|content|3d 22|"
+      },
+      "category": "semantic",
+      "rationale": "The same reduction as its sibling rule, kept because the two rules differ only in their version window and the descriptive comparison is only meaningful if both are measured under identical edits with the relative PCRE anchor preserved.",
+      "expected_negative_firings": [
+        "N-meta-tag-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2049623-meta-tag-hex-product-token",
+      "fixture": "et-2049623",
+      "clue_ids": [
+        "et-2049623-major-1-ajs-version-meta-tag"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "ajs"
+      },
+      "category": "representation",
+      "rationale": "Byte-identical respelling of the Atlassian marker. Because this rule and the 1-6 banner rule share the identical content, any difference in attacker behaviour under this edit is attributable to the version window alone."
+    },
+    {
+      "recipe_id": "et-2049623-version-window-broadened",
+      "fixture": "et-2049623",
+      "clue_ids": [
+        "et-2049623-major-2-affected-version-window"
+      ],
+      "target_predicate_ids": [
+        "pcre-0"
+      ],
+      "operator": "pcre/broaden_character_class",
+      "params": {
+        "character_class": "[4-7]",
+        "replacement": "[0-9]"
+      },
+      "category": "semantic",
+      "rationale": "Broadening the 4 to 7 window to every digit removes the one predicate that distinguishes CVE-2023-22522 from the CVE-2023-22518 banner rule, and the replacement is a proven superset so the banner traffic still matches.",
+      "expected_negative_firings": [
+        "N-version-out-of-range"
+      ]
+    },
+    {
+      "recipe_id": "et-2050340-brace-open-removed-with-release",
+      "fixture": "et-2050340",
+      "clue_ids": [
+        "et-2050340-major-3-ognl-brace-pair"
+      ],
+      "target_predicate_ids": [
+        "content-3"
+      ],
+      "operator": "content/remove_with_relative_release",
+      "params": {},
+      "category": "semantic",
+      "rationale": "The ordered brace pair is what turns a template request into an OGNL expression. The closing brace anchors to the opening one, so only a compensated removal can break the pair while leaving a single brace and positive recall in place.",
+      "expected_negative_firings": [
+        "N-body-close-brace-before-braces",
+        "N-body-open-brace-absent",
+        "N-body-open-brace-before-key"
+      ]
+    },
+    {
+      "recipe_id": "et-2050340-velocity-key-hex-engine-token",
+      "fixture": "et-2050340",
+      "clue_ids": [
+        "et-2050340-major-1-struts-velocity-context-key"
+      ],
+      "target_predicate_ids": [
+        "content-2"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "velocity"
+      },
+      "category": "representation",
+      "rationale": "Respells the template engine name inside the Struts context key without changing a byte. The Struts and KEY parts remain readable, isolating how much of the identification rests on naming Velocity specifically."
+    },
+    {
+      "recipe_id": "et-2050340-velocity-key-removed-with-release",
+      "fixture": "et-2050340",
+      "clue_ids": [
+        "et-2050340-major-1-struts-velocity-context-key"
+      ],
+      "target_predicate_ids": [
+        "content-2"
+      ],
+      "operator": "content/remove_with_relative_release",
+      "params": {},
+      "category": "semantic",
+      "rationale": "The context key is followed by the distance-anchored brace pair, so the generic matrix can only shorten it. Releasing that anchor removes the highest-ranked clue entirely and leaves the rule matching braces after a template URI.",
+      "expected_negative_firings": [
+        "N-body-open-brace-before-key",
+        "N-body-velocity-key-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2050434-bypass-removed-with-release",
+      "fixture": "et-2050434",
+      "clue_ids": [
+        "et-2050434-major-3-dot-semicolon-path-bypass"
+      ],
+      "target_predicate_ids": [
+        "pcre-0"
+      ],
+      "operator": "pcre/remove_with_relative_release",
+      "params": {},
+      "category": "semantic",
+      "rationale": "The wizard content anchors to this PCRE with within sixty, so the generic matrix rejects removal. Releasing that constraint alongside the removal is the only way to measure the rule without its CVE-2024-0204 traversal evidence.",
+      "expected_negative_firings": [
+        "N-pcre-beyond-offset-bound",
+        "N-pcre-no-encoded-traversal",
+        "N-setup-page-beyond-within"
+      ]
+    },
+    {
+      "recipe_id": "et-2050434-bypass-window-widened",
+      "fixture": "et-2050434",
+      "clue_ids": [
+        "et-2050434-major-3-dot-semicolon-path-bypass"
+      ],
+      "target_predicate_ids": [
+        "pcre-0"
+      ],
+      "operator": "pcre/widen_quantifier",
+      "params": {
+        "quantifier": "{0,10}",
+        "upper": 64
+      },
+      "category": "semantic",
+      "rationale": "The ten-byte window says the dot-semicolon sequence sits immediately after the GoAnywhere prefix. Widening it keeps the bypass alternation and drops the tight layout claim, giving a graded level between anchor relaxation and full removal.",
+      "expected_negative_firings": [
+        "N-pcre-beyond-offset-bound"
+      ]
+    },
+    {
+      "recipe_id": "et-2050434-request-line-boundary-rejected-by-relative-pcre",
+      "fixture": "et-2050434",
+      "clue_ids": [
+        "et-2050434-major-2-goanywhere-request-line-prefix"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/retain_boundary_prefix",
+      "params": {
+        "boundary": "GET /"
+      },
+      "category": "semantic",
+      "rationale": "Kept as a recipe so the manifest records why this major has no semantic reduction. Cutting the request line back to the bare method is the only meaningful boundary, and the operator refuses it because the traversal pcre and the wizard content both anchor to this content's match endpoint. The refusal is the reviewed evidence that the two representation candidates are the strongest edits available here."
+    },
+    {
+      "recipe_id": "et-2050434-request-line-hex-vendor-token",
+      "fixture": "et-2050434",
+      "clue_ids": [
+        "et-2050434-major-2-goanywhere-request-line-prefix"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "goanywhere"
+      },
+      "category": "representation",
+      "rationale": "The request-line prefix is anchored by startswith and consumed by a relative PCRE, so it cannot be shortened. Hexing the vendor token keeps every byte and the endpoint while removing the readable product name."
+    },
+    {
+      "recipe_id": "et-2050434-request-line-split-at-method",
+      "fixture": "et-2050434",
+      "clue_ids": [
+        "et-2050434-major-2-goanywhere-request-line-prefix"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/split_at_token",
+      "params": {
+        "boundary": "GET /"
+      },
+      "category": "representation",
+      "rationale": "Splitting the request line after the method keeps the buffer-start anchor on the method and moves the vendor path into an adjacent check, preserving the endpoint the traversal PCRE anchors to while breaking the single quotable string."
+    },
+    {
+      "recipe_id": "et-2050988-authbypass-bit-anonymized",
+      "fixture": "et-2050988",
+      "clue_ids": [
+        "et-2050988-major-1-screenconnect-authbypass-flowbit"
+      ],
+      "target_predicate_ids": [
+        "flowbits-0"
+      ],
+      "operator": "flowbits/anonymize_name",
+      "params": {
+        "name": "bit1"
+      },
+      "category": "representation",
+      "rationale": "The bit literally spells ScreenConnect authentication bypass, which is the whole answer written into the rule. Renaming it keeps the state mechanism and removes only the label, separating the naming leak from any inference the URI still supports."
+    },
+    {
+      "recipe_id": "et-2050988-authbypass-bit-removed",
+      "fixture": "et-2050988",
+      "clue_ids": [
+        "et-2050988-major-1-screenconnect-authbypass-flowbit"
+      ],
+      "target_predicate_ids": [
+        "flowbits-0"
+      ],
+      "operator": "flowbits/remove_state_set",
+      "params": {},
+      "category": "semantic",
+      "rationale": "This rank one clue had no executable candidate before. The set action does not gate matching, so removal preserves recall exactly and produces the clean measurement of whether the SetupWizard path alone reaches CVE-2024-1709.",
+      "match_set_effect": "state_side_effect_only",
+      "match_set_effect_rationale": "Removing the ScreenConnect auth-bypass bit deletes a state side effect, not a match condition: flowbits:set never constrains which packets this rule fires on, so the mutated rule matches exactly the same traffic as the baseline and no capture can distinguish them. The edit is semantic because it changes what the rule does to ruleset state, and it removes the clue an attacker reads, but it is not evidence that this rule's matching behaviour moved."
+    },
+    {
+      "recipe_id": "et-2050988-setup-wizard-hex-product-token",
+      "fixture": "et-2050988",
+      "clue_ids": [
+        "et-2050988-major-2-setup-wizard-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "SetupWizard"
+      },
+      "category": "representation",
+      "rationale": "Byte-identical respelling of the wizard page name while the aspx extension and the trailing slash that carries the bypass remain readable, isolating the endpoint name from the path shape it exploits."
+    },
+    {
+      "recipe_id": "et-2050988-uri-anchor-relaxed-to-window",
+      "fixture": "et-2050988",
+      "clue_ids": [
+        "et-2050988-major-3-uri-prefix-anchor"
+      ],
+      "target_predicate_ids": [
+        "content-0-startswith"
+      ],
+      "operator": "content_modifier/relax_startswith_to_depth",
+      "params": {
+        "depth": 64
+      },
+      "category": "semantic",
+      "rationale": "Grades the anchor clue that the generic matrix can only delete. A leading window still says the wizard path is near the request root without claiming it is the root, which is the weaker level worth measuring separately.",
+      "expected_negative_firings": [
+        "N-uri-not-at-start"
+      ]
+    },
+    {
+      "recipe_id": "et-2052951-config-endpoint-boundary-drops-api-prefix",
+      "fixture": "et-2052951",
+      "clue_ids": [
+        "et-2052951-major-1-public-config-api-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/retain_boundary_suffix",
+      "params": {
+        "boundary": "/config/application?public=true"
+      },
+      "category": "semantic",
+      "rationale": "Drops the Joomla API versioning prefix and keeps the public configuration query that is the actual CVE-2023-23752 disclosure. The endswith anchor permits a suffix reduction, and the fraction cuts of the generic matrix never land on this boundary.",
+      "expected_negative_firings": [
+        "N-uri-prefix-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2052951-config-endpoint-hex-entrypoint-token",
+      "fixture": "et-2052951",
+      "clue_ids": [
+        "et-2052951-major-1-public-config-api-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "index.php"
+      },
+      "category": "representation",
+      "rationale": "Respells the PHP entry point that marks this as Joomla while every other byte stays readable, so a surviving identification is attributable to the API path rather than to the platform marker."
+    },
+    {
+      "recipe_id": "et-2052951-endpoint-anchor-single-level",
+      "fixture": "et-2052951",
+      "clue_ids": [
+        "et-2052951-major-2-endpoint-at-uri-end"
+      ],
+      "target_predicate_ids": [
+        "content-1-endswith"
+      ],
+      "operator": "review/single_level",
+      "params": {},
+      "category": "semantic",
+      "rationale": "Reviewed as deliberately single level. The clue is an endswith anchor, and Suricata has no trailing-window modifier that is the mirror of depth, so the anchor can only be present or absent. The graded partner that exists for startswith anchors, relaxation into a leading window, has no honest analogue here and inventing one would mean asserting a position the rule never claimed."
+    },
+    {
+      "recipe_id": "et-2055723-getcfg-boundary-drops-htdocs-path",
+      "fixture": "et-2055723",
+      "clue_ids": [
+        "et-2055723-major-2-getcfg-configuration-path"
+      ],
+      "target_predicate_ids": [
+        "content-2"
+      ],
+      "operator": "content/retain_boundary_suffix",
+      "params": {
+        "boundary": "/getcfg"
+      },
+      "category": "semantic",
+      "rationale": "Keeps the configuration-retrieval action and drops the firmware directory layout that identifies the D-Link web root. The endpoint anchor is unchanged, so the following xml check still lands inside its window.",
+      "expected_negative_firings": [
+        "N-body-config-directory-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2055723-getcfg-removed-with-release",
+      "fixture": "et-2055723",
+      "clue_ids": [
+        "et-2055723-major-2-getcfg-configuration-path"
+      ],
+      "target_predicate_ids": [
+        "content-2"
+      ],
+      "operator": "content/remove_with_relative_release",
+      "params": {},
+      "category": "semantic",
+      "rationale": "The xml content anchors to this path with within fifty, so the generic matrix rejects removal. Releasing that window allows the configuration path to be deleted while the request body check and positive recall survive.",
+      "expected_negative_firings": [
+        "N-body-config-directory-changed",
+        "N-body-config-path-changed",
+        "N-body-extension-beyond-within"
+      ]
+    },
+    {
+      "recipe_id": "et-2055723-uri-size-relaxed",
+      "fixture": "et-2055723",
+      "clue_ids": [
+        "et-2055723-secondary-eleven-byte-uri"
+      ],
+      "target_predicate_ids": [
+        "bsize-0"
+      ],
+      "operator": "buffer_size/relax_to_bound",
+      "params": {
+        "bound": "<64"
+      },
+      "category": "semantic",
+      "rationale": "The exact URI size equals the length of the hedwig endpoint literal, so this secondary clue restates the rank one endpoint as a layout fact. A loose upper bound keeps a real buffer constraint while removing the arithmetic confirmation of the endpoint length.",
+      "expected_negative_firings": [
+        "N-uri-length-exceeds-bsize"
+      ]
+    },
+    {
+      "recipe_id": "et-2056147-credential-boundary-drops-static-secret",
+      "fixture": "et-2056147",
+      "clue_ids": [
+        "et-2056147-major-1-static-basic-credential"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/retain_boundary_prefix",
+      "params": {
+        "boundary": "Authorization|3a 20|Basic|20|"
+      },
+      "category": "semantic",
+      "rationale": "The base64 blob is the backdoor account itself and the strongest single identifier in the corpus. Cutting exactly at the end of the Basic scheme leaves a rule that says only that basic authentication is present, which no fraction-based cut of a seventy-one byte literal produces.",
+      "expected_negative_firings": [
+        "N-credentials-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2056147-path-anchor-relaxed-to-window",
+      "fixture": "et-2056147",
+      "clue_ids": [
+        "et-2056147-major-3-path-prefix-anchor"
+      ],
+      "target_predicate_ids": [
+        "content-0-startswith"
+      ],
+      "operator": "content_modifier/relax_startswith_to_depth",
+      "params": {
+        "depth": 64
+      },
+      "category": "semantic",
+      "rationale": "Grades the request-root claim on the CSLU path. A leading window preserves the positive traffic and the rough locality while removing the assertion that the smart-licensing path is the start of the URI.",
+      "expected_negative_firings": [
+        "N-uri-not-at-start"
+      ]
+    },
+    {
+      "recipe_id": "et-2057330-account-manager-boundary-cgi-root",
+      "fixture": "et-2057330",
+      "clue_ids": [
+        "et-2057330-major-1-account-manager-cgi-endpoint"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/retain_boundary_prefix",
+      "params": {
+        "boundary": "/cgi-bin/"
+      },
+      "category": "semantic",
+      "rationale": "Keeps the generic embedded-device CGI root and drops the account manager script that names the vulnerable component. This is the boundary between recognising a router CGI and recognising the CVE-2024-10914 endpoint.",
+      "expected_negative_firings": [
+        "N-cgi-endpoint-changed"
+      ]
+    },
+    {
+      "recipe_id": "et-2057330-injection-pcre-no-safe-relaxation",
+      "fixture": "et-2057330",
+      "clue_ids": [
+        "et-2057330-major-3-name-injection-pcre"
+      ],
+      "target_predicate_ids": [
+        "pcre-0"
+      ],
+      "operator": "review/rejected",
+      "params": {
+        "reason": "unsupported",
+        "diagnostic": "the injection pattern is a metacharacter alternation with no product literal and no bounded quantifier; its only simple classes are the percent-encoding case pairs [Bb], [Aa] and [Cc], and broadening those widens hex-escape letter case rather than the injection clue, so no reusable relaxation applies beyond the generic removal and start-anchor relaxation already generated"
+      },
+      "category": "semantic",
+      "rationale": "Recorded as an explicit reviewed refusal so the clue is visibly considered rather than silently skipped. The pattern does contain simple character classes, but each one only spells the upper and lower case forms of a percent-encoded metacharacter, so broadening one would perturb hex-escape case handling and not the reviewed clue. Inventing a one-off edit for this pattern would produce an operator with a single user and no reusable meaning."
+    },
+    {
+      "recipe_id": "et-2057705-authcheck-boundary-drops-header-name",
+      "fixture": "et-2057705",
+      "clue_ids": [
+        "et-2057705-major-1-pan-authcheck-disabled-header"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/retain_boundary_suffix",
+      "params": {
+        "boundary": "|3a 20|off"
+      },
+      "category": "semantic",
+      "rationale": "Retains only the disabled value and drops the vendor header name entirely. This broadens the rule considerably and will cost false positives, but it is the reduction that asks whether the header name alone carries the CVE-2024-0012 attribution.",
+      "expected_negative_firings": [
+        "N-other-header-value-off"
+      ]
+    },
+    {
+      "recipe_id": "et-2057705-authcheck-hex-vendor-token",
+      "fixture": "et-2057705",
+      "clue_ids": [
+        "et-2057705-major-1-pan-authcheck-disabled-header"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "PAN"
+      },
+      "category": "representation",
+      "rationale": "Respells only the three vendor bytes while AUTHCHECK and the disabled value stay readable, separating recognition of Palo Alto from recognition of an authentication-check bypass header in general."
+    },
+    {
+      "recipe_id": "et-2057705-header-locus-single-level",
+      "fixture": "et-2057705",
+      "clue_ids": [
+        "et-2057705-major-2-request-header-locus"
+      ],
+      "target_predicate_ids": [
+        "buffer-0"
+      ],
+      "operator": "review/single_level",
+      "params": {},
+      "category": "semantic",
+      "rationale": "Reviewed as deliberately single level. The clue is the choice of the http.header buffer, and the only locus strictly broader than that buffer is the raw payload, which is exactly what the generic sticky buffer removal already produces. No intermediate HTTP buffer contains request headers, so a second level would have to be a different buffer that loses the positive traffic."
+    },
+    {
+      "recipe_id": "et-2059741-install-title-hex-option-token",
+      "fixture": "et-2059741",
+      "clue_ids": [
+        "et-2059741-major-1-install-title-option"
+      ],
+      "target_predicate_ids": [
+        "content-4"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "install_title"
+      },
+      "category": "representation",
+      "rationale": "Byte-identical respelling of the ProjectSend option name that the rule treats as its fast pattern, leaving the surrounding form parameters readable so the product inference has to come from them instead."
+    },
+    {
+      "recipe_id": "et-2059741-uri-size-relaxed",
+      "fixture": "et-2059741",
+      "clue_ids": [
+        "et-2059741-major-3-exact-options-endpoint"
+      ],
+      "target_predicate_ids": [
+        "bsize-0"
+      ],
+      "operator": "buffer_size/relax_to_bound",
+      "params": {
+        "bound": "<64"
+      },
+      "category": "semantic",
+      "rationale": "The exact size of twelve equals the length of the options endpoint, so the constraint publishes that the URI is nothing but that endpoint. A loose bound keeps a buffer constraint while dropping the exact-length confirmation.",
+      "expected_negative_firings": [
+        "N-uri-length-exceeds-bsize"
+      ]
+    },
+    {
+      "recipe_id": "et-2060086-path-confusion-generalize-help-path",
+      "fixture": "et-2060086",
+      "clue_ids": [
+        "et-2060086-major-1-path-confusion-pcre"
+      ],
+      "target_predicate_ids": [
+        "pcre-0"
+      ],
+      "operator": "pcre/generalize_literal_run",
+      "params": {
+        "literal": "PAN_help"
+      },
+      "category": "semantic",
+      "rationale": "The pattern names the PAN_help directory that makes this a Palo Alto management-interface bypass. An equal-length wildcard keeps the traversal and extension structure intact while removing the vendor directory from the pattern text.",
+      "expected_negative_firings": [
+        "N-pcre-help-path-relocated"
+      ]
+    },
+    {
+      "recipe_id": "et-2060086-path-confusion-generalize-unauth-prefix",
+      "fixture": "et-2060086",
+      "clue_ids": [
+        "et-2060086-major-1-path-confusion-pcre"
+      ],
+      "target_predicate_ids": [
+        "pcre-0"
+      ],
+      "operator": "pcre/generalize_literal_run",
+      "params": {
+        "literal": "unauth"
+      },
+      "category": "semantic",
+      "rationale": "The graded partner of the help-path generalization. It hides the unauthenticated path prefix instead, so the two candidates separate which of the two vendor path tokens inside the pattern is doing the identification work.",
+      "match_set_effect": "pinned_by_sibling_predicate",
+      "match_set_effect_rationale": "The same rule carries content:\"/unauth/\" with startswith on http.uri, so every URI that reaches this pcre already begins with that literal and the widened .{6} can only ever match the six bytes it replaced. The combined match set is therefore provably identical to the baseline's, and no capture can separate them; the candidate is kept because it still hides the vendor path name from anyone reading the pattern."
+    },
+    {
+      "recipe_id": "et-2060144-service-port-any",
+      "fixture": "et-2060144",
+      "clue_ids": [
+        "et-2060144-major-2-postgresql-service-port"
+      ],
+      "target_predicate_ids": [
+        "header-dst-port"
+      ],
+      "operator": "destination_port/broaden_to_any",
+      "params": {},
+      "category": "semantic",
+      "rationale": "The port group names 5432 beside the HTTP ports variable, which is the only thing in the rule that says PostgreSQL. Broadening the whole expression removes that statement completely and is the strongest level of this previously untargetable clue.",
+      "expected_negative_firings": [
+        "N-wrong-port"
+      ]
+    },
+    {
+      "recipe_id": "et-2060144-service-port-widened-broad",
+      "fixture": "et-2060144",
+      "clue_ids": [
+        "et-2060144-major-2-postgresql-service-port"
+      ],
+      "target_predicate_ids": [
+        "header-dst-port"
+      ],
+      "operator": "destination_port/broaden_group_members",
+      "params": {
+        "margin": 8
+      },
+      "category": "semantic",
+      "rationale": "The wider of the two in-place levels. The range still contains 5432, so the PostgreSQL traffic is still matched and recall is preserved; what it removes is the literal standalone registered port number from the rule text, leaving an unremarkable service range an attacker cannot look up directly.",
+      "expected_negative_firings": [
+        "N-wrong-port"
+      ]
+    },
+    {
+      "recipe_id": "et-2060144-service-port-widened-narrow",
+      "fixture": "et-2060144",
+      "clue_ids": [
+        "et-2060144-major-2-postgresql-service-port"
+      ],
+      "target_predicate_ids": [
+        "header-dst-port"
+      ],
+      "operator": "destination_port/broaden_group_members",
+      "params": {
+        "margin": 2
+      },
+      "category": "semantic",
+      "rationale": "The generic port family refuses this header because it is a group with a variable member. Widening the numeric member by two still contains 5432 and therefore still matches the traffic; it is the mildest level, and it tests whether a range that merely brackets the registered port is read as PostgreSQL just as readily as the bare number. Both range levels already admit the adjacent-port negative at 5433, so the grading between them is how far the range strays from the registered number, not whether the port stays exact.",
+      "expected_negative_firings": [
+        "N-wrong-port"
+      ]
+    },
+    {
+      "recipe_id": "et-2060144-statement-terminator-removed-with-release",
+      "fixture": "et-2060144",
+      "clue_ids": [
+        "et-2060144-major-3-adjacent-statement-terminator"
+      ],
+      "target_predicate_ids": [
+        "content-0"
+      ],
+      "operator": "content/remove_with_relative_release",
+      "params": {},
+      "category": "semantic",
+      "rationale": "The rank three clue is the adjacency of a statement terminator and the shell escape, and the terminator had no candidate at all because the escape anchors to it. Releasing that anchor removes the terminator and the adjacency together.",
+      "expected_negative_firings": [
+        "N-shell-escape-before-separator",
+        "N-statement-separator-absent"
+      ]
+    },
+    {
+      "recipe_id": "et-2067354-checksum-window-removed",
+      "fixture": "et-2067354",
+      "clue_ids": [
+        "et-2067354-major-2-checksum-length-window"
+      ],
+      "target_predicate_ids": [
+        "byte_test-1",
+        "byte_test-2"
+      ],
+      "operator": "byte_test/remove_window",
+      "params": {},
+      "category": "semantic",
+      "rationale": "The clue is the bounded checksum length, and it is expressed by two byte tests. Widening or deleting either one on its own leaves the opposite bound in place, so only removing the pair together actually targets the reviewed clue.",
+      "expected_negative_firings": [
+        "N-seed-length-at-lower-bound",
+        "N-seed-length-at-upper-bound"
+      ]
+    },
+    {
+      "recipe_id": "et-2067354-server-mode-hex-role-token",
+      "fixture": "et-2067354",
+      "clue_ids": [
+        "et-2067354-major-3-server-sender-mode"
+      ],
+      "target_predicate_ids": [
+        "content-1"
+      ],
+      "operator": "content/partial_hex",
+      "params": {
+        "hex_token": "server"
+      },
+      "category": "representation",
+      "rationale": "Respells the server role flag while the sender flag stays readable, which separates the two halves of the daemon-mode clue without changing a single matched byte of the rsync negotiation."
+    }
+  ]
+}

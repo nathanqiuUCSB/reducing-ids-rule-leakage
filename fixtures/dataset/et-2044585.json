@@ -1,0 +1,9 @@
+{
+  "name": "et-2044585",
+  "sid": 2044585,
+  "revision": 1,
+  "cve": "CVE-2023-1389",
+  "pcap": "pcap/dataset/et-2044585/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2044585_suite.json",
+  "rule": "alert http any any -> [$HOME_NET,$HTTP_SERVERS] any ( http.method; content:\"POST\"; http.uri; content:\"/cgi-bin\"; startswith; content:\"|3b|stok=/locale?form=country\"; fast_pattern; http.request_body; content:\"operation=write\"; content:\"country=|24 28|\"; sid:2044585; rev:1;)"
+}

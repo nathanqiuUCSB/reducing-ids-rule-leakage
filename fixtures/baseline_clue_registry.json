@@ -1,0 +1,1449 @@
+{
+  "rules": [
+    {
+      "clues": [
+        {
+          "clue_id": "et-2044143-major-1-license-bundle-endpoint",
+          "description": "http.uri literal \"/goanywhere/lic/accept?bundle=\".",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044143-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"/goanywhere/lic/accept?bundle=\"; suite negatives N-uri-endpoint-changed and N-uri-literal-in-header; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "Names the vendor application, the licensing subsystem and the exact bundle parameter that carries the serialized object, so it resolves to the Fortra GoAnywhere MFT License Response Servlet flaw on its own. All three v2 trials quoted the literal and all three predicted CVE-2023-0669 exactly. Two suite negatives isolate it: N-uri-endpoint-changed replaces the literal and N-uri-literal-in-header proves it must sit in http.uri rather than anywhere in the request.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2044143-major-2-post-bundle-submission",
+          "description": "http.method literal \"POST\" on the licensing endpoint.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044143-baseline (packet sha256 7a9c9e97...); trials 0-2 each emitted a standalone clue citing http.method; and content:\"POST\";; suite negative N-wrong-method",
+          "rank": 2,
+          "rationale": "Retained as a major on documented necessity rather than as a generic method clue. The endpoint literal also appears in ordinary license page traffic, and it is the POST that turns the URI into a submission of an attacker-supplied bundle object, which is the deserialization step of the vulnerability. All three v2 trials raised the method as an independent clue and each read it as an exploit-style submission rather than browsing. Ranked below the endpoint because the method identifies nothing by itself, and suite negative N-wrong-method shows it is load-bearing for the rule.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2044143-major-3-uri-prefix-anchor",
+          "description": "startswith anchoring the licensing endpoint to the beginning of http.uri.",
+          "predicate_ids": [
+            "content-1-startswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044143-baseline (packet sha256 7a9c9e97...); trials 1 and 2 quoted startswith; with the endpoint literal; suite negative N-uri-not-at-start",
+          "rank": 3,
+          "rationale": "Tells the reader the rule expects the licensing path to be the request root rather than a substring inside a longer path, which separates direct exploitation of the servlet from proxied or nested references to the same string. v2 trials 1 and 2 quoted the anchor inside their URI clue. Ranked third because it only refines the literal already counted at rank 1; suite negative N-uri-not-at-start isolates it.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2044143-secondary-inbound-request-flow",
+          "description": "flow:established,to_server restricting the match to a completed inbound client-to-server request.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044143-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence flow:established,to_server;; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "Every v2 trial spent one clue slot on this transport context and read it as an inbound exploit attempt against a deployed GoAnywhere instance. Real supporting context, but it carries no product or CVE information, so it stays out of the majors. The two direction facets are quoted as a single option in the attacker evidence, so they are recorded as one clue; suite negatives N-flow-not-established and N-wrong-direction cover them individually.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2044143-secondary-internal-server-destination",
+          "description": "Rule header destination $HOME_NET, scoping the match to internally hosted servers.",
+          "predicate_ids": [
+            "header-dst-address"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044143-baseline (packet sha256 7a9c9e97...); trial 0 clue about traffic sent to an internal server; suite negative N-wrong-destination-address",
+          "rank": null,
+          "rationale": "v2 trial 0 read the destination scope as evidence that the signature protects a deployed GoAnywhere instance, which is deployment context rather than CVE identity. Untargetable: no accepted generic operator rewrites rule-header addresses, so suite negative N-wrong-destination-address is the only lever on it.",
+          "targetable": false
+        }
+      ],
+      "rule_id": "et-2044143",
+      "target_cve": "CVE-2023-0669"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2044585-major-1-locale-country-form",
+          "description": "http.uri literal \"|3b|stok=/locale?form=country\".",
+          "predicate_ids": [
+            "content-2"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044585-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"|3b|stok=/locale?form=country\"; suite negative N-uri-locale-parameter-absent; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "The session-token-scoped locale country form is the exact endpoint named in the TP-Link Archer AX21 advisory, and it is the only predicate that selects this bug rather than TP-Link web management flaws in general. All three v2 trials made it their leading URI clue; the trial that missed still recovered a TP-Link/LuCI router from it, which is what a product-and-endpoint anchor looks like. Suite negative N-uri-locale-parameter-absent isolates it.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2044585-major-2-country-command-substitution",
+          "description": "http.request_body literal \"country=|24 28|\", the country parameter opening with the shell command-substitution bytes.",
+          "predicate_ids": [
+            "content-4"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044585-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"country=|24 28|\"; suite negative N-body-country-not-command",
+          "rank": 2,
+          "rationale": "Turns a configuration write into command injection and pins the injected parameter, which is the published weakness: the country value reaches popen() unsanitised. All three v2 trials described it as command substitution in the country parameter. Ranked second rather than first because the injection primitive alone is shared with many embedded-router CVEs while the locale form literal is what selects the product. Suite negative N-body-country-not-command percent-encodes the bytes and stops the alert.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2044585-major-3-write-operation",
+          "description": "http.request_body literal \"operation=write\".",
+          "predicate_ids": [
+            "content-3"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044585-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"operation=write\"; suite negative N-body-operation-read",
+          "rank": 3,
+          "rationale": "The advisory scopes the flaw to the write operation of the country form, and a read of the same form is not exploitable. All three v2 trials called the write action out as its own clue. Ranked third because it narrows an endpoint and an injection primitive that ranks 1 and 2 have already established. Suite negative N-body-operation-read swaps the value and stops the alert.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2044585-secondary-cgi-path-prefix",
+          "description": "http.uri literal \"/cgi-bin\".",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044585-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted content:\"/cgi-bin\"; alongside the locale literal; suite negative N-uri-cgi-prefix-changed",
+          "rank": null,
+          "rationale": "Places the endpoint in the CGI tree used by essentially every embedded router web interface, so it corroborates the device class without adding anything beyond the locale form literal at rank 1. Every v2 trial quoted it inside the same clue as that literal rather than separately. Suite negative N-uri-cgi-prefix-changed.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2044585-secondary-cgi-path-anchor",
+          "description": "startswith anchoring \"/cgi-bin\" to the start of http.uri.",
+          "predicate_ids": [
+            "content-1-startswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044585-baseline (packet sha256 7a9c9e97...); trials 0 and 2 quoted startswith; with the CGI prefix; suite negative N-uri-not-at-start",
+          "rank": null,
+          "rationale": "Positional refinement of the CGI prefix above: the rule wants the CGI tree at the request root, not a proxied path that merely contains it. Quoted by v2 trials 0 and 2 in the same clue as the prefix. Suite negative N-uri-not-at-start.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2044585-secondary-post-write-method",
+          "description": "http.method literal \"POST\" carrying the locale configuration write.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2044585-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.method; content:\"POST\";; suite negative N-wrong-method",
+          "rank": null,
+          "rationale": "The advisory notes the injection is reachable with a simple POST request, and every v2 trial paired the method with the write operation. It is excluded from the majors under the generic-method rule because the request body literal at rank 3 already carries the same configuration-write inference with product specificity. Suite negative N-wrong-method.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2044585",
+      "target_cve": "CVE-2023-1389"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2045307-major-1-filereceiver-endpoint",
+          "description": "http.uri literal \"/Operajserv/webarchive/FileReceiver?filename=\".",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2045307-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"/Operajserv/webarchive/FileReceiver?filename=\"; suite negatives N-uri-endpoint-changed and N-uri-not-at-start; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "The only predicate that names the Oracle Hospitality OPERA application and the specific web-archive servlet whose filename handling is the reviewed weakness. All three v2 trials opened with it and all three recovered Oracle OPERA or MICROS from it while missing the year, which is exactly how a product-identifying rank-1 clue behaves in a control fixture. Suite negatives N-uri-endpoint-changed and N-uri-not-at-start isolate the literal and its position.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2045307-major-2-micros-install-path",
+          "description": "pcre \"/^[a-zA-Z]\\x3a\\x5cMICROS\\x5c/R\" requiring the filename value to be a Windows drive path under the MICROS installation directory.",
+          "predicate_ids": [
+            "pcre-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2045307-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence pcre:\"/^[a-zA-Z]\\x3a\\x5cMICROS\\x5c/R\"; suite negative N-pcre-not-micros-path",
+          "rank": 2,
+          "rationale": "Ties the upload to an on-disk Oracle MICROS deployment and shows the parameter is a server-side write location rather than a display name, which is the substance of the flaw. All three v2 trials gave it a dedicated clue and used it to reason about MICROS and OPERA. Ranked second because it qualifies the servlet that rank 1 identifies. Suite negative N-pcre-not-micros-path points the filename outside the install tree.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2045307-major-3-jndi-and-user-parameters",
+          "description": "http.uri literals \"&jndiname=\" and \"&username=\" following the filename value.",
+          "predicate_ids": [
+            "content-2",
+            "content-3"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2045307-baseline (packet sha256 7a9c9e97...); trials 0-2 reported content:\"&jndiname=\"; and content:\"&username=\"; in one clue; suite negatives N-jndiname-parameter-absent and N-username-parameter-absent",
+          "rank": 3,
+          "rationale": "The pair is the FileReceiver call signature: a JNDI datasource name and a username submitted alongside a file write, which is unusual enough to identify the servlet even without the endpoint literal. Every v2 trial reported the two parameters in a single clue and never separately, so they are recorded as one inference unit. Ranked third because they corroborate a servlet already identified. Suite negatives N-jndiname-parameter-absent and N-username-parameter-absent.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2045307-secondary-multipart-upload",
+          "description": "http.content_type literal \"multipart/form-data|3b 20|boundary=\" anchored with startswith.",
+          "predicate_ids": [
+            "content-4",
+            "content-4-startswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2045307-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted http.content_type; with the multipart literal and startswith; suite negatives N-content-type-changed and N-content-type-not-at-start",
+          "rank": null,
+          "rationale": "Confirms the request is a real file upload rather than a query, which every v2 trial used when describing the exploitation mechanism. It is upload mechanics shared with any multipart handler, so it stays secondary. The literal and its anchor are quoted as one option group in all three trials, so they are held together. Suite negatives N-content-type-changed and N-content-type-not-at-start.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2045307-secondary-absent-referer",
+          "description": "Negated http.header_names content !\"Referer|0d 0a|\" requiring the request to carry no Referer header.",
+          "predicate_ids": [
+            "content-5"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2045307-baseline (packet sha256 7a9c9e97...); trials 1 and 2 rule_evidence http.header_names; content:!\"Referer|0d 0a|\";; suite negative N-referer-header-present",
+          "rank": null,
+          "rationale": "v2 trials 1 and 2 read the missing Referer as evidence of direct unauthenticated exploit traffic rather than in-application navigation, which is useful attacker-behaviour context but says nothing about which product or CVE is involved. Suite negative N-referer-header-present adds the header and stops the alert.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2045307-secondary-parameter-ordering",
+          "description": "Two distance:0 modifiers forcing the jndiname and username parameters to follow the filename value in order.",
+          "predicate_ids": [
+            "content-2-distance",
+            "content-3-distance"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2045307-baseline (packet sha256 7a9c9e97...); trials 0 and 1 quoted a bare distance:0; snippet that maps ambiguously; suite negative N-parameters-out-of-order",
+          "rank": null,
+          "rationale": "Records the ordered parameter layout the servlet emits. The two distance options are byte-identical in the visible rule, so attacker evidence quoting distance:0 on its own cannot be attributed to either one; that ambiguity is exactly what leaves v2 trials 0 and 1 clue-unmeasured, and it is why the two are held as a single secondary instead of split. Suite negative N-parameters-out-of-order keys to the username distance.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2045307-secondary-upload-post-method",
+          "description": "http.method literal \"POST\" delivering the multipart upload.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2045307-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.method; content:\"POST\"; quoted with the multipart content type; 11 accepted content candidates touch content-0; suite negative N-wrong-method",
+          "rank": null,
+          "rationale": "Generic on its own: a POST is the delivery verb for almost every upload endpoint and identifies neither Oracle nor the OPERA servlet. It is recorded because all three v2 trials quoted it inside the same option group as the multipart content type, and because eleven accepted mutation candidates rewrite this literal; leaving it unlinked would silently drop those candidates from clue attribution. Suite negative N-wrong-method.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2045307-secondary-endpoint-prefix-anchor",
+          "description": "startswith anchoring the FileReceiver endpoint to the beginning of http.uri.",
+          "predicate_ids": [
+            "content-1-startswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2045307-baseline (packet sha256 7a9c9e97...); trials 0 and 1 rule_evidence startswith; quoted with the FileReceiver literal; content_modifier/remove_startswith accepted; suite negative N-endpoint-not-at-uri-start",
+          "rank": null,
+          "rationale": "Supporting placement rather than inference: it states that the servlet path is the start of the URI, which is already implied by the rank 1 literal naming an application-root endpoint. Trials 0 and 1 quoted the anchor inside their endpoint clue and neither drew anything from it. Linked because remove_startswith is an accepted candidate here and the resulting mutation needs a clue to attribute to. Suite negative N-endpoint-not-at-uri-start.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2045307-secondary-established-session",
+          "description": "flow established facet, the only flow constraint in this rule, with no direction facet alongside it.",
+          "predicate_ids": [
+            "flow-established"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2045307-baseline (packet sha256 7a9c9e97...); no v2 trial quoted flow:established;; flow/remove accepted as a candidate; suite negative N-flow-not-established",
+          "rank": null,
+          "rationale": "Weakest clue in the fixture and the only one no v2 trial cited at all: the rule states established without a direction, so it contributes nothing beyond requiring a real session, and the inbound direction the trials assumed actually comes from the rule header and the request buffers. It is linked so that the accepted flow mutation is attributable rather than silently unmapped. Suite negative N-flow-not-established.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2045307-secondary-external-source-scope",
+          "description": "Rule header source $EXTERNAL_NET for the OPERA upload endpoint.",
+          "predicate_ids": [
+            "header-src-address"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2045307-baseline (packet sha256 7a9c9e97...); rule header quoted in the v2 prompt; suite negative N-internal-source-address",
+          "rank": null,
+          "rationale": "Scopes the signature to externally originated requests against an internally hosted OPERA server, which is deployment context rather than vulnerability evidence. Untargetable: no accepted generic operator rewrites rule-header addresses, so suite negative N-internal-source-address is the only lever on it.",
+          "targetable": false
+        }
+      ],
+      "rule_id": "et-2045307",
+      "target_cve": "CVE-2023-21932"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2048541-major-1-setup-complete-reset",
+          "description": "http.uri literal \"bootstrapStatusProvider.applicationConfig.setupComplete=false\".",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2048541-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"bootstrapStatusProvider.applicationConfig.setupComplete=false\"; suite negative N-setup-complete-true; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "The exploit primitive itself: the flaw works by flipping Confluence back into setup mode through this bootstrap configuration parameter. The literal names an internal Confluence class path, so it is both product-specific and exploit-specific, and no other Atlassian fixture in this corpus shares it. All three v2 trials described it as setup state manipulation and all three predicted the target exactly. Suite negative N-setup-complete-true sets the parameter to true.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2048541-major-2-server-info-action",
+          "description": "http.uri literal \"/server-info.action?\".",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2048541-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"/server-info.action?\"; suite negative N-action-endpoint-changed",
+          "rank": 2,
+          "rationale": "Confluence-specific endpoint naming that establishes the product but not the bug, since several Atlassian issues are reachable through action endpoints. Ranked below the setup parameter because a product fingerprint cannot select a CVE inside the four-fixture Confluence cluster in this corpus, which is the ordering principle the v2 Confluence results support. All three v2 trials cited it. Suite negative N-action-endpoint-changed.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2048541-major-3-exploit-step-flowbit",
+          "description": "flowbits:set marking the request as step one of a multi-step exploit chain.",
+          "predicate_ids": [
+            "flowbits-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2048541-baseline (packet sha256 7a9c9e97...); trial 0 rule_evidence flowbits:set,ET..step1.request; no accepted generic operator emits a flowbits mutation for this rule",
+          "rank": 3,
+          "rationale": "Even after the sanitizer strips the descriptive rule name, the surviving step1.request token tells the reader the signature covers one stage of a staged exploit, which matches the two-request shape of this Confluence attack; v2 trial 0 used it exactly that way. Untargetable: no accepted generic operator rewrites flowbits, so this is an inference the defender cannot currently remove and there is no suite negative for it.",
+          "targetable": false
+        },
+        {
+          "clue_id": "et-2048541-secondary-parameter-after-endpoint",
+          "description": "distance:0 requiring the setup parameter to follow the action endpoint in the same URI.",
+          "predicate_ids": [
+            "content-1-distance"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2048541-baseline (packet sha256 7a9c9e97...); trials 0 and 2 quoted distance:0; with the setup parameter; suite negative N-parameter-before-endpoint",
+          "rank": null,
+          "rationale": "Layout constraint that binds the two URI literals into a single request rather than two unrelated matches. v2 trials 0 and 2 quoted it with the setup parameter. Suite negative N-parameter-before-endpoint moves the parameter ahead of the endpoint.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2048541-secondary-inbound-request-flow",
+          "description": "flow:established,to_server scoping the match to inbound requests.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2048541-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence flow:established,to_server;; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "Transport context quoted by all three v2 trials while explaining that the match applies to crafted inbound request URIs. Non-discriminating on its own; both facets are quoted as one option so they are held as one clue. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2048541",
+      "target_cve": "CVE-2023-22515"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2049007-major-1-install-add-endpoint",
+          "description": "http.uri literal \"/webui/rest/softwareMgmt/installAdd\".",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049007-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"/webui/rest/softwareMgmt/installAdd\"; suite negatives N-uri-endpoint-changed and N-uri-not-at-start; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "Names the Cisco IOS XE web UI and the exact software-management REST method whose parameter handling is the privilege-escalation surface. All three v2 trials opened with it and all three predicted the target exactly. Suite negatives N-uri-endpoint-changed and N-uri-not-at-start cover the literal and its position.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049007-major-2-injection-metacharacter-pcre",
+          "description": "pcre matching a backtick, semicolon, pipe or ampersand, or one of <, > and $ followed by an opening parenthesis, raw or percent-encoded, within five bytes of the inspected value.",
+          "predicate_ids": [
+            "pcre-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049007-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence quoting the relative pcre; suite negatives N-body-no-injection-metacharacter and N-body-metacharacter-beyond-pcre-bound",
+          "rank": 2,
+          "rationale": "Establishes that the endpoint is being used to inject operating-system commands rather than to install software, which is the weakness itself. Every v2 trial ended on this clue and read it as command injection. Ranked second rather than first because the metacharacter set is generic across command-injection signatures while the endpoint is what makes it Cisco. Suite negatives N-body-no-injection-metacharacter and N-body-metacharacter-beyond-pcre-bound.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049007-major-3-ipaddress-json-key",
+          "description": "http.request_body literal \"|22|ipaddress|22|\".",
+          "predicate_ids": [
+            "content-4"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049007-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.request_body; content:\"|22|ipaddress|22|\";; suite negative N-body-json-key-changed",
+          "rank": 3,
+          "rationale": "Pins the injection point to the quoted ipaddress field of the install request, which is the parameter identified in the vendor advisory. All three v2 trials gave it its own clue. Ranked third because it locates an injection whose existence ranks 1 and 2 already establish. Suite negative N-body-json-key-changed renames the key.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049007-secondary-endpoint-prefix-anchor",
+          "description": "startswith anchoring the installAdd REST path to the beginning of http.uri.",
+          "predicate_ids": [
+            "content-1-startswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049007-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.uri; with the installAdd literal, startswith, nocase and fast_pattern in one snippet; content_modifier/remove_startswith accepted; suite negative N-uri-not-at-start",
+          "rank": null,
+          "rationale": "Placement detail rather than inference: all three v2 trials quoted the anchor in the same snippet as the rank 1 endpoint literal and none of them reasoned from it, because a REST path that begins at the URI root is what the literal already implies. It is linked because remove_startswith is an accepted candidate against this rule and the mutation it produces must be attributable to some clue. Suite negative N-uri-not-at-start.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049007-secondary-install-post-method",
+          "description": "http.method literal \"POST\" carrying the software-install request.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049007-baseline (packet sha256 7a9c9e97...); no v2 trial quoted the method; 11 accepted content candidates touch content-0; suite negative N-wrong-method",
+          "rank": null,
+          "rationale": "The only predicate in this rule that no v2 trial mentioned even once, and correctly so: a REST install call is a POST by construction, so the method adds nothing to the endpoint, the cookie or the injection PCRE. It is recorded rather than omitted because eleven accepted mutation candidates rewrite this literal, and an unlinked predicate would make those candidates invisible to clue attribution. Suite negative N-wrong-method.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049007-secondary-authenticated-session-cookie",
+          "description": "http.cookie literal \"Auth=\" anchored with startswith.",
+          "predicate_ids": [
+            "content-2",
+            "content-2-startswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049007-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.cookie; content:\"Auth=\"; startswith;; suite negatives N-cookie-name-changed and N-cookie-not-at-start",
+          "rank": null,
+          "rationale": "Marks the request as coming from an authenticated web UI session, which matches this CVE being the post-authentication half of the October 2023 IOS XE chain. All three v2 trials paired the cookie with the CSRF header in a single clue about authenticated exploitation. The literal and its position anchor are quoted together, so they are held as one clue. Suite negatives N-cookie-name-changed and N-cookie-not-at-start.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049007-secondary-csrf-token-header",
+          "description": "http.header_names literal \"|0d 0a|X-Csrf-Token|0d 0a|\".",
+          "predicate_ids": [
+            "content-3"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049007-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"|0d 0a|X-Csrf-Token|0d 0a|\"; suite negative N-csrf-header-absent",
+          "rank": null,
+          "rationale": "Confirms the request imitates a genuine web UI action rather than a bare unauthenticated probe, and all three v2 trials cited it beside the Auth cookie. It describes the caller's session state rather than the vulnerable function, so it stays secondary. Suite negative N-csrf-header-absent removes the header name.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049007-secondary-json-value-layout",
+          "description": "Four single-byte contents, an opening quote followed by three colons, walking the quoted address value after the ipaddress key.",
+          "predicate_ids": [
+            "content-5",
+            "content-6",
+            "content-7",
+            "content-8"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049007-baseline (packet sha256 7a9c9e97...); trial 1 rule_evidence content:\"|22|\"; within:5; content:\"|3a|\"; within:5; ...; suite negatives N-body-value-quote-absent and N-body-third-separator-absent",
+          "rank": null,
+          "rationale": "Describes the expected shape of the value being inspected and is where the injection pcre anchors. v2 trial 1 quoted the whole chain as one clue. Individually these bytes carry no information, so the group is a single secondary; the opening quote is structurally untargetable because its within:5 successor depends on it, while the three colons are targetable. Suite negatives N-body-value-quote-absent and N-body-third-separator-absent.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049007-secondary-value-proximity-chain",
+          "description": "Four within:5 modifiers keeping the quote and the three separators within five bytes of each other.",
+          "predicate_ids": [
+            "content-5-within",
+            "content-6-within",
+            "content-7-within",
+            "content-8-within"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049007-baseline (packet sha256 7a9c9e97...); trial 1 quoted the within:5 chain inline with the separators; suite negatives N-body-value-quote-beyond-within, N-body-first-separator-beyond-within, N-body-second-separator-beyond-within and N-body-third-separator-beyond-within",
+          "rank": null,
+          "rationale": "Bounds the inspected value so the injection pcre fires next to the ipaddress key rather than anywhere in the body. These are proximity mechanics with no product content, and the four modifiers are indistinguishable in attacker evidence, so they are held as one secondary. Suite negatives N-body-value-quote-beyond-within through N-body-third-separator-beyond-within cover each bound.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049007-secondary-inbound-request-flow",
+          "description": "flow:established,to_server scoping the match to inbound web UI requests.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049007-baseline (packet sha256 7a9c9e97...); rule header and flow option visible in the v2 prompt; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "Transport context that frames the match as an inbound management request against the appliance. It carries no product or CVE information and no v2 trial spent a clue slot on it for this fixture, so it is recorded purely as supporting context. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2049007",
+      "target_cve": "CVE-2023-20273"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2049080-major-1-ajs-version-meta-tag",
+          "description": "http.response_body literal for the hex-encoded Atlassian AJS version-number meta tag that a Confluence page emits about itself.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049080-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence quoting the hex-encoded ajs-version-number meta tag; suite negative N-meta-tag-changed; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "The meta tag is the only Atlassian-specific evidence anywhere in this signature, and all three v2 trials recognised an Atlassian product from it. It ranks first as much by elimination as by strength: CVE-2023-22518 is exploited by an unauthenticated request that resets the instance, and none of that request appears in the rule, so there is no exploit evidence to outrank the fingerprint. The trials duly reached other Atlassian advisories, CVE-2019-3396 once and CVE-2022-26134 twice, and none reached the target. Suite negative N-meta-tag-changed renames the tag.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049080-major-2-affected-version-window",
+          "description": "pcre \"/^[1-6]\\./R\" accepting only banners whose major version is 1 through 6.",
+          "predicate_ids": [
+            "pcre-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049080-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence pcre:\"/^[1-6]\\./R\"; suite negatives N-version-out-of-range and N-version-without-minor-separator",
+          "rank": 2,
+          "rationale": "This window is the single byte-level difference between this rule and et-2049623, so it is the only thing that can separate the two Confluence fixtures. It is a poor discriminator for the target: Atlassian documents CVE-2023-22518 as affecting all Confluence Data Center and Server versions, so a 1-to-6 range does not follow from the advisory, and all three v2 trials read it as generic coverage of older branches instead. Suite negatives N-version-out-of-range and N-version-without-minor-separator.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049080-major-3-response-direction",
+          "description": "flow direction to_client, so the match happens on the banner a server volunteers rather than on any request.",
+          "predicate_ids": [
+            "flow-to_client"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049080-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence flow:established,to_client; with http.response_body;; suite negative N-wrong-direction",
+          "rank": 3,
+          "rationale": "Response-direction matching is the framing fact about this rule: it reports an exposed instance and never sees the unauthenticated reset request that actually exploits CVE-2023-22518. Trials 0 and 2 both opened with that observation. Only the direction facet is ranked; the established facet is transport-only and is held separately so that a mutation removing one facet is attributed to the right clue. Suite negative N-wrong-direction.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049080-secondary-established-session",
+          "description": "flow established facet requiring a completed session before the response body is inspected.",
+          "predicate_ids": [
+            "flow-established"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049080-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted flow:established,to_client;; suite negative N-flow-not-established",
+          "rank": null,
+          "rationale": "A version banner cannot appear before a session exists, so this facet adds nothing to the response direction already ranked third; every v2 trial quoted it only as part of the same flow option. It is held apart from the direction facet so that attribution can distinguish a mutation dropping the handshake requirement from one reversing the direction. Suite negative N-flow-not-established.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049080-secondary-hourly-source-threshold",
+          "description": "threshold limiting the alert to once an hour per source address.",
+          "predicate_ids": [
+            "threshold-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049080-baseline (packet sha256 7a9c9e97...); trial 0 rule_evidence threshold:type limit, count 1, seconds 3600, track by_src;; no accepted generic operator emits a threshold mutation",
+          "rank": null,
+          "rationale": "Trial 0 spent an entire clue on the hourly limit, reading the rule as a host-exposure alert rather than a per-request exploit signature. That reading is correct about intent and is why the trial never looked for an exploit primitive, but the limit says nothing about which Confluence flaw is meant. Untargetable: no accepted generic operator rewrites a threshold, and the dataset suite has no negative case for it.",
+          "targetable": false
+        },
+        {
+          "clue_id": "et-2049080-secondary-monitored-server-source",
+          "description": "Rule header source [$HOME_NET,$HTTP_SERVERS], restricting the reported banner to protected web servers.",
+          "predicate_ids": [
+            "header-src-address"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049080-baseline (packet sha256 7a9c9e97...); trial 0 rule_evidence alert http [$HOME_NET,$HTTP_SERVERS] any -> any any; suite negative N-external-response-source",
+          "rank": null,
+          "rationale": "Trial 0 quoted the whole header line together with the flow when concluding that the rule watches the operator's own servers, which frames the alert as internal exposure reporting rather than attack detection. It constrains who may be reported, not what is matched, so it carries no CVE inference. Untargetable header scope; suite negative N-external-response-source is the only lever.",
+          "targetable": false
+        }
+      ],
+      "rule_id": "et-2049080",
+      "target_cve": "CVE-2023-22518"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2049623-major-1-ajs-version-meta-tag",
+          "description": "http.response_body literal for the hex-encoded Atlassian AJS version-number meta tag, the only vendor-specific bytes the rule matches.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049623-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence quoting the hex-encoded ajs-version-number meta tag; trial 1 predicted CVE-2019-11581 from it; suite negative N-meta-tag-changed; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "Every v2 trial started from this tag, but it identifies a vendor rather than a product: trial 1 read it as a Jira fingerprint and predicted CVE-2019-11581, while trials 0 and 2 read Confluence and predicted CVE-2022-26134. It still ranks first because the rest of the signature is a version test and transport context, and because the target, a template injection reachable by an authenticated or anonymous user, leaves no payload evidence in this rule at all. Suite negative N-meta-tag-changed renames the tag.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049623-major-2-affected-version-window",
+          "description": "pcre \"/^[4-7]\\./R\" accepting only banners whose major version is 4 through 7.",
+          "predicate_ids": [
+            "pcre-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049623-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence pcre:\"/^[4-7]\\./R\"; trial 1 read it as an old Jira range; suite negatives N-version-out-of-range and N-version-without-minor-separator",
+          "rank": 2,
+          "rationale": "The window is the only byte-level difference from et-2049080 and is therefore the discriminator between the two Confluence fixtures, but it also actively misleads: 4 through 7 spans most of the supported Confluence lifetime and overlaps the sibling rule, so no trial could tie it to the 7.x and 8.x releases the CVE-2023-22522 advisory lists, and trial 1 used it to argue for old Jira releases instead. Suite negatives N-version-out-of-range and N-version-without-minor-separator.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049623-major-3-response-direction",
+          "description": "flow direction to_client, placing the match on the server's rendered page instead of on the injected template request.",
+          "predicate_ids": [
+            "flow-to_client"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049623-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence flow:established,to_client; quoted while describing passive fingerprinting; suite negative N-wrong-direction",
+          "rank": 3,
+          "rationale": "Template injection is delivered in a request, yet this signature only ever inspects responses, so the direction tells the reader the rule cannot witness exploitation of CVE-2023-22522 and is inventorying candidates instead. All three v2 trials made that point explicitly. Only the direction facet is ranked; the established facet is transport-only and is held separately so that removing one facet is attributed to the right clue. Suite negative N-wrong-direction.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049623-secondary-established-session",
+          "description": "flow established facet, satisfied by any completed session in which the server returns a rendered page.",
+          "predicate_ids": [
+            "flow-established"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049623-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted flow:established,to_client;, trial 1 alongside the threshold; suite negative N-flow-not-established",
+          "rank": null,
+          "rationale": "Trial 1 folded this facet, the direction and the threshold into a single clue about passive exposure reporting, which is the whole of its contribution; it says nothing about template injection or about which Atlassian product is running. It is held apart from the direction facet so that dropping the handshake requirement and reversing the direction are attributed to different clues. Suite negative N-flow-not-established.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2049623-secondary-hourly-source-threshold",
+          "description": "threshold:type limit rate-limiting the alert to one per hour for each source address.",
+          "predicate_ids": [
+            "threshold-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049623-baseline (packet sha256 7a9c9e97...); trial 1 rule_evidence threshold:type limit, count 1, seconds 3600, track by_src; quoted with the flow; no accepted generic operator emits a threshold mutation",
+          "rank": null,
+          "rationale": "Only trial 1 mentioned the rate limit, and it did so in passing while arguing that the rule reports vulnerable servers rather than exploitation. The limit shapes alert volume rather than inference, and it is what makes this signature unusable as evidence that CVE-2023-22522 was attempted. Untargetable: no accepted generic operator rewrites a threshold, and the dataset suite has no negative case for it.",
+          "targetable": false
+        },
+        {
+          "clue_id": "et-2049623-secondary-monitored-server-source",
+          "description": "Rule header source [$HOME_NET,$HTTP_SERVERS], so the banner must come from a server the deployment already owns.",
+          "predicate_ids": [
+            "header-src-address"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2049623-baseline (packet sha256 7a9c9e97...); trials 0 and 2 rule_evidence alert http [$HOME_NET,$HTTP_SERVERS] any -> any any; suite negative N-external-response-source",
+          "rank": null,
+          "rationale": "Trials 0 and 2 quoted the header line beside the flow when concluding that the rule identifies an exposed internal server. Because it limits who may be reported rather than what is matched, a third-party Confluence page carrying the same banner would not alert at all, and it contributes nothing to CVE inference. Untargetable header scope; suite negative N-external-response-source is the only lever.",
+          "targetable": false
+        }
+      ],
+      "rule_id": "et-2049623",
+      "target_cve": "CVE-2023-22522"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2050340-major-1-struts-velocity-context-key",
+          "description": "http.request_body literal \".KEY_velocity.struts2\".",
+          "predicate_ids": [
+            "content-2"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050340-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\".KEY_velocity.struts2\"; suite negative N-body-velocity-key-changed; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "Exploit-specific rather than product-specific: this context key is the payload primitive used to reach OGNL evaluation from a Velocity template, and it is what separates this fixture from the other three Confluence rules in the corpus. All three v2 trials named it the distinctive Struts2 Velocity context key and all three predicted the target exactly. Suite negative N-body-velocity-key-changed.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050340-major-2-velocity-template-uri",
+          "description": "http.uri literal \".vm\" selecting a Velocity template resource.",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050340-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.uri; content:\".vm\";; suite negative N-uri-extension-changed",
+          "rank": 2,
+          "rationale": "Points at the Velocity template endpoint family that the injection is delivered through; v2 trial 2 named text-inline.vm from it unprompted. Ranked second because a template extension is a template-engine fact rather than a Confluence or CVE fact on its own, and the context key at rank 1 is what makes the request an exploit. Suite negative N-uri-extension-changed.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050340-major-3-ognl-brace-pair",
+          "description": "http.request_body contents \"|7b|\" and \"|7d|\".",
+          "predicate_ids": [
+            "content-3",
+            "content-4"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050340-baseline (packet sha256 7a9c9e97...); trials 0-2 reported content:\"|7b|\"; and content:\"|7d|\"; in one clue; suite negatives N-body-open-brace-absent and N-body-close-brace-absent",
+          "rank": 3,
+          "rationale": "The empty-brace argument shape of the published OGNL payload, which is what makes the context key an executable expression rather than a string. Every v2 trial reported the two braces as a single clue about payload structure, so they are one inference unit. Ranked third because braces alone are meaningless without the context key. Suite negatives N-body-open-brace-absent and N-body-close-brace-absent.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050340-secondary-template-extension-anchor",
+          "description": "endswith anchoring the template extension to the end of the URI.",
+          "predicate_ids": [
+            "content-1-endswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050340-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted endswith; with the template extension; suite negative N-uri-extension-not-at-end",
+          "rank": null,
+          "rationale": "Requires the request to end at the template rather than merely mention it, which keeps the rule off ordinary static references to .vm files. Cited by all three v2 trials inside the URI clue. Suite negative N-uri-extension-not-at-end appends a query string.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050340-secondary-brace-ordering",
+          "description": "Two distance:0 modifiers ordering the braces after the context key and after each other.",
+          "predicate_ids": [
+            "content-3-distance",
+            "content-4-distance"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050340-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted distance:0; twice inside the brace clue; suite negatives N-body-open-brace-before-key and N-body-close-brace-before-braces",
+          "rank": null,
+          "rationale": "Payload layout mechanics. The two options are byte-identical in the visible rule, so attacker evidence quoting distance:0 cannot separate them and they are held as one secondary. Suite negatives N-body-open-brace-before-key and N-body-close-brace-before-braces cover the two orderings.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050340-secondary-post-body-delivery",
+          "description": "http.method literal \"POST\" carrying the template injection body.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050340-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.method; content:\"POST\";; suite negative N-wrong-method",
+          "rank": null,
+          "rationale": "All three v2 trials used the method to argue that the payload arrives in a request body rather than in the URI, which is a real delivery fact but a generic one. Kept out of the majors under the generic-method rule because the body literals at ranks 1 and 3 already carry the same delivery inference with exploit specificity. Suite negative N-wrong-method.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050340-secondary-inbound-request-flow",
+          "description": "flow:established,to_server scoping the match to submitted request data.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050340-baseline (packet sha256 7a9c9e97...); trial 1 rule_evidence flow:established,to_server;; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "v2 trial 1 grouped the flow with the method to explain that the exploit payload is submitted rather than served. Transport context only; both facets are quoted as one option so they are held as one clue. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2050340",
+      "target_cve": "CVE-2023-22527"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2050434-major-1-setup-wizard-page",
+          "description": "http.request_line literal \"/wizard/InitialAccountSetup.xhtml\".",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050434-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"/wizard/InitialAccountSetup.xhtml\"; suite negative N-setup-page-absent; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "The exact resource the vulnerability exposes: reaching the initial account setup wizard on an already-initialised GoAnywhere MFT server creates an administrator. Product and vulnerable function in one literal. All three v2 trials named it as the targeted resource and all three predicted the target exactly. Suite negative N-setup-page-absent swaps the wizard page.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050434-major-2-goanywhere-request-line-prefix",
+          "description": "http.request_line literal \"GET /goanywhere/\".",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050434-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"GET /goanywhere/\"; startswith;; suite negative N-wrong-method",
+          "rank": 2,
+          "rationale": "Carries the product name in the application context path. This is not a bare method clue: the method and the vendor path are a single content literal in this rule, and all three v2 trials read it as identifying GoAnywhere. Ranked below the wizard page because the corpus contains a second GoAnywhere fixture, et-2044143, that shares the same context path, so the prefix alone cannot select the CVE. Suite negative N-wrong-method replaces GET in the request line.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050434-major-3-dot-semicolon-path-bypass",
+          "description": "pcre matching one or two literal or percent-encoded dots followed by one or more literal or encoded semicolons within ten bytes of the context path.",
+          "predicate_ids": [
+            "pcre-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050434-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence quoting the relative traversal pcre; suite negatives N-pcre-no-encoded-traversal and N-pcre-beyond-offset-bound",
+          "rank": 3,
+          "rationale": "The access-control bypass primitive: path-parameter trickery that makes the protected wizard resemble an allowed path. All three v2 trials gave it a dedicated clue and described it as a traversal-style bypass. Ranked third because it describes how the wizard is reached while the wizard itself is the vulnerability. Suite negatives N-pcre-no-encoded-traversal and N-pcre-beyond-offset-bound.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050434-secondary-wizard-proximity",
+          "description": "within:60 requiring the wizard page to appear close behind the traversal sequence.",
+          "predicate_ids": [
+            "content-1-within"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050434-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted within:60; with the wizard literal; suite negative N-setup-page-beyond-within",
+          "rank": null,
+          "rationale": "Binds the bypass sequence and the target page into one request line rather than two unrelated matches. All three v2 trials quoted the bound alongside the wizard literal. Suite negative N-setup-page-beyond-within pushes the page past the bound.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050434-secondary-request-line-anchor",
+          "description": "startswith anchoring the product prefix to the beginning of the request line.",
+          "predicate_ids": [
+            "content-0-startswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050434-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted startswith; with the request-line prefix; covered by suite negative N-wrong-method through the same content",
+          "rank": null,
+          "rationale": "Requires the GoAnywhere context path to open the request line, which is what keeps the rule bound to a direct request rather than a reference embedded elsewhere. Quoted by all three v2 trials with the prefix literal. It shares its suite coverage with the prefix itself.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050434-secondary-inbound-request-flow",
+          "description": "flow:established,to_server restricting the match to inbound requests.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050434-baseline (packet sha256 7a9c9e97...); flow option visible in the v2 prompt; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "Transport context that explains why http.request_line is populated at all; it carries no product or CVE information and no v2 trial spent a clue on it for this fixture. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2050434",
+      "target_cve": "CVE-2024-0204"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2050988-major-1-screenconnect-authbypass-flowbit",
+          "description": "flowbits:set naming a ScreenConnect authentication bypass attempt.",
+          "predicate_ids": [
+            "flowbits-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050988-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence flowbits:set,ET.ScreenConnectAuthBypass.Attempt; no accepted generic operator emits a flowbits mutation for this rule; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "The surviving flowbit name states the product and the bug class outright, which resolves to this CVE in a single token. It was the first clue in all three v2 trials and all three predicted the target exactly. This is the clearest case in the corpus of identifying information leaking through a non-detection option. Untargetable: no accepted generic operator rewrites flowbits, so the clue cannot currently be hardened and has no suite negative.",
+          "targetable": false
+        },
+        {
+          "clue_id": "et-2050988-major-2-setup-wizard-endpoint",
+          "description": "http.uri literal \"/SetupWizard.aspx/\".",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050988-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.uri; content:\"/SetupWizard.aspx/\";; suite negative N-uri-lowercased",
+          "rank": 2,
+          "rationale": "The vulnerable path itself: the trailing-slash SetupWizard request is how the bypass reaches the setup flow on an already-configured server. It is the strongest clue that survives if the flowbit is removed, and every v2 trial cited it second. Suite negative N-uri-lowercased shows the literal is matched case-sensitively, so even the capitalisation is load-bearing.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050988-major-3-uri-prefix-anchor",
+          "description": "startswith anchoring the setup wizard path to the beginning of http.uri.",
+          "predicate_ids": [
+            "content-0-startswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050988-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted startswith; with the setup wizard path; suite negative N-uri-not-at-start",
+          "rank": 3,
+          "rationale": "Distinguishes a direct request for the setup wizard from any request that merely contains the string, which is what keeps the signature on exploitation rather than on links or logs. All three v2 trials quoted the anchor with the path. This rule has only three detection predicates outside transport context, so the majors are effectively the whole rule and the anchor takes rank 3. Suite negative N-uri-not-at-start.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050988-secondary-inbound-request-flow",
+          "description": "flow:established,to_server restricting the match to inbound web requests.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050988-baseline (packet sha256 7a9c9e97...); trial 1 rule_evidence flow:established,to_server;; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "v2 trial 1 used the flow together with the rule header to describe an established client request against an internal HTTP server. Transport context with no product content. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2050988-secondary-protected-server-destination",
+          "description": "Rule header destination [$HOME_NET,$HTTP_SERVERS].",
+          "predicate_ids": [
+            "header-dst-address"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2050988-baseline (packet sha256 7a9c9e97...); trial 1 rule_evidence alert http any any -> [$HOME_NET,$HTTP_SERVERS] any; suite negative N-wrong-destination-address",
+          "rank": null,
+          "rationale": "v2 trial 1 quoted the whole header line when arguing the target is an internally hosted web application. Deployment scoping rather than vulnerability evidence, and untargetable because no accepted generic operator rewrites rule-header addresses. Suite negative N-wrong-destination-address.",
+          "targetable": false
+        }
+      ],
+      "rule_id": "et-2050988",
+      "target_cve": "CVE-2024-1709"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2052951-major-1-public-config-api-endpoint",
+          "description": "http.uri literal \"/api/index.php/v1/config/application?public=true\".",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2052951-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"/api/index.php/v1/config/application?public=true\"; suite negative N-public-parameter-false; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "The Joomla 4 web-services route together with the public=true parameter is the whole of the vulnerability: an improper access check that lets an unauthenticated caller read application configuration, including database credentials. Product, endpoint and exploit condition in one literal. All three v2 trials cited it and all three predicted the target exactly. Suite negative N-public-parameter-false flips the parameter.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2052951-major-2-endpoint-at-uri-end",
+          "description": "endswith requiring the URI to terminate at that endpoint and query string.",
+          "predicate_ids": [
+            "content-1-endswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2052951-baseline (packet sha256 7a9c9e97...); trials 1 and 2 rule_evidence endswith; as its own clue; suite negative N-uri-not-at-end",
+          "rank": 2,
+          "rationale": "Turns a substring match into an exact-request match, which v2 trials 1 and 2 read as a precise exploit probe rather than a generic path match. Besides the literal itself it is the only predicate that constrains what the request may be, so it takes rank 2 ahead of transport context. Suite negative N-uri-not-at-end appends another parameter.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2052951-major-3-unauthenticated-get-probe",
+          "description": "http.method literal \"GET\" retrieving the public configuration endpoint.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2052951-baseline (packet sha256 7a9c9e97...); trials 0-2 each raised http.method; content:\"GET\"; as a separate clue; suite negative N-wrong-method",
+          "rank": 3,
+          "rationale": "Ranked as a major on documented necessity. After the endpoint literal and its end anchor this rule contains nothing but transport context, and every v2 trial raised the method as an independent clue, reading it as unauthenticated retrieval of exposed configuration, which is precisely the information-disclosure class of this CVE rather than an upload or code-execution flaw. The remaining candidates, flow direction and header scope, carry strictly less information. Suite negative N-wrong-method confirms it is load-bearing.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2052951-secondary-inbound-request-flow",
+          "description": "flow:established,to_server restricting the match to a client request sent to the server.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2052951-baseline (packet sha256 7a9c9e97...); trials 0 and 2 rule_evidence flow:established,to_server;; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "v2 trials 0 and 2 grouped the flow with the method when describing an unauthenticated probe of the configuration endpoint. It supports the reading at rank 3 without adding product information of its own. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2052951",
+      "target_cve": "CVE-2023-23752"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2055723-major-1-hedwig-cgi-endpoint",
+          "description": "http.uri literal \"/hedwig.cgi\".",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2055723-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"/hedwig.cgi\"; suite negative N-uri-endpoint-changed; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "hedwig.cgi is a D-Link-specific handler and the entry point named in the DIR-859 report. All three v2 trials opened with it and all three recovered a D-Link router web-management interface from it while naming three different older CVEs, which is the classic control signature where the product token is decisive and nothing selects the year. Suite negative N-uri-endpoint-changed keeps the length but replaces the literal.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2055723-major-2-getcfg-configuration-path",
+          "description": "http.request_body literal \"/htdocs/webinc/getcfg\".",
+          "predicate_ids": [
+            "content-2"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2055723-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.request_body; content:\"/htdocs/webinc/getcfg\";; suite negative N-body-config-path-changed",
+          "rank": 2,
+          "rationale": "The internal firmware path whose traversal is the vulnerability. It shows the body selects a server-side configuration file rather than posting form data, which is what makes this configuration disclosure rather than an ordinary CGI post. Every v2 trial cited it as a separate clue. Suite negative N-body-config-path-changed removes the path.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2055723-major-3-xml-config-target",
+          "description": "http.request_body literal \".xml\" required within 50 bytes of the configuration path.",
+          "predicate_ids": [
+            "content-3",
+            "content-3-within"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2055723-baseline (packet sha256 7a9c9e97...); trials 1 and 2 reported content:\".xml\"; within:50; as one clue; suite negatives N-body-extension-changed and N-body-extension-beyond-within",
+          "rank": 3,
+          "rationale": "Completes the request shape by selecting a specific configuration XML module near the getcfg path. v2 trials 1 and 2 gave the extension and its proximity bound a single clue and used it to argue configuration disclosure rather than a generic CGI probe, so the literal and the bound are one inference unit here. Suite negatives N-body-extension-changed and N-body-extension-beyond-within.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2055723-secondary-eleven-byte-uri",
+          "description": "bsize:11 requiring the whole URI to be exactly eleven bytes.",
+          "predicate_ids": [
+            "bsize-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2055723-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted bsize:11; with the endpoint literal; suite negative N-uri-length-exceeds-bsize",
+          "rank": null,
+          "rationale": "Says the request targets the CGI at the web root with no query string, which every v2 trial quoted next to the endpoint literal. It is a length constraint rather than an identity clue, so it stays secondary despite being quoted in all three trials. Suite negative N-uri-length-exceeds-bsize keeps the literal but lengthens the URI.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2055723-secondary-post-submission",
+          "description": "http.method literal \"POST\" carrying the getcfg configuration request.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2055723-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.method; content:\"POST\";; suite negative N-wrong-method",
+          "rank": null,
+          "rationale": "All three v2 trials cited the method as the delivery mechanism for the configuration request. It is generic on its own, and the body literals at ranks 2 and 3 already establish that data is being submitted, so it is kept out of the majors under the generic-method rule. Suite negative N-wrong-method.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2055723-secondary-inbound-request-flow",
+          "description": "flow:established,to_server restricting the match to inbound hedwig.cgi requests.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2055723-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence flow:established,to_server;; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "Quoted by every v2 trial inside the method clue while describing an exploit request to the device. Transport context with no product content of its own. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2055723",
+      "target_cve": "CVE-2024-0769"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2056147-major-1-static-basic-credential",
+          "description": "http.header literal matching an Authorization Basic header carrying a single fixed base64 credential.",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2056147-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.header; content:\"Authorization|3a 20|Basic|20|...\";; suite negatives N-credentials-changed and N-credentials-in-body; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "A hard-coded credential written into a signature is the vulnerability: this CVE is an undocumented static administrative credential in Cisco Smart Licensing Utility, and the base64 blob decodes to that account. Both clues in all three v2 trials treated it as the decisive one, describing a fixed credential rather than user-supplied authentication, and all three predicted the target exactly. Ranked above the path because the credential identifies the bug while the path only identifies the product. Suite negatives N-credentials-changed and N-credentials-in-body.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2056147-major-2-cslu-path-scope",
+          "description": "http.uri literal \"/cslu/\".",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2056147-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.uri; content:\"/cslu/\";; suite negative N-uri-path-changed",
+          "rank": 2,
+          "rationale": "Names the Cisco Smart Licensing Utility service. Every v2 trial listed it first in reading order but reasoned from the credential, which is why it ranks second: it delivers product attribution without identifying the defect. Suite negative N-uri-path-changed points the request at another application path.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2056147-major-3-path-prefix-anchor",
+          "description": "startswith anchoring the licensing path to the beginning of http.uri.",
+          "predicate_ids": [
+            "content-0-startswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2056147-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted startswith; with the licensing path; suite negative N-uri-not-at-start",
+          "rank": 3,
+          "rationale": "Requires the licensing service to be the application root rather than a substring, which is what binds the rule to a CSLU deployment instead of any URL mentioning the string. All three v2 trials quoted the anchor with the path. This rule has only three detection predicates outside transport context, so the anchor takes rank 3. Suite negative N-uri-not-at-start.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2056147-secondary-inbound-request-flow",
+          "description": "flow:established,to_server restricting the match to inbound licensing requests.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2056147-baseline (packet sha256 7a9c9e97...); flow option visible in the v2 prompt; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "Transport context that explains why request headers are populated. No v2 trial spent one of its two clue slots on it, which is itself evidence that it carries no inference here. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2056147",
+      "target_cve": "CVE-2024-20439"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2057330-major-1-account-manager-cgi-endpoint",
+          "description": "http.uri literal \"/cgi-bin/account_mgr.cgi|3f|\".",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057330-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"/cgi-bin/account_mgr.cgi|3f|\"; suite negative N-cgi-endpoint-changed; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "The exact CGI named in the D-Link DNS-320 family advisory. All three v2 trials opened with it, and the two that missed still described an account-management CGI on an embedded device, so the endpoint is the product anchor even when the year is lost. Suite negative N-cgi-endpoint-changed points at another CGI.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2057330-major-2-cgi-user-add-command",
+          "description": "http.uri literal \"cmd|3d|cgi_user_add\".",
+          "predicate_ids": [
+            "content-2"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057330-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"cmd|3d|cgi_user_add\"; suite negative N-command-changed",
+          "rank": 2,
+          "rationale": "Selects the vulnerable function inside the CGI. The advisory scopes the flaw to the cgi_user_add command, and a delete or list command against the same script is unaffected, which suite negative N-command-changed encodes directly. All three v2 trials cited it as narrowing the issue to user creation.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2057330-major-3-name-injection-pcre",
+          "description": "pcre matching a semicolon, newline, ampersand, backtick, pipe or dollar sign, raw or percent-encoded, inside the name value before the next parameter.",
+          "predicate_ids": [
+            "pcre-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057330-baseline (packet sha256 7a9c9e97...); trials 0-2 emitted the pcre as its own clue distinct from the name parameter clue; suite negative N-pcre-no-shell-metacharacter; deviation from the initial review packet recorded during calibration",
+          "rank": 3,
+          "rationale": "This is what makes the request an exploit rather than telemetry: without it the endpoint and command look like an ordinary user-add call. All three v2 trials emitted it as a separate fourth clue. The group A review proposed folding it together with the name= literal; v2 shows every trial separating them, and the analogous PCRE in et-2049007 is ranked the same way, so they are split here with the injection proof ranked above the parameter locator. Suite negative N-pcre-no-shell-metacharacter.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2057330-secondary-name-parameter-locator",
+          "description": "http.uri literal \"name|3d|\" immediately preceding the inspected value.",
+          "predicate_ids": [
+            "content-3"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057330-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"name|3d|\"; suite negative N-name-parameter-absent",
+          "rank": null,
+          "rationale": "Marks which parameter is injectable and is the anchor the relative pcre attaches to. On its own name= is a generic query parameter, and the injection evidence at rank 3 already implies an injected field, so it is secondary. Suite negative N-name-parameter-absent keeps the command but drops the parameter.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2057330-secondary-get-delivery",
+          "description": "http.method literal \"GET\" carrying the user-add command in its query string.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057330-baseline (packet sha256 7a9c9e97...); trial 0 rule_evidence http.method; content:\"GET\";; suite negative N-wrong-method",
+          "rank": null,
+          "rationale": "v2 trial 0 used the method to say the exploit is delivered as a plain GET, which is a real property of this bug but not one that distinguishes it from any other query-string injection. Kept out of the majors under the generic-method rule. Suite negative N-wrong-method.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2057330-secondary-inbound-request-flow",
+          "description": "flow:established,to_server restricting the match to inbound account_mgr.cgi requests.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057330-baseline (packet sha256 7a9c9e97...); trial 0 rule_evidence flow:established,to_server;; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "Quoted by v2 trial 0 alongside the method when describing delivery to the device. Transport context only. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2057330",
+      "target_cve": "CVE-2024-10914"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2057705-major-1-pan-authcheck-disabled-header",
+          "description": "Request header literal \"X-PAN-AUTHCHECK|3a 20|off\".",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057705-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"X-PAN-AUTHCHECK|3a 20|off\"; suite negative N-authcheck-enabled; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "Vendor namespace, the security control being addressed and the state that disables it, all in one literal, which is precisely an unauthenticated management-interface bypass. All three v2 trials named Palo Alto Networks from it and all three predicted the target exactly; two of them spent two separate clues on the name and the value of the same literal. Suite negative N-authcheck-enabled flips the value.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2057705-major-2-request-header-locus",
+          "description": "http.header sticky buffer selecting request headers as the match locus.",
+          "predicate_ids": [
+            "buffer-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057705-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.header;; suite negative N-authcheck-literal-in-body",
+          "rank": 2,
+          "rationale": "Ranked as a major on documented necessity rather than as a bare buffer declaration. The corpus contains a second PAN-OS management-interface bypass, et-2060086, that is reached through the URI, so the header locus is what separates the two, and suite negative N-authcheck-literal-in-body proves the placement is independently load-bearing: the same literal in a request body does not alert. All three v2 trials spent a clue on the header locus. With exactly one content predicate in this rule, ranks 2 and 3 must come from placement and direction rather than from further literals.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2057705-major-3-inbound-request-direction",
+          "description": "flow direction to_server.",
+          "predicate_ids": [
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057705-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence flow:established,to_server; with http.header;; suite negative N-wrong-direction",
+          "rank": 3,
+          "rationale": "Makes the header attacker-supplied on an inbound management request rather than something echoed by the appliance, which is the difference between an exploit attempt and a response artefact. Every v2 trial paired the direction with the header locus in its transport clue. Documented necessity applies again: with a single content predicate there is no remaining literal to rank here, and the established facet, held as a secondary, carries less information. Suite negative N-wrong-direction.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2057705-secondary-established-session",
+          "description": "flow established facet requiring a completed TCP session.",
+          "predicate_ids": [
+            "flow-established"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057705-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted flow:established,to_server;; suite negative N-flow-not-established",
+          "rank": null,
+          "rationale": "Held separately from the direction facet so that a mutation removing the handshake requirement is not attributed to the ranked direction clue. It appears in every v2 trial only as part of the same quoted option and adds no independent inference. Suite negative N-flow-not-established.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2057705-secondary-protected-management-destination",
+          "description": "Rule header destination $HOME_NET covering the protected PAN-OS appliance.",
+          "predicate_ids": [
+            "header-dst-address"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2057705-baseline (packet sha256 7a9c9e97...); trial 2 rule_evidence alert http any any -> $HOME_NET any; suite negative N-wrong-destination-address",
+          "rank": null,
+          "rationale": "v2 trial 2 quoted the whole header line when arguing the request is an inbound management request against a protected appliance. Deployment scoping rather than vulnerability evidence, and untargetable because no accepted generic operator rewrites rule-header addresses. Suite negative N-wrong-destination-address.",
+          "targetable": false
+        }
+      ],
+      "rule_id": "et-2057705",
+      "target_cve": "CVE-2024-0012"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2059741-major-1-install-title-option",
+          "description": "http.request_body literal \"this_install_title|3d|\".",
+          "predicate_ids": [
+            "content-4"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2059741-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"this_install_title|3d|\"; suite negatives N-body-option-name-changed and N-option-name-in-header; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "The most application-specific token in the rule: this is a ProjectSend options key, and the vulnerability is unauthenticated modification of exactly those options through options.php. All three v2 trials singled it out as the key discriminator, yet none recognised the product, so this fixture is 0/3 in v2 because of a knowledge gap about ProjectSend rather than a ranking error. Suite negatives N-body-option-name-changed and N-option-name-in-header.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2059741-major-2-general-settings-section",
+          "description": "http.request_body literal \"section|3d|general\".",
+          "predicate_ids": [
+            "content-3"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2059741-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"section|3d|general\"; suite negative N-body-section-changed",
+          "rank": 2,
+          "rationale": "Identifies which settings group is being written, matching the general configuration section that the unauthenticated write reaches. Cited by all three v2 trials as a distinct clue. Ranked second because the section name only becomes meaningful alongside the option key at rank 1. Suite negative N-body-section-changed posts a different section.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2059741-major-3-exact-options-endpoint",
+          "description": "http.uri exactly twelve bytes long and equal to \"/options.php\".",
+          "predicate_ids": [
+            "content-1",
+            "bsize-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2059741-baseline (packet sha256 7a9c9e97...); trials 0-2 reported http.uri; bsize:12; content:\"/options.php\"; as one clue; suite negatives N-uri-endpoint-changed and N-uri-length-exceeds-bsize",
+          "rank": 3,
+          "rationale": "The vulnerable endpoint named in the advisory, pinned to a bare twelve-byte URI with no query string. Every v2 trial quoted the length constraint and the literal together as a single clue, so they are one inference unit. Ranked third because /options.php is a common PHP filename that only becomes ProjectSend-specific in combination with the body parameters above. Suite negatives N-uri-endpoint-changed and N-uri-length-exceeds-bsize.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2059741-secondary-csrf-token-parameter",
+          "description": "http.request_body literal \"csrf_token|3d|\".",
+          "predicate_ids": [
+            "content-2"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2059741-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"csrf_token|3d|\"; suite negative N-body-csrf-token-absent",
+          "rank": null,
+          "rationale": "Adversely informative. All three v2 trials read the CSRF token as evidence of an authenticated administrative form submission, which points away from a missing-authentication vulnerability and toward session-riding issues. It is recorded because it demonstrably shapes attacker reasoning on this fixture, not because it leads to the right answer. Suite negative N-body-csrf-token-absent.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2059741-secondary-post-settings-write",
+          "description": "http.method literal \"POST\" carrying the options.php settings write.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2059741-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.method; content:\"POST\";; suite negative N-wrong-method",
+          "rank": null,
+          "rationale": "Every v2 trial used the method to describe a settings update rather than browsing, which is accurate but generic; the body parameters at ranks 1 and 2 already establish that a configuration write is happening. Kept out of the majors under the generic-method rule. Suite negative N-wrong-method.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2059741-secondary-inbound-request-flow",
+          "description": "flow:established,to_server restricting the match to submitted form data.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2059741-baseline (packet sha256 7a9c9e97...); trials 0 and 2 rule_evidence flow:established,to_server;; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "Quoted by v2 trials 0 and 2 inside the method clue while describing a server-directed settings submission. Transport context only. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2059741",
+      "target_cve": "CVE-2024-11680"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2060086-major-1-path-confusion-pcre",
+          "description": "pcre requiring /unauth/, then a double-encoded dot pair, then /PAN_help/, then a .css, .js, .html or .htm tail, anchored across the whole URI.",
+          "predicate_ids": [
+            "pcre-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060086-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence quoting the anchored URI pcre; trial 1 is the only exact prediction; suite negatives N-pcre-single-encoded-traversal and N-pcre-non-static-extension; deviation from the initial review packet recorded during calibration",
+          "rank": 1,
+          "rationale": "This is the path-confusion primitive of the CVE: making a protected management request look like an allowed static help resource. It is also the discriminator inside the PAN-OS cluster, and v2 settles the ordering empirically. Trials 0 and 2 both quoted the vendor path and still answered CVE-2024-0012, while trial 1, the only one to predict the target, is the trial that reasoned hardest about the double-encoded traversal and the static-extension tail. The group B review ranked the vendor token first; the v2 outcome contradicts that, so the pcre is promoted. Suite negatives N-pcre-single-encoded-traversal and N-pcre-non-static-extension.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2060086-major-2-pan-help-path",
+          "description": "http.uri literal \"/PAN_help/\".",
+          "predicate_ids": [
+            "content-2"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060086-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"/PAN_help/\"; covered indirectly by suite negatives N-pcre-single-encoded-traversal and N-pcre-non-static-extension",
+          "rank": 2,
+          "rationale": "The only vendor-named token in the rule and the reason every v2 trial reached Palo Alto Networks. It ranks second because it demonstrably attributes the product without selecting the CVE: two of three v2 trials had this literal in hand and still answered the other PAN-OS bypass in this corpus. Its only suite coverage is indirect, through the pcre cases that also require the path.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2060086-major-3-unauth-path-prefix",
+          "description": "http.uri literal \"/unauth/\".",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060086-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence http.uri; content:\"/unauth/\";; prefix is re-asserted by the anchored pcre so the suite has no separate negative",
+          "rank": 3,
+          "rationale": "Establishes that the entry point is the unauthenticated route family, which is why every v2 trial described an authentication-bypass class issue. It ranks third because the unauthenticated prefix is what both PAN-OS bypasses in this corpus have in common: it moves the reader to the right class but not the right CVE. No dedicated suite negative exists for the literal because the pcre re-asserts the same prefix.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2060086-secondary-unauth-prefix-anchor",
+          "description": "startswith anchoring the unauthenticated prefix to the beginning of the URI.",
+          "predicate_ids": [
+            "content-1-startswith"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060086-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted startswith; with the unauthenticated prefix; constraint duplicated by the anchored pcre",
+          "rank": null,
+          "rationale": "Requires the unauthenticated route to be the request root, matching the start anchor inside the pcre. All three v2 trials quoted it in their URI clue. It duplicates a constraint the ranked pcre already expresses, which is why it is secondary.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2060086-secondary-get-retrieval",
+          "description": "http.method literal \"GET\" fetching the static-looking help resource.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060086-baseline (packet sha256 7a9c9e97...); trial 2 rule_evidence http.method; content:\"GET\";; suite negative N-wrong-method",
+          "rank": null,
+          "rationale": "v2 trial 2 opened with the method, the flow and the URI buffer in a single clue and then predicted the wrong PAN-OS CVE, which is a good illustration of transport context consuming clue capacity without adding discrimination. Kept out of the majors under the generic-method rule. Suite negative N-wrong-method.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2060086-secondary-inbound-request-flow",
+          "description": "flow:established,to_server restricting the match to inbound URI requests.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060086-baseline (packet sha256 7a9c9e97...); trial 2 rule_evidence flow:established,to_server;; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "Quoted by v2 trial 2 together with the method. It explains why http.uri is populated but says nothing about the product or the defect. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2060086-secondary-external-source-scope",
+          "description": "Rule header source $EXTERNAL_NET for the PAN-OS management interface.",
+          "predicate_ids": [
+            "header-src-address"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060086-baseline (packet sha256 7a9c9e97...); rule header visible in the v2 prompt; suite negative N-internal-source-address",
+          "rank": null,
+          "rationale": "Scopes the signature to externally originated requests against the management interface, which is deployment context rather than vulnerability evidence. Untargetable because no accepted generic operator rewrites rule-header addresses. Suite negative N-internal-source-address.",
+          "targetable": false
+        }
+      ],
+      "rule_id": "et-2060086",
+      "target_cve": "CVE-2025-0108"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2060144-major-1-psql-shell-escape",
+          "description": "Content \"|5c 5c 21 20|\", the escaped psql meta-command shell escape followed by a space.",
+          "predicate_ids": [
+            "content-1"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060144-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"|5c 5c 21 20|\"; suite negative N-shell-escape-changed; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "The psql shell escape is PostgreSQL-client-specific and is the observed exploitation shape of this CVE, where broken quoting in libpq lets attacker text break out into psql meta-commands. All three v2 trials described it as an escaped psql shell escape. It stays rank 1 even though the fixture is 0/3: the trials reached PostgreSQL command execution and then chose older PostgreSQL-adjacent identifiers. Suite negative N-shell-escape-changed alters the bytes.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2060144-major-2-postgresql-service-port",
+          "description": "Rule header destination port set combining the HTTP port variable with 5432.",
+          "predicate_ids": [
+            "header-dst-port"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060144-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence -> $HOME_NET [$HTTP_PORTS,5432]; suite negative N-wrong-port; the ports family rejects this set because it contains a variable",
+          "rank": 2,
+          "rationale": "Port 5432 is the PostgreSQL wire-protocol port and is the only product identification in a rule that otherwise matches four bytes of punctuation. Every v2 trial used it to reach PostgreSQL and two of them additionally reasoned about the HTTP ports in the same set, concluding that a web-facing administration interface is in scope. Ports are ranked here by inference value rather than dismissed as header noise. Untargetable: the port operator rejects sets containing a variable, so suite negative N-wrong-port is the only lever.",
+          "targetable": false
+        },
+        {
+          "clue_id": "et-2060144-major-3-adjacent-statement-terminator",
+          "description": "Content \"|3b|\" with distance:0 forcing the escape to begin immediately after it.",
+          "predicate_ids": [
+            "content-0",
+            "content-1-distance"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060144-baseline (packet sha256 7a9c9e97...); trial 2 reported content:\"|3b|\"; content:\"|5c 5c 21 20|\"; distance:0; as one clue; suite negatives N-statement-separator-absent and N-shell-escape-before-separator",
+          "rank": 3,
+          "rationale": "The semicolon plus strict adjacency is what turns two ordinary byte strings into the stacked pattern of terminating a statement and then escaping to a shell. v2 trial 2 reported exactly that composite and trial 0 spent two separate clues on the same idea. The two predicates are held as one clue because the semicolon is structurally untargetable on its own, distance:0 being anchored to it, and neither half carries the inference alone. Suite negatives N-statement-separator-absent and N-shell-escape-before-separator.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2060144-secondary-raw-tcp-inspection",
+          "description": "Rule protocol tcp rather than http.",
+          "predicate_ids": [
+            "header-protocol"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060144-baseline (packet sha256 7a9c9e97...); trials 1 and 2 reasoned from the raw-tcp header line; no accepted generic operator rewrites the header protocol",
+          "rank": null,
+          "rationale": "Tells the reader the rule inspects the raw stream, so it expects the PostgreSQL wire protocol as well as web-delivered payloads. That framing is what led v2 trials 1 and 2 to reason about a web-facing PostgreSQL administration interface. Untargetable: no accepted generic operator rewrites the rule-header protocol.",
+          "targetable": false
+        },
+        {
+          "clue_id": "et-2060144-secondary-inbound-query-flow",
+          "description": "flow:established,to_server restricting the match to attacker-supplied query data.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060144-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence flow:established,to_server;; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "Every v2 trial cited the flow when arguing that the payload is inbound rather than a response artefact. Transport context that supports the reading of the payload clues without identifying the product. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2060144-secondary-protected-server-destination",
+          "description": "Rule header destination $HOME_NET covering protected database and web hosts.",
+          "predicate_ids": [
+            "header-dst-address"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2060144-baseline (packet sha256 7a9c9e97...); trials 0 and 2 quoted -> $HOME_NET [$HTTP_PORTS,5432]; suite negative N-wrong-destination-address",
+          "rank": null,
+          "rationale": "Quoted inside the same header snippet the trials used to reach the PostgreSQL port, and it scopes the alert to internally hosted database or web hosts. Deployment context only, and untargetable because no accepted generic operator rewrites rule-header addresses. Suite negative N-wrong-destination-address.",
+          "targetable": false
+        }
+      ],
+      "rule_id": "et-2060144",
+      "target_cve": "CVE-2025-1094"
+    },
+    {
+      "clues": [
+        {
+          "clue_id": "et-2067354-major-1-rsyncd-protocol-banner",
+          "description": "Content \"|40|RSYNCD|3a|\", the @RSYNCD: daemon protocol greeting.",
+          "predicate_ids": [
+            "content-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2067354-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence content:\"|40|RSYNCD|3a|\"; suite negative N-banner-changed; manual review calibration review notes",
+          "rank": 1,
+          "rationale": "Identifies the rsync daemon protocol outright, which is the product half of the vulnerability and the reason all three v2 trials opened with it and all three predicted the target exactly. It is also the clue the rest of the rule is relative to, since the byte tests are positioned from the negotiation that follows it. Suite negative N-banner-changed removes the greeting.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2067354-major-2-checksum-length-window",
+          "description": "byte_test:4,>,16,9,relative,little with byte_test:4,<,65,9,relative,little, a little-endian four-byte field at offset 9 constrained to the range 17 through 64.",
+          "predicate_ids": [
+            "byte_test-1",
+            "byte_test-2"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2067354-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted byte_test:4,>,16,9,relative,little; and byte_test:4,<,65,9,relative,little; in one clue; suite negatives N-seed-length-at-lower-bound and N-seed-length-at-upper-bound",
+          "rank": 2,
+          "rationale": "The exploit condition: the overflow is reached when the attacker-controlled checksum length exceeds the fixed sixteen-byte digest buffer. All three v2 trials called this bounded window the decisive condition or the key exploit indicator and reasoned from it to the CVE. The two tests are a single range check expressed as two options and every trial quoted them together, so they are one inference unit. Suite negatives N-seed-length-at-lower-bound and N-seed-length-at-upper-bound pin both edges.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2067354-major-3-server-sender-mode",
+          "description": "Contents \"--server\" and \"--sender\".",
+          "predicate_ids": [
+            "content-1",
+            "content-2"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2067354-baseline (packet sha256 7a9c9e97...); trials 0-2 reported content:\"--server\"; and content:\"--sender\"; in one clue; suite negatives N-server-argument-changed and N-sender-argument-changed",
+          "rank": 3,
+          "rationale": "Places the daemon in the server-sender role in which it parses the client-supplied checksum metadata, which is the reachability condition for the overflow. All three v2 trials reported the two arguments as a single clue about operating mode, so they are one inference unit. Ranked third because mode selection is ordinary rsync traffic until the length window at rank 2 is also present. Suite negatives N-server-argument-changed and N-sender-argument-changed.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2067354-secondary-rsync-daemon-port",
+          "description": "Rule header destination port 873.",
+          "predicate_ids": [
+            "header-dst-port"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2067354-baseline (packet sha256 7a9c9e97...); trials 0-2 rule_evidence alert tcp any any -> $HOME_NET 873; suite negative N-wrong-port",
+          "rank": null,
+          "rationale": "The registered rsync daemon port; every v2 trial quoted the header line together with the banner when establishing that this is rsync traffic. It corroborates a service the banner already names, so it stays secondary despite being one of the few directly targetable header facets in the corpus. Suite negative N-wrong-port moves the traffic to an adjacent port.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2067354-secondary-message-framing",
+          "description": "Contents \"|00 00 07|\" and \"|0e|\", the message framing marker and the checksum negotiation tag byte.",
+          "predicate_ids": [
+            "content-3",
+            "content-4"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2067354-baseline (packet sha256 7a9c9e97...); trials 0-2 quoted content:\"|00 00 07|\"; and content:\"|0e|\"; together; suite negatives N-framing-marker-changed and N-negotiation-tag-changed",
+          "rank": null,
+          "rationale": "Locates the negotiation message that the byte tests read their offsets from. All three v2 trials quoted the two bytes together while describing a crafted protocol structure rather than a banner match. The tag byte is structurally untargetable because its distance:0 successor depends on it, while the framing marker is targetable. Suite negatives N-framing-marker-changed and N-negotiation-tag-changed.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2067354-secondary-tag-ordering",
+          "description": "distance:0 requiring the negotiation tag to follow the framing marker immediately.",
+          "predicate_ids": [
+            "content-4-distance"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2067354-baseline (packet sha256 7a9c9e97...); trials 1 and 2 quoted content:\"|0e|\"; distance:0;; suite negative N-tag-before-framing-marker",
+          "rank": null,
+          "rationale": "Ordering constraint that binds the framing pair into a single protocol message. v2 trials 1 and 2 quoted it inline with the tag byte. It is layout mechanics rather than an independent inference, so it is secondary. Suite negative N-tag-before-framing-marker.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2067354-secondary-flag-high-bit",
+          "description": "byte_test:1,&,0x80,0,relative requiring the high bit of the byte after the tag to be set.",
+          "predicate_ids": [
+            "byte_test-0"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2067354-baseline (packet sha256 7a9c9e97...); trials 1 and 2 quoted byte_test:1,&,0x80,0,relative; with the length window; suite negative N-flag-high-bit-clear",
+          "rank": null,
+          "rationale": "A protocol flag check that v2 trials 1 and 2 grouped with the length window when describing the exploit condition. It is a single-bit flag rather than the overflow condition itself, so it is recorded as supporting structure. Suite negative N-flag-high-bit-clear.",
+          "targetable": true
+        },
+        {
+          "clue_id": "et-2067354-secondary-inbound-daemon-flow",
+          "description": "flow:established,to_server restricting the match to a client request into the daemon.",
+          "predicate_ids": [
+            "flow-established",
+            "flow-to_server"
+          ],
+          "provenance": "dataset-clue-baseline-v2 review packet candidate et-2067354-baseline (packet sha256 7a9c9e97...); trial 2 rule_evidence flow:established,to_server; as a standalone clue; suite negatives N-flow-not-established and N-wrong-direction",
+          "rank": null,
+          "rationale": "v2 trial 2 gave the flow its own clue, reading it as an established client-to-server request into the protected rsync daemon. Transport context that carries no product content beyond what the port and banner already give. Suite negatives N-flow-not-established and N-wrong-direction.",
+          "targetable": true
+        }
+      ],
+      "rule_id": "et-2067354",
+      "target_cve": "CVE-2024-12084"
+    }
+  ],
+  "version": 1
+}

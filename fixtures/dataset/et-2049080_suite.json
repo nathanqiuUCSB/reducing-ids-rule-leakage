@@ -1,0 +1,77 @@
+{
+  "cases": [
+    {
+      "name": "P0-canonical",
+      "pcap": "pcap/dataset/et-2049080/P0-canonical.pcap",
+      "expected_alert": true,
+      "reason": "canonical signature-positive payload in a single TCP segment"
+    },
+    {
+      "name": "P1-boundary-segments",
+      "pcap": "pcap/dataset/et-2049080/P1-boundary-segments.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload split at parser and required-content boundaries"
+    },
+    {
+      "name": "P2-many-small-segments",
+      "pcap": "pcap/dataset/et-2049080/P2-many-small-segments.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload split into many small TCP segments"
+    },
+    {
+      "name": "P3-retransmission",
+      "pcap": "pcap/dataset/et-2049080/P3-retransmission.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload with one byte-identical retransmitted data segment"
+    },
+    {
+      "name": "N-meta-tag-changed",
+      "pcap": "pcap/dataset/et-2049080/N-meta-tag-changed.pcap",
+      "expected_alert": false,
+      "reason": "response advertises a different meta tag name",
+      "predicate_id": "content-0"
+    },
+    {
+      "name": "N-version-out-of-range",
+      "pcap": "pcap/dataset/et-2049080/N-version-out-of-range.pcap",
+      "expected_alert": false,
+      "reason": "advertised major version 9 is outside the affected range",
+      "predicate_id": "pcre-0"
+    },
+    {
+      "name": "N-version-without-minor-separator",
+      "pcap": "pcap/dataset/et-2049080/N-version-without-minor-separator.pcap",
+      "expected_alert": false,
+      "reason": "advertised version omits the minor-version separator the PCRE requires",
+      "predicate_id": "pcre-0"
+    },
+    {
+      "name": "N-external-response-source",
+      "pcap": "pcap/dataset/et-2049080/N-external-response-source.pcap",
+      "expected_alert": false,
+      "reason": "response is served by a host outside the monitored network",
+      "predicate_id": "header-src-address"
+    },
+    {
+      "name": "N-flow-not-established",
+      "pcap": "pcap/dataset/et-2049080/N-flow-not-established.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is sent without a completed TCP handshake",
+      "predicate_id": "flow-established"
+    },
+    {
+      "name": "N-wrong-direction",
+      "pcap": "pcap/dataset/et-2049080/N-wrong-direction.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is replayed to server; http.response_body is only populated for responses",
+      "predicate_id": "flow-to_client"
+    },
+    {
+      "name": "N-random-http-response",
+      "pcap": "pcap/dataset/et-2049080/N-random-http-response.pcap",
+      "expected_alert": false,
+      "reason": "protocol-valid HTTP response that satisfies no combination of rule predicates",
+      "predicate_id": "rule-baseline"
+    }
+  ]
+}

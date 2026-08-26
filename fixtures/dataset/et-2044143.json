@@ -1,0 +1,9 @@
+{
+  "name": "et-2044143",
+  "sid": 2044143,
+  "revision": 1,
+  "cve": "CVE-2023-0669",
+  "pcap": "pcap/dataset/et-2044143/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2044143_suite.json",
+  "rule": "alert http any any -> $HOME_NET any ( flow:established,to_server; http.method; content:\"POST\"; http.uri; content:\"/goanywhere/lic/accept?bundle=\"; fast_pattern; startswith; sid:2044143; rev:1;)"
+}

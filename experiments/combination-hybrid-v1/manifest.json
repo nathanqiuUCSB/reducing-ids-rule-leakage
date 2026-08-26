@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "experiment_id": "combination-hybrid-v1",
+  "source_run": "runs/mutations/dataset-component-mutations-v2",
+  "primary_fixtures": [
+    "et-2052951",
+    "et-2059741",
+    "et-2050340",
+    "et-2057330",
+    "et-2060144",
+    "et-2067354"
+  ],
+  "control_fixtures": [
+    {
+      "name": "et-2060086",
+      "role": "near_cve_confusion_control"
+    }
+  ],
+  "selection": {
+    "strategy": "hybrid_ranked_v1",
+    "max_blocks": 8,
+    "minimum_combination_size": 2,
+    "selected_blocks_by_fixture": {
+      "et-2052951": [
+        "et-2052951-content-shorten_suffix-41b42c351b17",
+        "et-2052951-content-literal_as_hex-1e895a624e78",
+        "et-2052951-flow-remove-1888ee6f5079",
+        "et-2052951-sticky_buffer-remove-70f537c3cec4",
+        "et-2052951-content_modifier-remove_fast_pattern-ccbf7d47e207"
+      ],
+      "et-2059741": [
+        "et-2059741-content-literal_as_hex-570a33c59ca9",
+        "et-2059741-content-retain_middle-e961bb8448b1",
+        "et-2059741-content-remove-837f8b38ae8d",
+        "et-2059741-flow-remove-1888ee6f5079",
+        "et-2059741-sticky_buffer-remove-70f537c3cec4",
+        "et-2059741-buffer_size-widen-2187c2de32b0",
+        "et-2059741-content_modifier-remove_fast_pattern-5f4351643684"
+      ],
+      "et-2050340": [
+        "et-2050340-content-shorten_prefix-076ce471713a",
+        "et-2050340-content-hex_as_literal-3f1407626deb",
+        "et-2050340-content-literal_as_hex-464441438d82",
+        "et-2050340-flow-remove-1888ee6f5079",
+        "et-2050340-sticky_buffer-remove-70f537c3cec4",
+        "et-2050340-relative_constraint-remove-25a3fef30d9d",
+        "et-2050340-content_modifier-remove_fast_pattern-7d60fcab19b2"
+      ],
+      "et-2057330": [
+        "et-2057330-content-literal_as_hex-1e895a624e78",
+        "et-2057330-content-retain_alternating-1df700f29f1c",
+        "et-2057330-flow-remove-1888ee6f5079",
+        "et-2057330-pcre-remove-27e475aa5e65",
+        "et-2057330-sticky_buffer-remove-70f537c3cec4",
+        "et-2057330-content_modifier-remove_fast_pattern-ccbf7d47e207"
+      ],
+      "et-2060144": [
+        "et-2060144-content-shorten_prefix-65d1f0cdd3eb",
+        "et-2060144-flow-remove_direction-8b54003de27d",
+        "et-2060144-relative_constraint-remove-88c0dea69389",
+        "et-2060144-content_modifier-remove_fast_pattern-f13d19e86af9"
+      ],
+      "et-2067354": [
+        "et-2067354-content-literal_as_hex-795d55f91de2",
+        "et-2067354-flow-remove_direction-8b54003de27d",
+        "et-2067354-destination_port-any-8edd5eb46775",
+        "et-2067354-relative_constraint-remove-69cfc24a1ddf",
+        "et-2067354-byte_test-remove-73e9e06c8b09",
+        "et-2067354-content_modifier-remove_fast_pattern-8b47fe9ccde0"
+      ],
+      "et-2060086": [
+        "et-2060086-content-literal_as_hex-1e895a624e78",
+        "et-2060086-content-literal_as_hex-2e5fd7e2c32f",
+        "et-2060086-flow-remove-1888ee6f5079",
+        "et-2060086-pcre-relax_end_anchor-16c4f3f22d57",
+        "et-2060086-sticky_buffer-remove-70f537c3cec4",
+        "et-2060086-content_modifier-remove_fast_pattern-ccbf7d47e207"
+      ]
+    }
+  },
+  "metrics": [
+    "exact_cve",
+    "effective_attribution",
+    "positive_recall",
+    "synthetic_precision",
+    "benign_precision"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "et-2059741",
+  "sid": 2059741,
+  "revision": 1,
+  "cve": "CVE-2024-11680",
+  "pcap": "pcap/dataset/et-2059741/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2059741_suite.json",
+  "rule": "alert http any any -> $HOME_NET any ( flow:established,to_server; http.method; content:\"POST\"; http.uri; bsize:12; content:\"/options.php\"; http.request_body; content:\"csrf_token|3d|\"; content:\"section|3d|general\"; content:\"this_install_title|3d|\"; fast_pattern; sid:2059741; rev:1;)"
+}

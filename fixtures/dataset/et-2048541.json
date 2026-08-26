@@ -1,0 +1,9 @@
+{
+  "name": "et-2048541",
+  "sid": 2048541,
+  "revision": 1,
+  "cve": "CVE-2023-22515",
+  "pcap": "pcap/dataset/et-2048541/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2048541_suite.json",
+  "rule": "alert http any any -> [$HOME_NET,$HTTP_SERVERS] any ( flow:established,to_server; flowbits:set,ET..step1.request; http.uri; content:\"/server-info.action?\"; content:\"bootstrapStatusProvider.applicationConfig.setupComplete=false\"; distance:0; fast_pattern; sid:2048541; rev:1;)"
+}

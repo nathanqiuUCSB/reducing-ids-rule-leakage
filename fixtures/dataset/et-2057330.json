@@ -1,0 +1,9 @@
+{
+  "name": "et-2057330",
+  "sid": 2057330,
+  "revision": 1,
+  "cve": "CVE-2024-10914",
+  "pcap": "pcap/dataset/et-2057330/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2057330_suite.json",
+  "rule": "alert http any any -> $HOME_NET any ( flow:established,to_server; http.method; content:\"GET\"; http.uri; content:\"/cgi-bin/account_mgr.cgi|3f|\"; fast_pattern; content:\"cmd|3d|cgi_user_add\"; content:\"name|3d|\"; pcre:\"/^[^&]*?(?:(?:\\x3b|%3[Bb])|(?:\\x0a|%0[Aa])|(?:\\x26|%26)|(?:\\x60|%60)|(?:\\x7c|%7[Cc])|(?:\\x24|%24))/R\"; sid:2057330; rev:1;)"
+}

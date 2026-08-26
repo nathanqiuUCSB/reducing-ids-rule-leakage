@@ -1,0 +1,472 @@
+{
+  "dataset": "datasets/gpt55_exact_cve_l5_2023plus_20.jsonl",
+  "records": [
+    {
+      "name": "et-2044143",
+      "sid": 2044143,
+      "cve": "CVE-2023-0669",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2044143.json",
+      "suite": "fixtures/dataset/et-2044143_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 9,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2044585",
+      "sid": 2044585,
+      "cve": "CVE-2023-1389",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2044585.json",
+      "suite": "fixtures/dataset/et-2044585_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 10,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-2-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2050434",
+      "sid": 2050434,
+      "cve": "CVE-2024-0204",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2050434.json",
+      "suite": "fixtures/dataset/et-2050434_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 9,
+        "unsupported": 2
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-0-startswith",
+          "reason": "http.request_line always begins with the method and target, so the required prefix can only ever appear at the buffer start"
+        },
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2055723",
+      "sid": 2055723,
+      "cve": "CVE-2024-0769",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2055723.json",
+      "suite": "fixtures/dataset/et-2055723_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 11,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2057330",
+      "sid": 2057330,
+      "cve": "CVE-2024-10914",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2057330.json",
+      "suite": "fixtures/dataset/et-2057330_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 9,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2057705",
+      "sid": 2057705,
+      "cve": "CVE-2024-0012",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2057705.json",
+      "suite": "fixtures/dataset/et-2057705_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 7,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-0-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2059741",
+      "sid": 2059741,
+      "cve": "CVE-2024-11680",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2059741.json",
+      "suite": "fixtures/dataset/et-2059741_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 11,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-4-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2060086",
+      "sid": 2060086,
+      "cve": "CVE-2025-0108",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2060086.json",
+      "suite": "fixtures/dataset/et-2060086_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 9,
+        "unsupported": 4
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-1",
+          "reason": "pcre-0 independently anchors the same /unauth/ prefix, so no traffic can drop this content while the PCRE still matches"
+        },
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        },
+        {
+          "id": "content-1-startswith",
+          "reason": "pcre-0 is anchored at the start of http.uri with the same prefix, so relocating the content cannot be isolated from the PCRE"
+        },
+        {
+          "id": "content-2",
+          "reason": "pcre-0 independently requires the same /PAN_help/ path element, so this content cannot be violated in isolation"
+        }
+      ]
+    },
+    {
+      "name": "et-2067354",
+      "sid": 2067354,
+      "cve": "CVE-2024-12084",
+      "suite_type": "raw_tcp",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2067354.json",
+      "suite": "fixtures/dataset/et-2067354_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 14,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-0-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2044680",
+      "sid": 2044680,
+      "cve": "CVE-2023-23397",
+      "suite_type": null,
+      "status": "excluded",
+      "reason": "Explicitly excluded from predicate-complete suites."
+    },
+    {
+      "name": "et-2045307",
+      "sid": 2045307,
+      "cve": "CVE-2023-21932",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2045307.json",
+      "suite": "fixtures/dataset/et-2045307_suite.json",
+      "case_counts": {
+        "signature_positive": 5,
+        "negative": 16,
+        "unsupported": 3
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        },
+        {
+          "id": "content-1-nocase",
+          "reason": "nocase relaxes matching, so no traffic can violate it; a signature-positive case with alternate casing demonstrates it instead"
+        },
+        {
+          "id": "content-2-distance",
+          "reason": "startswith pins the endpoint literal to the URI start and pcre-0 immediately follows it, so no protocol-valid URI can place jndiname before that anchor"
+        }
+      ]
+    },
+    {
+      "name": "et-2048541",
+      "sid": 2048541,
+      "cve": "CVE-2023-22515",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2048541.json",
+      "suite": "fixtures/dataset/et-2048541_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 7,
+        "unsupported": 2
+      },
+      "unsupported_predicates": [
+        {
+          "id": "flowbits-0",
+          "reason": "flowbits:set only records state for other signatures and has no detection effect on this rule"
+        },
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2049007",
+      "sid": 2049007,
+      "cve": "CVE-2023-20273",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2049007.json",
+      "suite": "fixtures/dataset/et-2049007_suite.json",
+      "case_counts": {
+        "signature_positive": 7,
+        "negative": 19,
+        "unsupported": 6
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-1-nocase",
+          "reason": "nocase cannot be isolated by a negative; signature-positive P4-lowercase-uri verifies its alternate URI casing"
+        },
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        },
+        {
+          "id": "content-3-nocase",
+          "reason": "nocase cannot be isolated by a negative; signature-positive P5-lowercase-csrf-header verifies its alternate header-name casing"
+        },
+        {
+          "id": "content-4-nocase",
+          "reason": "nocase cannot be isolated by a negative; signature-positive P6-uppercase-ipaddress-key verifies its alternate JSON-key casing"
+        },
+        {
+          "id": "content-6",
+          "reason": "content-6, content-7, and content-8 are identical single-byte separators chained by within:5; only the final link can be isolated by shortening the separator count"
+        },
+        {
+          "id": "content-7",
+          "reason": "content-6, content-7, and content-8 are identical single-byte separators chained by within:5; only the final link can be isolated by shortening the separator count"
+        }
+      ]
+    },
+    {
+      "name": "et-2049080",
+      "sid": 2049080,
+      "cve": "CVE-2023-22518",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2049080.json",
+      "suite": "fixtures/dataset/et-2049080_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 7,
+        "unsupported": 2
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-0-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        },
+        {
+          "id": "threshold-0",
+          "reason": "threshold throttles alert output rather than deciding whether the signature matches, so a single-flow case cannot isolate it"
+        }
+      ]
+    },
+    {
+      "name": "et-2049623",
+      "sid": 2049623,
+      "cve": "CVE-2023-22522",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2049623.json",
+      "suite": "fixtures/dataset/et-2049623_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 7,
+        "unsupported": 2
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-0-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        },
+        {
+          "id": "threshold-0",
+          "reason": "threshold throttles alert output rather than deciding whether the signature matches, so a single-flow case cannot isolate it"
+        }
+      ]
+    },
+    {
+      "name": "et-2050340",
+      "sid": 2050340,
+      "cve": "CVE-2023-22527",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2050340.json",
+      "suite": "fixtures/dataset/et-2050340_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 13,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-2-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2050988",
+      "sid": 2050988,
+      "cve": "CVE-2024-1709",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2050988.json",
+      "suite": "fixtures/dataset/et-2050988_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 6,
+        "unsupported": 2
+      },
+      "unsupported_predicates": [
+        {
+          "id": "flowbits-0",
+          "reason": "flowbits:set only records state for other signatures and has no detection effect on this rule"
+        },
+        {
+          "id": "content-0-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2052951",
+      "sid": 2052951,
+      "cve": "CVE-2023-23752",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2052951.json",
+      "suite": "fixtures/dataset/et-2052951_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 8,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2056147",
+      "sid": 2056147,
+      "cve": "CVE-2024-20439",
+      "suite_type": "http",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2056147.json",
+      "suite": "fixtures/dataset/et-2056147_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 8,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    },
+    {
+      "name": "et-2060144",
+      "sid": 2060144,
+      "cve": "CVE-2025-1094",
+      "suite_type": "raw_tcp",
+      "status": "validated",
+      "reason": "predicate-complete synthetic suite derived from the rule model",
+      "fixture": "fixtures/dataset/et-2060144.json",
+      "suite": "fixtures/dataset/et-2060144_suite.json",
+      "case_counts": {
+        "signature_positive": 4,
+        "negative": 8,
+        "unsupported": 1
+      },
+      "unsupported_predicates": [
+        {
+          "id": "content-1-fast_pattern",
+          "reason": "fast_pattern only selects the multi-pattern anchor; no traffic can violate it without violating the content it annotates"
+        }
+      ]
+    }
+  ]
+}

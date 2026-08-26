@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "cache_root": "online_benign_pcaps",
+  "sources": [
+    {
+      "source_id": "HTTP_SIMPLE",
+      "url": "https://wiki.wireshark.org/uploads/27707187aeb30df68e70c8fb9d614981/http.cap",
+      "relative_path": "level1/http/http.cap",
+      "sha256": "25a72bdf10339f2c29916920c8b9501d294923108de8f29b19aba7cc001ab60d",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcap",
+      "inspection_status": "confirmed",
+      "protocol": "http"
+    },
+    {
+      "source_id": "HTTP_GZIP",
+      "url": "https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/http_gzip.cap",
+      "relative_path": "level1/http/http_gzip.cap",
+      "sha256": "79e0ae3b23c0de4289b4cb73901091ac0b744dc417532a84dcd3fb882eaec12e",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcap",
+      "inspection_status": "confirmed",
+      "protocol": "http"
+    },
+    {
+      "source_id": "HTTP_CHUNKED",
+      "url": "https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/http-chunked-gzip.pcap",
+      "relative_path": "level1/http/http-chunked-gzip.pcap",
+      "sha256": "0a9df2fa7fc8bcda8d336b3ebbf1f6b215a55734721ffbe3ff67a4fa7a4dd703",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcap",
+      "inspection_status": "confirmed",
+      "protocol": "http"
+    },
+    {
+      "source_id": "HTTP_LARGE_POST",
+      "url": "https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/tcp-ethereal-file1.trace",
+      "relative_path": "level1/http/tcp-ethereal-file1.trace",
+      "sha256": "235ae61d53ae316410d2247781603fa681b9f37e7edbd014d1a882c47307664a",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcap",
+      "inspection_status": "confirmed",
+      "protocol": "http"
+    },
+    {
+      "source_id": "HTTP_REDIRECTS",
+      "url": "https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/http_redirects.pcapng",
+      "relative_path": "level1/http/http_redirects.pcapng",
+      "sha256": "ff432a6b71d06cd20720f7763e584014edd0a43c3b55981c682d1b7640207abc",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcapng",
+      "inspection_status": "confirmed",
+      "protocol": "http"
+    },
+    {
+      "source_id": "SMTP_SIMPLE",
+      "url": "https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/smtp.pcap",
+      "relative_path": "level1/smtp/smtp.pcap",
+      "sha256": "17ad230db1b6fd5dd18eb311092df1cf6eb162054bdb47697b89bef5a86a47ab",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcap",
+      "inspection_status": "confirmed",
+      "protocol": "smtp"
+    },
+    {
+      "source_id": "SMTP_IMF",
+      "url": "https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/sample-imf.pcap.gz",
+      "relative_path": "level1/smtp/sample-imf.pcap.gz",
+      "sha256": "8ad0ee94bc7ca51061a94a462a28405ca4d76f5f314331124175357546bca241",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcap.gz",
+      "inspection_status": "confirmed",
+      "protocol": "smtp"
+    },
+    {
+      "source_id": "SMTP_TNEF",
+      "url": "https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/sample-TNEF.pcap.gz",
+      "relative_path": "level1/smtp/sample-TNEF.pcap.gz",
+      "sha256": "e5c60b18f23dae7a44dd50a7fac5b07d8e6a09272064c695f39060ab0bdf1e40",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcap.gz",
+      "inspection_status": "candidate",
+      "protocol": "smtp/tnef"
+    },
+    {
+      "source_id": "RSYNC_EMERGE",
+      "url": "https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/EmergeSync.cap",
+      "relative_path": "level1_to_level3/rsync/EmergeSync.cap",
+      "sha256": "3a424cdcd57f32cdbd00a7c8340e3e67bcb8dc3c1756476c56d7425b89ae8cde",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcap",
+      "inspection_status": "confirmed",
+      "protocol": "rsync"
+    },
+    {
+      "source_id": "PGSQL_BRIEF",
+      "url": "https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/pgsql.cap.gz",
+      "relative_path": "level1_to_level2/postgresql/pgsql.cap.gz",
+      "sha256": "4250f70479e340f9f547617ba045d327949d7e216631893208006d652e25bb54",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcap.gz",
+      "inspection_status": "confirmed",
+      "protocol": "postgresql"
+    },
+    {
+      "source_id": "PGSQL_JDBC",
+      "url": "https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/pgsql-jdbc.pcap.gz?download=1",
+      "relative_path": "level1_to_level2/postgresql/pgsql-jdbc.pcap.gz",
+      "sha256": "15b51bb4cc197753c1ac6b7dc3cf5697f22a81e3bb5d2e1d24d15de469c3a06b",
+      "license_note": "Wireshark wiki sample terms",
+      "capture_format": "pcap.gz",
+      "inspection_status": "confirmed",
+      "protocol": "postgresql"
+    },
+    {
+      "source_id": "PGSQL_SSL",
+      "url": "https://raw.githubusercontent.com/Lekensteyn/wireshark-notes/master/tls/pgsql-ssl.pcapng",
+      "relative_path": "level1_to_level2/postgresql/pgsql-ssl.pcapng",
+      "sha256": "368cead60515a289abf1faf2b4a5892a787f6e687d2d171cab6d64281bc5f0a1",
+      "license_note": "Wireshark/git sample terms",
+      "capture_format": "pcapng",
+      "inspection_status": "confirmed",
+      "protocol": "postgresql/tls"
+    }
+  ]
+}

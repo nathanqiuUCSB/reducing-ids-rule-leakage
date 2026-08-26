@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reducing-ids-rule-leakage"
+version = "1.0.0"
+description = "Deterministic Suricata rule mutation and LLM attribution evaluation framework"
+requires-python = ">=3.12"
+dependencies = [
+  "httpx>=0.28",
+  "openai>=2.0",
+  "python-dotenv>=1.0",
+  "scapy>=2.7",
+  "exrex>=0.12",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=9.0"]
+dashboard = ["fastapi", "uvicorn", "httpx"]
+
+[project.scripts]
+hardening-dashboard = "hardening_game.api:main"
+hardening-dataset-suites = "hardening_game.dataset_suites:main"
+hardening-mutations = "hardening_game.mutations.cli:main"
+hardening-mutations-combinations = "hardening_game.mutations.combination_cli:main"
+hardening-mutations-report = "hardening_game.mutations.report_cli:main"
+hardening-mutations-clue-targets = "hardening_game.mutations.clue_target_cli:main"
+hardening-mutations-clue-manifest = "hardening_game.mutations.clue_manifest_cli:main"
+
+[tool.setuptools.packages.find]
+include = ["hardening_game*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "integration: runs a real local Suricata validation",
+]

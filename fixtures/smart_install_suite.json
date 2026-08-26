@@ -1,0 +1,191 @@
+{
+  "fixture": "smart_install",
+  "cases": [
+    {
+      "name": "P0-baseline",
+      "pcap": "pcap/smart_install/P0-baseline.pcap",
+      "expected_alert": true,
+      "reason": "Canonical layout: header + distance:12 A-run + distance:4 B-run"
+    },
+    {
+      "name": "P1-uninspected-gaps",
+      "pcap": "pcap/smart_install/P1-uninspected-gaps.pcap",
+      "expected_alert": true,
+      "reason": "Exact distance gaps filled with non-zero uninspected bytes"
+    },
+    {
+      "name": "P2-tcp-segmented-alt",
+      "pcap": "pcap/smart_install/P2-tcp-segmented-alt.pcap",
+      "expected_alert": true,
+      "reason": "Canonical payload with alternate TCP segment boundaries"
+    },
+    {
+      "name": "P3-trailing-bytes",
+      "pcap": "pcap/smart_install/P3-trailing-bytes.pcap",
+      "expected_alert": true,
+      "reason": "Trailing bytes after the required literals remain uninspected"
+    },
+    {
+      "name": "P4-tcp-segmented",
+      "pcap": "pcap/smart_install/P4-tcp-segmented.pcap",
+      "expected_alert": true,
+      "reason": "Same logical payload split across TCP segments for reassembly"
+    },
+    {
+      "name": "P5-header-split",
+      "pcap": "pcap/smart_install/P5-header-split.pcap",
+      "expected_alert": true,
+      "reason": "Header split across TCP segments"
+    },
+    {
+      "name": "P6-a-anchor-split",
+      "pcap": "pcap/smart_install/P6-a-anchor-split.pcap",
+      "expected_alert": true,
+      "reason": "A anchor split across TCP segments"
+    },
+    {
+      "name": "P7-b-anchor-split",
+      "pcap": "pcap/smart_install/P7-b-anchor-split.pcap",
+      "expected_alert": true,
+      "reason": "B anchor split across TCP segments"
+    },
+    {
+      "name": "P8-many-small-segments",
+      "pcap": "pcap/smart_install/P8-many-small-segments.pcap",
+      "expected_alert": true,
+      "reason": "Canonical payload split into many small TCP segments"
+    },
+    {
+      "name": "P9-retransmission",
+      "pcap": "pcap/smart_install/P9-retransmission.pcap",
+      "expected_alert": true,
+      "reason": "Canonical payload with one retransmitted TCP data segment"
+    },
+    {
+      "name": "N1-depth-prefix",
+      "pcap": "pcap/smart_install/N1-depth-prefix.pcap",
+      "expected_alert": false,
+      "reason": "One-byte prefix pushes the header outside depth:12"
+    },
+    {
+      "name": "N2-depth-late-header",
+      "pcap": "pcap/smart_install/N2-depth-late-header.pcap",
+      "expected_alert": false,
+      "reason": "Junk fills the first 12 bytes so the real header is too late"
+    },
+    {
+      "name": "N3-A-too-early",
+      "pcap": "pcap/smart_install/N3-A-too-early.pcap",
+      "expected_alert": false,
+      "reason": "A starts before distance:12 minimum"
+    },
+    {
+      "name": "N4-A-too-late",
+      "pcap": "pcap/smart_install/N4-A-too-late.pcap",
+      "expected_alert": false,
+      "reason": "A starts one byte after the exact distance:12/within:36 boundary"
+    },
+    {
+      "name": "N5-A-short",
+      "pcap": "pcap/smart_install/N5-A-short.pcap",
+      "expected_alert": false,
+      "reason": "A literal is one byte short of the required 36-byte run"
+    },
+    {
+      "name": "N6-B-too-early",
+      "pcap": "pcap/smart_install/N6-B-too-early.pcap",
+      "expected_alert": false,
+      "reason": "B starts before distance:4 minimum"
+    },
+    {
+      "name": "N7-B-too-late",
+      "pcap": "pcap/smart_install/N7-B-too-late.pcap",
+      "expected_alert": false,
+      "reason": "B starts one byte after the exact distance:4/within:44 boundary"
+    },
+    {
+      "name": "N8-B-short",
+      "pcap": "pcap/smart_install/N8-B-short.pcap",
+      "expected_alert": false,
+      "reason": "B literal is one byte short of the required 44-byte run"
+    },
+    {
+      "name": "N9-wrong-header-byte",
+      "pcap": "pcap/smart_install/N9-wrong-header-byte.pcap",
+      "expected_alert": false,
+      "reason": "Header last byte differs from the required Smart Install marker"
+    },
+    {
+      "name": "N10-flow-not-established",
+      "pcap": "pcap/smart_install/N10-flow-not-established.pcap",
+      "expected_alert": false,
+      "reason": "Payload is sent without an established TCP handshake"
+    },
+    {
+      "name": "N11-benign-4786",
+      "pcap": "pcap/smart_install/N11-benign-4786.pcap",
+      "expected_alert": false,
+      "reason": "Established TCP/4786 with benign payload and no signature markers"
+    },
+    {
+      "name": "N12-wrong-port",
+      "pcap": "pcap/smart_install/N12-wrong-port.pcap",
+      "expected_alert": false,
+      "reason": "Canonical payload sent to a non-Smart-Install destination port"
+    },
+    {
+      "name": "N13-wrong-direction",
+      "pcap": "pcap/smart_install/N13-wrong-direction.pcap",
+      "expected_alert": false,
+      "reason": "Canonical payload sent from server to client"
+    },
+    {
+      "name": "N14-wrong-a-bytes",
+      "pcap": "pcap/smart_install/N14-wrong-a-bytes.pcap",
+      "expected_alert": false,
+      "reason": "A anchor bytes differ from the required literal"
+    },
+    {
+      "name": "N15-wrong-b-bytes",
+      "pcap": "pcap/smart_install/N15-wrong-b-bytes.pcap",
+      "expected_alert": false,
+      "reason": "B anchor bytes differ from the required literal"
+    },
+    {
+      "name": "N16-a-too-short",
+      "pcap": "pcap/smart_install/N16-a-too-short.pcap",
+      "expected_alert": false,
+      "reason": "A anchor is one byte shorter than the required literal"
+    },
+    {
+      "name": "N17-b-too-short",
+      "pcap": "pcap/smart_install/N17-b-too-short.pcap",
+      "expected_alert": false,
+      "reason": "B anchor is one byte shorter than the required literal"
+    },
+    {
+      "name": "N18-a-b-reversed",
+      "pcap": "pcap/smart_install/N18-a-b-reversed.pcap",
+      "expected_alert": false,
+      "reason": "A and B anchors appear in the opposite order"
+    },
+    {
+      "name": "N19-header-without-anchors",
+      "pcap": "pcap/smart_install/N19-header-without-anchors.pcap",
+      "expected_alert": false,
+      "reason": "Correct header has no A or B anchors"
+    },
+    {
+      "name": "N20-anchors-without-header",
+      "pcap": "pcap/smart_install/N20-anchors-without-header.pcap",
+      "expected_alert": false,
+      "reason": "A and B anchors lack the required header"
+    },
+    {
+      "name": "N21-random-4786",
+      "pcap": "pcap/smart_install/N21-random-4786.pcap",
+      "expected_alert": false,
+      "reason": "Random established payload on TCP/4786"
+    }
+  ]
+}

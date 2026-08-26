@@ -1,0 +1,9 @@
+{
+  "name": "et-2067354",
+  "sid": 2067354,
+  "revision": 1,
+  "cve": "CVE-2024-12084",
+  "pcap": "pcap/dataset/et-2067354/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2067354_suite.json",
+  "rule": "alert tcp any any -> $HOME_NET 873 ( flow:established,to_server; content:\"|40|RSYNCD|3a|\"; fast_pattern; content:\"--server\"; content:\"--sender\"; content:\"|00 00 07|\"; content:\"|0e|\"; distance:0; byte_test:1,&,0x80,0,relative; byte_test:4,>,16,9,relative,little; byte_test:4,<,65,9,relative,little; sid:2067354; rev:1;)"
+}

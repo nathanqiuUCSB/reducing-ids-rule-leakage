@@ -1,0 +1,9 @@
+{
+  "name": "et-2052951",
+  "sid": 2052951,
+  "revision": 1,
+  "cve": "CVE-2023-23752",
+  "pcap": "pcap/dataset/et-2052951/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2052951_suite.json",
+  "rule": "alert http any any -> $HOME_NET any ( flow:established,to_server; http.method; content:\"GET\"; http.uri; content:\"/api/index.php/v1/config/application?public=true\"; fast_pattern; endswith; sid:2052951; rev:1;)"
+}

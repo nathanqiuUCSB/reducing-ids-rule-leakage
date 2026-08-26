@@ -1,0 +1,91 @@
+{
+  "cases": [
+    {
+      "name": "P0-canonical",
+      "pcap": "pcap/dataset/et-2060086/P0-canonical.pcap",
+      "expected_alert": true,
+      "reason": "canonical signature-positive payload in a single TCP segment"
+    },
+    {
+      "name": "P1-boundary-segments",
+      "pcap": "pcap/dataset/et-2060086/P1-boundary-segments.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload split at parser and required-content boundaries"
+    },
+    {
+      "name": "P2-many-small-segments",
+      "pcap": "pcap/dataset/et-2060086/P2-many-small-segments.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload split into many small TCP segments"
+    },
+    {
+      "name": "P3-retransmission",
+      "pcap": "pcap/dataset/et-2060086/P3-retransmission.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload with one byte-identical retransmitted data segment"
+    },
+    {
+      "name": "N-wrong-method",
+      "pcap": "pcap/dataset/et-2060086/N-wrong-method.pcap",
+      "expected_alert": false,
+      "reason": "POST replaces the required GET method",
+      "predicate_id": "content-0"
+    },
+    {
+      "name": "N-pcre-single-encoded-traversal",
+      "pcap": "pcap/dataset/et-2060086/N-pcre-single-encoded-traversal.pcap",
+      "expected_alert": false,
+      "reason": "URI carries one double-encoded dot instead of the required pair",
+      "predicate_id": "pcre-0"
+    },
+    {
+      "name": "N-pcre-non-static-extension",
+      "pcap": "pcap/dataset/et-2060086/N-pcre-non-static-extension.pcap",
+      "expected_alert": false,
+      "reason": "URI requests a non-static extension the PCRE does not accept",
+      "predicate_id": "pcre-0"
+    },
+    {
+      "name": "N-pcre-help-path-relocated",
+      "pcap": "pcap/dataset/et-2060086/N-pcre-help-path-relocated.pcap",
+      "expected_alert": false,
+      "reason": "help directory literal is present but before the traversal, so the traversal lands in a different eight-byte directory",
+      "predicate_id": "pcre-0"
+    },
+    {
+      "name": "N-internal-source-address",
+      "pcap": "pcap/dataset/et-2060086/N-internal-source-address.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload originates inside the monitored network",
+      "predicate_id": "header-src-address"
+    },
+    {
+      "name": "N-wrong-destination-address",
+      "pcap": "pcap/dataset/et-2060086/N-wrong-destination-address.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is sent to a server outside the monitored network",
+      "predicate_id": "header-dst-address"
+    },
+    {
+      "name": "N-flow-not-established",
+      "pcap": "pcap/dataset/et-2060086/N-flow-not-established.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is sent without a completed TCP handshake",
+      "predicate_id": "flow-established"
+    },
+    {
+      "name": "N-wrong-direction",
+      "pcap": "pcap/dataset/et-2060086/N-wrong-direction.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is replayed to client; http.uri is only populated for requests",
+      "predicate_id": "flow-to_server"
+    },
+    {
+      "name": "N-random-http-request",
+      "pcap": "pcap/dataset/et-2060086/N-random-http-request.pcap",
+      "expected_alert": false,
+      "reason": "protocol-valid HTTP request that satisfies no combination of rule predicates",
+      "predicate_id": "rule-baseline"
+    }
+  ]
+}

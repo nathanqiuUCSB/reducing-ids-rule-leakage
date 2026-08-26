@@ -1,0 +1,9 @@
+{
+  "name": "et-2057705",
+  "sid": 2057705,
+  "revision": 1,
+  "cve": "CVE-2024-0012",
+  "pcap": "pcap/dataset/et-2057705/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2057705_suite.json",
+  "rule": "alert http any any -> $HOME_NET any ( flow:established,to_server; http.header; content:\"X-PAN-AUTHCHECK|3a 20|off\"; fast_pattern; sid:2057705; rev:1;)"
+}

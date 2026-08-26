@@ -1,0 +1,9 @@
+{
+  "name": "et-2049623",
+  "sid": 2049623,
+  "revision": 1,
+  "cve": "CVE-2023-22522",
+  "pcap": "pcap/dataset/et-2049623/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2049623_suite.json",
+  "rule": "alert http [$HOME_NET,$HTTP_SERVERS] any -> any any ( flow:established,to_client; http.response_body; content:\"|3c|meta|20|name|3d 22|ajs|2d|version|2d|number|22 20|content|3d 22|\"; fast_pattern; pcre:\"/^[4-7]\\./R\"; threshold:type limit, count 1, seconds 3600, track by_src; sid:2049623; rev:1;)"
+}

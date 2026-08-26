@@ -1,0 +1,9 @@
+{
+  "name": "et-2055723",
+  "sid": 2055723,
+  "revision": 1,
+  "cve": "CVE-2024-0769",
+  "pcap": "pcap/dataset/et-2055723/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2055723_suite.json",
+  "rule": "alert http any any -> $HOME_NET any ( flow:established,to_server; http.method; content:\"POST\"; http.uri; bsize:11; content:\"/hedwig.cgi\"; fast_pattern; http.request_body; content:\"/htdocs/webinc/getcfg\"; content:\".xml\"; within:50; sid:2055723; rev:1;)"
+}

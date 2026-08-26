@@ -1,0 +1,98 @@
+{
+  "cases": [
+    {
+      "name": "P0-canonical",
+      "pcap": "pcap/dataset/et-2044585/P0-canonical.pcap",
+      "expected_alert": true,
+      "reason": "canonical signature-positive payload in a single TCP segment"
+    },
+    {
+      "name": "P1-boundary-segments",
+      "pcap": "pcap/dataset/et-2044585/P1-boundary-segments.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload split at parser and required-content boundaries"
+    },
+    {
+      "name": "P2-many-small-segments",
+      "pcap": "pcap/dataset/et-2044585/P2-many-small-segments.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload split into many small TCP segments"
+    },
+    {
+      "name": "P3-retransmission",
+      "pcap": "pcap/dataset/et-2044585/P3-retransmission.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload with one byte-identical retransmitted data segment"
+    },
+    {
+      "name": "N-wrong-method",
+      "pcap": "pcap/dataset/et-2044585/N-wrong-method.pcap",
+      "expected_alert": false,
+      "reason": "GET replaces the required POST method",
+      "predicate_id": "content-0"
+    },
+    {
+      "name": "N-uri-not-at-start",
+      "pcap": "pcap/dataset/et-2044585/N-uri-not-at-start.pcap",
+      "expected_alert": false,
+      "reason": "CGI prefix is present but preceded by a proxy path",
+      "predicate_id": "content-1-startswith"
+    },
+    {
+      "name": "N-uri-cgi-prefix-changed",
+      "pcap": "pcap/dataset/et-2044585/N-uri-cgi-prefix-changed.pcap",
+      "expected_alert": false,
+      "reason": "URI no longer contains the required CGI prefix",
+      "predicate_id": "content-1"
+    },
+    {
+      "name": "N-uri-locale-parameter-absent",
+      "pcap": "pcap/dataset/et-2044585/N-uri-locale-parameter-absent.pcap",
+      "expected_alert": false,
+      "reason": "URI drops the stok/locale form parameter literal",
+      "predicate_id": "content-2"
+    },
+    {
+      "name": "N-uri-locale-form-changed",
+      "pcap": "pcap/dataset/et-2044585/N-uri-locale-form-changed.pcap",
+      "expected_alert": false,
+      "reason": "URI keeps the stok locale form but selects a different form than country",
+      "predicate_id": "content-2"
+    },
+    {
+      "name": "N-body-operation-read",
+      "pcap": "pcap/dataset/et-2044585/N-body-operation-read.pcap",
+      "expected_alert": false,
+      "reason": "body requests a read instead of the required write operation",
+      "predicate_id": "content-3"
+    },
+    {
+      "name": "N-body-country-not-command",
+      "pcap": "pcap/dataset/et-2044585/N-body-country-not-command.pcap",
+      "expected_alert": false,
+      "reason": "country value is percent-encoded, removing the literal command substitution",
+      "predicate_id": "content-4"
+    },
+    {
+      "name": "N-wrong-direction",
+      "pcap": "pcap/dataset/et-2044585/N-wrong-direction.pcap",
+      "expected_alert": false,
+      "reason": "canonical request bytes replayed to client, so the destination is external and request buffers stay empty",
+      "predicate_id": "header-dst-address"
+    },
+    {
+      "name": "N-wrong-destination-address",
+      "pcap": "pcap/dataset/et-2044585/N-wrong-destination-address.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is sent to a server outside the monitored network",
+      "predicate_id": "header-dst-address"
+    },
+    {
+      "name": "N-random-http-request",
+      "pcap": "pcap/dataset/et-2044585/N-random-http-request.pcap",
+      "expected_alert": false,
+      "reason": "protocol-valid HTTP request that satisfies no combination of rule predicates",
+      "predicate_id": "rule-baseline"
+    }
+  ]
+}

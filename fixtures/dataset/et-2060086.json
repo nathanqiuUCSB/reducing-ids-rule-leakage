@@ -1,0 +1,9 @@
+{
+  "name": "et-2060086",
+  "sid": 2060086,
+  "revision": 1,
+  "cve": "CVE-2025-0108",
+  "pcap": "pcap/dataset/et-2060086/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2060086_suite.json",
+  "rule": "alert http $EXTERNAL_NET any -> $HOME_NET any ( flow:established,to_server; http.method; content:\"GET\"; http.uri; content:\"/unauth/\"; fast_pattern; startswith; content:\"/PAN_help/\"; pcre:\"/^\\x2funauth\\x2f[^\\x25]*?(?:\\x252e){2}.*?\\x2fPAN_help\\x2f.*?\\x2e(?:css|js|html|htm)$/Ui\"; sid:2060086; rev:1;)"
+}

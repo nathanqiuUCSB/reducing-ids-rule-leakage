@@ -1,0 +1,9 @@
+{
+  "name": "et-2056147",
+  "sid": 2056147,
+  "revision": 1,
+  "cve": "CVE-2024-20439",
+  "pcap": "pcap/dataset/et-2056147/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2056147_suite.json",
+  "rule": "alert http any any -> $HOME_NET any ( flow:established,to_server; http.uri; content:\"/cslu/\"; startswith; http.header; content:\"Authorization|3a 20|Basic|20|Y3NsdS13aW5kb3dzLWNsaWVudDpMaWJyYXJ5NEMkTFU=\"; fast_pattern; sid:2056147; rev:1;)"
+}

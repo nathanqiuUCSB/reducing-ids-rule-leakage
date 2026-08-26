@@ -1,0 +1,9 @@
+{
+  "name": "et-2049007",
+  "sid": 2049007,
+  "revision": 1,
+  "cve": "CVE-2023-20273",
+  "pcap": "pcap/dataset/et-2049007/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2049007_suite.json",
+  "rule": "alert http any any -> [$HOME_NET,$HTTP_SERVERS] any ( flow:established,to_server; http.method; content:\"POST\"; http.uri; content:\"/webui/rest/softwareMgmt/installAdd\"; startswith; nocase; fast_pattern; http.cookie; content:\"Auth=\"; startswith; http.header_names; content:\"|0d 0a|X-Csrf-Token|0d 0a|\"; nocase; http.request_body; content:\"|22|ipaddress|22|\"; nocase; content:\"|22|\"; within:5; content:\"|3a|\"; within:5; content:\"|3a|\"; within:5; content:\"|3a|\"; within:5; pcre:\"/^.{0,5}(?:[\\x60\\x3b\\x7c\\x26]|%60|%3b|%7c|%26|(?:[\\x3c\\x3e\\x24]|%3c|%3e|%24)(?:\\x28|%28))/R\"; sid:2049007; rev:1;)"
+}

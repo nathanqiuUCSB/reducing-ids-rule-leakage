@@ -1,0 +1,1373 @@
+{
+  "entries": [
+    {
+      "predicted_cve": "CVE-2023-34362",
+      "product": "GoAnywhere MFT License Response Servlet (target) / MOVEit Transfer / MOVEit Cloud (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-0669 -> CVE-2023-34362; target CVE-2023-0669 (published) https://www.cve.org/CVERecord?id=CVE-2023-0669 and https://nvd.nist.gov/vuln/detail/CVE-2023-0669; prediction CVE-2023-34362 (published) https://www.cve.org/CVERecord?id=CVE-2023-34362 and https://nvd.nist.gov/vuln/detail/CVE-2023-34362; supporting sources https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-31May2023, https://attackerkb.com/topics/mg883Nbeva/cve-2023-0669/rapid7-analysis; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product. The target is a pre-authentication deserialization/command-injection flaw in the Fortra GoAnywhere MFT License Response Servlet; the prediction is SQL injection in the Progress MOVEit Transfer web application. The only shared context is the managed-file-transfer market segment and 2023 Cl0p mass exploitation, which is not a product or vulnerability relationship.",
+      "target_cve": "CVE-2023-0669",
+      "tier": "meaningfully_distinct",
+      "vendor": "Fortra (target) / Progress Software (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2016-20017",
+      "product": "Archer AX21 (AX1800) web management interface (target) / DSL-2750B modem/router (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-1389 -> CVE-2016-20017; target CVE-2023-1389 (published) https://www.cve.org/CVERecord?id=CVE-2023-1389 and https://nvd.nist.gov/vuln/detail/CVE-2023-1389; prediction CVE-2016-20017 (published) https://www.cve.org/CVERecord?id=CVE-2016-20017 and https://nvd.nist.gov/vuln/detail/CVE-2016-20017; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product: D-Link DSL-2750B login.cgi command injection versus the TP-Link Archer AX21. Only the generic SOHO-router CGI command-injection pattern is shared.",
+      "target_cve": "CVE-2023-1389",
+      "tier": "meaningfully_distinct",
+      "vendor": "TP-Link (target) / D-Link (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2017-13772",
+      "product": "Archer AX21 (AX1800) web management interface (target) / WR940N wireless router (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-1389 -> CVE-2017-13772; target CVE-2023-1389 (published) https://www.cve.org/CVERecord?id=CVE-2023-1389 and https://nvd.nist.gov/vuln/detail/CVE-2023-1389; prediction CVE-2017-13772 (published) https://www.cve.org/CVERecord?id=CVE-2017-13772 and https://nvd.nist.gov/vuln/detail/CVE-2017-13772; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (TP-Link consumer router web/httpd interfaces) but a different product line and a different vulnerability: the target is unauthenticated command injection in the Archer AX21 /cgi-bin/luci;stok=/locale country parameter, while the prediction is an authenticated stack-based buffer overflow on a different TP-Link model.",
+      "target_cve": "CVE-2023-1389",
+      "tier": "same_ecosystem",
+      "vendor": "TP-Link"
+    },
+    {
+      "predicted_cve": "CVE-2018-16119",
+      "product": "Archer AX21 (AX1800) web management interface (target) / TL-WR1043ND httpd (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-1389 -> CVE-2018-16119; target CVE-2023-1389 (published) https://www.cve.org/CVERecord?id=CVE-2023-1389 and https://nvd.nist.gov/vuln/detail/CVE-2023-1389; prediction CVE-2018-16119 (published) https://www.cve.org/CVERecord?id=CVE-2018-16119 and https://nvd.nist.gov/vuln/detail/CVE-2018-16119; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (TP-Link consumer router web/httpd interfaces) but a different product line and a different vulnerability: the target is unauthenticated command injection in the Archer AX21 /cgi-bin/luci;stok=/locale country parameter, while the prediction is an authenticated stack-based buffer overflow on a different TP-Link model.",
+      "target_cve": "CVE-2023-1389",
+      "tier": "same_ecosystem",
+      "vendor": "TP-Link"
+    },
+    {
+      "predicted_cve": "CVE-2018-19537",
+      "product": "Archer AX21 (AX1800) web management interface (target) / Archer C5 router web GUI (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-1389 -> CVE-2018-19537; target CVE-2023-1389 (published) https://www.cve.org/CVERecord?id=CVE-2023-1389 and https://nvd.nist.gov/vuln/detail/CVE-2023-1389; prediction CVE-2018-19537 (published) https://www.cve.org/CVERecord?id=CVE-2018-19537 and https://nvd.nist.gov/vuln/detail/CVE-2018-19537; first observed in the SID-free dataset-clue-baseline-v2 calibration and absent from the 145-pair historical draft, so it was researched for this review.",
+      "rationale": "Same vendor and the same Archer consumer router line, but a different model and a distinct vulnerability. The target is unauthenticated command injection through the country parameter of the /cgi-bin/luci;stok=/locale write operation, which reaches popen() as root. The prediction is remote command execution on Archer C5 devices via shell metacharacters in the wan_dyn_hostname line of an encrypted configuration file uploaded through the web GUI using the web admin account, so it needs administrative access and a different delivery path. Graded consistently with the existing TP-Link entries for this target.",
+      "target_cve": "CVE-2023-1389",
+      "tier": "same_ecosystem",
+      "vendor": "TP-Link"
+    },
+    {
+      "predicted_cve": "CVE-2022-25084",
+      "product": "Archer AX21 (AX1800) web management interface (target) / T6 router (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-1389 -> CVE-2022-25084; target CVE-2023-1389 (published) https://www.cve.org/CVERecord?id=CVE-2023-1389 and https://nvd.nist.gov/vuln/detail/CVE-2023-1389; prediction CVE-2022-25084 (published) https://www.cve.org/CVERecord?id=CVE-2022-25084 and https://nvd.nist.gov/vuln/detail/CVE-2022-25084; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product: TOTOLINK T6 QUERY_STRING command injection versus the TP-Link Archer AX21.",
+      "target_cve": "CVE-2023-1389",
+      "tier": "meaningfully_distinct",
+      "vendor": "TP-Link (target) / TOTOLINK (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2021-22015",
+      "product": "IOS XE Software web UI (target) / vCenter Server / Cloud Foundation (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-20273 -> CVE-2021-22015; target CVE-2023-20273 (published) https://www.cve.org/CVERecord?id=CVE-2023-20273 and https://nvd.nist.gov/vuln/detail/CVE-2023-20273; prediction CVE-2021-22015 (published) https://www.cve.org/CVERecord?id=CVE-2021-22015 and https://nvd.nist.gov/vuln/detail/CVE-2021-22015; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product: VMware vCenter Server local privilege escalation through improper file and directory permissions versus remote root command injection in the Cisco IOS XE web UI.",
+      "target_cve": "CVE-2023-20273",
+      "tier": "meaningfully_distinct",
+      "vendor": "Cisco (target) / VMware (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2023-20073",
+      "product": "IOS XE Software web UI (target) / RV340/RV340W/RV345/RV345P VPN routers (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-20273 -> CVE-2023-20073; target CVE-2023-20273 (published) https://www.cve.org/CVERecord?id=CVE-2023-20273 and https://nvd.nist.gov/vuln/detail/CVE-2023-20273; prediction CVE-2023-20073 (published) https://www.cve.org/CVERecord?id=CVE-2023-20073 and https://nvd.nist.gov/vuln/detail/CVE-2023-20073; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (Cisco) and both flaws sit in a web-based management interface, but different products and weaknesses: the target is root command injection in the Cisco IOS XE web UI, while the prediction is unauthorized arbitrary file upload on Cisco RV340/RV345 small-business VPN routers.",
+      "target_cve": "CVE-2023-20273",
+      "tier": "same_ecosystem",
+      "vendor": "Cisco"
+    },
+    {
+      "predicted_cve": "CVE-2016-5603",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / FLEXCUBE Universal Banking (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2016-5603; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2016-5603 (published) https://www.cve.org/CVERecord?id=CVE-2016-5603 and https://nvd.nist.gov/vuln/detail/CVE-2016-5603; observed as 2 result row(s) across dataset-clue-baseline-v1, dataset-component-mutations.",
+      "rationale": "Same vendor ecosystem (an Oracle product disclosed through an Oracle Critical Patch Update) but a different product and a distinct vulnerability from the target flaw in Oracle Hospitality OPERA 5 Property Services (OXI component).",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2016-5607",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / FLEXCUBE Universal Banking (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2016-5607; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2016-5607 (published) https://www.cve.org/CVERecord?id=CVE-2016-5607 and https://nvd.nist.gov/vuln/detail/CVE-2016-5607; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor ecosystem (an Oracle product disclosed through an Oracle Critical Patch Update) but a different product and a distinct vulnerability from the target flaw in Oracle Hospitality OPERA 5 Property Services (OXI component).",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2016-5608",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / VM VirtualBox (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2016-5608; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2016-5608 (published) https://www.cve.org/CVERecord?id=CVE-2016-5608 and https://nvd.nist.gov/vuln/detail/CVE-2016-5608; observed as 1 result row(s) across dataset-component-mutations.",
+      "rationale": "Same vendor ecosystem (an Oracle product disclosed through an Oracle Critical Patch Update) but a different product and a distinct vulnerability from the target flaw in Oracle Hospitality OPERA 5 Property Services (OXI component).",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2016-5612",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / MySQL Server (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2016-5612; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2016-5612 (published) https://www.cve.org/CVERecord?id=CVE-2016-5612 and https://nvd.nist.gov/vuln/detail/CVE-2016-5612; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor ecosystem (an Oracle product disclosed through an Oracle Critical Patch Update) but a different product and a distinct vulnerability from the target flaw in Oracle Hospitality OPERA 5 Property Services (OXI component).",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2016-5618",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / Data Integrator (Fusion Middleware) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2016-5618; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2016-5618 (published) https://www.cve.org/CVERecord?id=CVE-2016-5618 and https://nvd.nist.gov/vuln/detail/CVE-2016-5618; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor ecosystem (an Oracle product disclosed through an Oracle Critical Patch Update) but a different product and a distinct vulnerability from the target flaw in Oracle Hospitality OPERA 5 Property Services (OXI component).",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2018-2636",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / Hospitality Simphony (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2018-2636; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2018-2636 (published) https://www.cve.org/CVERecord?id=CVE-2018-2636 and https://nvd.nist.gov/vuln/detail/CVE-2018-2636; observed as 11 result row(s) across dataset-component-mutations, dataset-component-mutations-v2, et-2045307-mutations.",
+      "rationale": "Same vendor and same Oracle Hospitality Applications family, but a different product (Hospitality Simphony, Security subcomponent) and a distinct vulnerability from the target OPERA 5 Property Services OXI flaw, so the same-product confusion required for closely_related is absent.",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2018-3110",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / Database Server Java VM (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2018-3110; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2018-3110 (published) https://www.cve.org/CVERecord?id=CVE-2018-3110 and https://nvd.nist.gov/vuln/detail/CVE-2018-3110; observed as 1 result row(s) across et-2045307-mutations.",
+      "rationale": "Same vendor ecosystem (an Oracle product disclosed through an Oracle Critical Patch Update) but a different product and a distinct vulnerability from the target flaw in Oracle Hospitality OPERA 5 Property Services (OXI component).",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2019-2568",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / WebLogic Server, WLS Core Components (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2019-2568; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2019-2568 (published) https://www.cve.org/CVERecord?id=CVE-2019-2568 and https://nvd.nist.gov/vuln/detail/CVE-2019-2568; first observed in the SID-free dataset-clue-baseline-v2 calibration and absent from the 145-pair historical draft, so it was researched for this review.",
+      "rationale": "Same vendor but a different Oracle product line: the target is in Oracle Hospitality Applications and the prediction is in Oracle Fusion Middleware's WebLogic Server. The vulnerabilities are also distinct, the prediction being a low-privilege HTTP flaw allowing unauthorized update, insert or delete access to WebLogic data. Graded consistently with the other Oracle cross-product entries recorded for this target.",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle Corporation"
+    },
+    {
+      "predicted_cve": "CVE-2019-2578",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / WebCenter Sites (Fusion Middleware) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2019-2578; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2019-2578 (published) https://www.cve.org/CVERecord?id=CVE-2019-2578 and https://nvd.nist.gov/vuln/detail/CVE-2019-2578; observed as 5 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor ecosystem (an Oracle product disclosed through an Oracle Critical Patch Update) but a different product and a distinct vulnerability from the target flaw in Oracle Hospitality OPERA 5 Property Services (OXI component).",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2019-2633",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / Work in Process (E-Business Suite) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2019-2633; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2019-2633 (published) https://www.cve.org/CVERecord?id=CVE-2019-2633 and https://nvd.nist.gov/vuln/detail/CVE-2019-2633; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor ecosystem (an Oracle product disclosed through an Oracle Critical Patch Update) but a different product and a distinct vulnerability from the target flaw in Oracle Hospitality OPERA 5 Property Services (OXI component).",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2019-2638",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / General Ledger (E-Business Suite) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2019-2638; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2019-2638 (published) https://www.cve.org/CVERecord?id=CVE-2019-2638 and https://nvd.nist.gov/vuln/detail/CVE-2019-2638; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor ecosystem (an Oracle product disclosed through an Oracle Critical Patch Update) but a different product and a distinct vulnerability from the target flaw in Oracle Hospitality OPERA 5 Property Services (OXI component).",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2019-3027",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / Application Object Library (E-Business Suite) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2019-3027; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2019-3027 (published) https://www.cve.org/CVERecord?id=CVE-2019-3027 and https://nvd.nist.gov/vuln/detail/CVE-2019-3027; observed as 1 result row(s) across et-2045307-mutations.",
+      "rationale": "Same vendor ecosystem (an Oracle product disclosed through an Oracle Critical Patch Update) but a different product and a distinct vulnerability from the target flaw in Oracle Hospitality OPERA 5 Property Services (OXI component).",
+      "target_cve": "CVE-2023-21932",
+      "tier": "same_ecosystem",
+      "vendor": "Oracle"
+    },
+    {
+      "predicted_cve": "CVE-2019-3029",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / no published CVE record (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2019-3029; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2019-3029 (no_published_record) https://www.cve.org/CVERecord?id=CVE-2019-3029; no published CVE record as of 2026-08-04 exists for CVE-2019-3029 in NVD or the CVE Program catalog, so the tier records an absence of evidence rather than a confirmed product fact; observed as 10 result row(s) across dataset-component-mutations, dataset-component-mutations-v2.",
+      "rationale": "The predicted identifier has no published CVE record in NVD or the CVE Program catalog, so no product or vulnerability relationship to the target can be substantiated from public evidence; reviewed as non-close.",
+      "target_cve": "CVE-2023-21932",
+      "tier": "meaningfully_distinct",
+      "vendor": "Oracle (target) / unknown (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2019-3119",
+      "product": "Hospitality OPERA 5 Property Services (OXI) (target) / no published CVE record (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-21932 -> CVE-2019-3119; target CVE-2023-21932 (published) https://www.cve.org/CVERecord?id=CVE-2023-21932 and https://nvd.nist.gov/vuln/detail/CVE-2023-21932; prediction CVE-2019-3119 (no_published_record) https://www.cve.org/CVERecord?id=CVE-2019-3119; no published CVE record as of 2026-08-04 exists for CVE-2019-3119 in NVD or the CVE Program catalog, so the tier records an absence of evidence rather than a confirmed product fact; observed as 1 result row(s) across dataset-component-mutations.",
+      "rationale": "The predicted identifier has no published CVE record in NVD or the CVE Program catalog, so no product or vulnerability relationship to the target can be substantiated from public evidence; reviewed as non-close.",
+      "target_cve": "CVE-2023-21932",
+      "tier": "meaningfully_distinct",
+      "vendor": "Oracle (target) / unknown (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2019-3396",
+      "product": "Confluence Data Center and Server (target) / Confluence Server (Widget Connector macro) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22518 -> CVE-2019-3396; target CVE-2023-22518 (published) https://www.cve.org/CVERecord?id=CVE-2023-22518 and https://nvd.nist.gov/vuln/detail/CVE-2023-22518; prediction CVE-2019-3396 (published) https://www.cve.org/CVERecord?id=CVE-2019-3396 and https://nvd.nist.gov/vuln/detail/CVE-2019-3396; observed as 2 result row(s) across dataset-component-mutations, dataset-component-mutations-v2.",
+      "rationale": "Same product (Atlassian Confluence) but a distinct vulnerability class: the target CVE-2023-22518 is an improper-authorization flaw (CWE-863) that lets an unauthenticated attacker reset Confluence and create an administrator account, whereas the prediction is an injection, path-traversal or code-execution flaw rather than an access-control bypass.",
+      "target_cve": "CVE-2023-22518",
+      "tier": "same_ecosystem",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2022-26134",
+      "product": "Confluence Data Center and Server (target) / Confluence Server and Data Center (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22518 -> CVE-2022-26134; target CVE-2023-22518 (published) https://www.cve.org/CVERecord?id=CVE-2023-22518 and https://nvd.nist.gov/vuln/detail/CVE-2023-22518; prediction CVE-2022-26134 (published) https://www.cve.org/CVERecord?id=CVE-2022-26134 and https://nvd.nist.gov/vuln/detail/CVE-2022-26134; observed as 5 result row(s) across dataset-clue-baseline-v1, dataset-component-mutations-v2.",
+      "rationale": "Same product (Atlassian Confluence) but a distinct vulnerability class: the target CVE-2023-22518 is an improper-authorization flaw (CWE-863) that lets an unauthenticated attacker reset Confluence and create an administrator account, whereas the prediction is an injection, path-traversal or code-execution flaw rather than an access-control bypass.",
+      "target_cve": "CVE-2023-22518",
+      "tier": "same_ecosystem",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2023-22522",
+      "product": "Confluence Data Center and Server",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22518 -> CVE-2023-22522; target CVE-2023-22518 (published) https://www.cve.org/CVERecord?id=CVE-2023-22518 and https://nvd.nist.gov/vuln/detail/CVE-2023-22518; prediction CVE-2023-22522 (published) https://www.cve.org/CVERecord?id=CVE-2023-22522 and https://nvd.nist.gov/vuln/detail/CVE-2023-22522; supporting sources https://confluence.atlassian.com/pages/viewpage.action?pageId=1319570362; observed as 2 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same product (Atlassian Confluence) but a distinct vulnerability class: the target CVE-2023-22518 is an improper-authorization flaw (CWE-863) that lets an unauthenticated attacker reset Confluence and create an administrator account, whereas the prediction is an injection, path-traversal or code-execution flaw rather than an access-control bypass.",
+      "target_cve": "CVE-2023-22518",
+      "tier": "same_ecosystem",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2023-22527",
+      "product": "Confluence Data Center and Server",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22518 -> CVE-2023-22527; target CVE-2023-22518 (published) https://www.cve.org/CVERecord?id=CVE-2023-22518 and https://nvd.nist.gov/vuln/detail/CVE-2023-22518; prediction CVE-2023-22527 (published) https://www.cve.org/CVERecord?id=CVE-2023-22527 and https://nvd.nist.gov/vuln/detail/CVE-2023-22527; supporting sources https://confluence.atlassian.com/pages/viewpage.action?pageId=1333335615; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same product (Atlassian Confluence) but a distinct vulnerability class: the target CVE-2023-22518 is an improper-authorization flaw (CWE-863) that lets an unauthenticated attacker reset Confluence and create an administrator account, whereas the prediction is an injection, path-traversal or code-execution flaw rather than an access-control bypass.",
+      "target_cve": "CVE-2023-22518",
+      "tier": "same_ecosystem",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2024-21683",
+      "product": "Confluence Data Center and Server",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22518 -> CVE-2024-21683; target CVE-2023-22518 (published) https://www.cve.org/CVERecord?id=CVE-2023-22518 and https://nvd.nist.gov/vuln/detail/CVE-2023-22518; prediction CVE-2024-21683 (published) https://www.cve.org/CVERecord?id=CVE-2024-21683 and https://nvd.nist.gov/vuln/detail/CVE-2024-21683; observed as 1 result row(s) across dataset-component-mutations.",
+      "rationale": "Same product (Atlassian Confluence) but a distinct vulnerability class: the target CVE-2023-22518 is an improper-authorization flaw (CWE-863) that lets an unauthenticated attacker reset Confluence and create an administrator account, whereas the prediction is an injection, path-traversal or code-execution flaw rather than an access-control bypass.",
+      "target_cve": "CVE-2023-22518",
+      "tier": "same_ecosystem",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2019-11581",
+      "product": "Confluence Data Center and Server (target) / Jira Server and Data Center (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22522 -> CVE-2019-11581; target CVE-2023-22522 (published) https://www.cve.org/CVERecord?id=CVE-2023-22522 and https://nvd.nist.gov/vuln/detail/CVE-2023-22522; prediction CVE-2019-11581 (published) https://www.cve.org/CVERecord?id=CVE-2019-11581 and https://nvd.nist.gov/vuln/detail/CVE-2019-11581; observed as 1 result row(s) across dataset-component-mutations.",
+      "rationale": "Same vendor (Atlassian) and a similar server-side template injection weakness, but a different product (Jira Server and Data Center rather than Confluence), so the same-product requirement for closely_related is not met.",
+      "target_cve": "CVE-2023-22522",
+      "tier": "same_ecosystem",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2022-26134",
+      "product": "Confluence Data Center and Server (target) / Confluence Server and Data Center (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22522 -> CVE-2022-26134; target CVE-2023-22522 (published) https://www.cve.org/CVERecord?id=CVE-2023-22522 and https://nvd.nist.gov/vuln/detail/CVE-2023-22522; prediction CVE-2022-26134 (published) https://www.cve.org/CVERecord?id=CVE-2022-26134 and https://nvd.nist.gov/vuln/detail/CVE-2022-26134; supporting sources https://confluence.atlassian.com/pages/viewpage.action?pageId=1319570362, https://confluence.atlassian.com/doc/confluence-security-advisory-2022-06-02-1130377146.html; observed as 6 result row(s) across dataset-component-mutations, dataset-component-mutations-v2.",
+      "rationale": "Both are unauthenticated server-side injection flaws in Atlassian Confluence Data Center and Server that end in remote code execution: the target injects unsafe user input into a Confluence page as a template (CWE-74), while CVE-2022-26134 injects an OGNL expression through the request URI (CWE-917). An attacker reading an injection-shaped Confluence signature can land on either, which is exactly the confusion this tier records; they differ mainly by disclosure wave and by whether the attacker must first be able to place content on a page.",
+      "target_cve": "CVE-2023-22522",
+      "tier": "closely_related",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2023-22518",
+      "product": "Confluence Data Center and Server",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22522 -> CVE-2023-22518; target CVE-2023-22522 (published) https://www.cve.org/CVERecord?id=CVE-2023-22522 and https://nvd.nist.gov/vuln/detail/CVE-2023-22522; prediction CVE-2023-22518 (published) https://www.cve.org/CVERecord?id=CVE-2023-22518 and https://nvd.nist.gov/vuln/detail/CVE-2023-22518; supporting sources https://confluence.atlassian.com/pages/viewpage.action?pageId=1319570362; observed as 3 result row(s) across dataset-clue-baseline-v1, dataset-component-mutations, dataset-component-mutations-v2.",
+      "rationale": "Same product (Atlassian Confluence) but a distinct vulnerability class: the target CVE-2023-22522 is template injection leading to remote code execution, while CVE-2023-22518 is an improper-authorization flaw allowing instance reset and administrator account creation.",
+      "target_cve": "CVE-2023-22522",
+      "tier": "same_ecosystem",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2023-22527",
+      "product": "Confluence Data Center and Server",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22522 -> CVE-2023-22527; target CVE-2023-22522 (published) https://www.cve.org/CVERecord?id=CVE-2023-22522 and https://nvd.nist.gov/vuln/detail/CVE-2023-22522; prediction CVE-2023-22527 (published) https://www.cve.org/CVERecord?id=CVE-2023-22527 and https://nvd.nist.gov/vuln/detail/CVE-2023-22527; supporting sources https://confluence.atlassian.com/pages/viewpage.action?pageId=1319570362, https://confluence.atlassian.com/pages/viewpage.action?pageId=1333335615; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "The same template-injection weakness (CWE-74) in the same product, disclosed six weeks apart: CVE-2023-22522 requires the attacker to be able to put unsafe input into a Confluence page, and CVE-2023-22527 removes even that step on out-of-date 8.x Data Center and Server releases. Atlassian describes both as template injection leading to remote code execution, so naming one for the other is a near miss within a single advisory family rather than a wrong product.",
+      "target_cve": "CVE-2023-22522",
+      "tier": "closely_related",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2024-21683",
+      "product": "Confluence Data Center and Server",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22522 -> CVE-2024-21683; target CVE-2023-22522 (published) https://www.cve.org/CVERecord?id=CVE-2023-22522 and https://nvd.nist.gov/vuln/detail/CVE-2023-22522; prediction CVE-2024-21683 (published) https://www.cve.org/CVERecord?id=CVE-2024-21683 and https://nvd.nist.gov/vuln/detail/CVE-2024-21683; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same product (Atlassian Confluence) but a distinct vulnerability: CVE-2024-21683 is a post-authentication code-injection remote code execution reached through an administrative upload path, not the anonymous/low-privilege page-content template injection of the target.",
+      "target_cve": "CVE-2023-22522",
+      "tier": "same_ecosystem",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2016-0785",
+      "product": "Confluence Data Center and Server (target) / Struts 2 (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22527 -> CVE-2016-0785; target CVE-2023-22527 (published) https://www.cve.org/CVERecord?id=CVE-2023-22527 and https://nvd.nist.gov/vuln/detail/CVE-2023-22527; prediction CVE-2016-0785 (published) https://www.cve.org/CVERecord?id=CVE-2016-0785 and https://nvd.nist.gov/vuln/detail/CVE-2016-0785; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product: the prediction is an Apache Struts 2 framework vulnerability, while the target is Confluence template-injection remote code execution. Some Struts and Confluence flaws both involve OGNL expression handling, but they are separate products with separate advisories.",
+      "target_cve": "CVE-2023-22527",
+      "tier": "meaningfully_distinct",
+      "vendor": "Atlassian (target) / Apache Software Foundation (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2021-26084",
+      "product": "Confluence Data Center and Server (target) / Confluence Server and Data Center (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22527 -> CVE-2021-26084; target CVE-2023-22527 (published) https://www.cve.org/CVERecord?id=CVE-2023-22527 and https://nvd.nist.gov/vuln/detail/CVE-2023-22527; prediction CVE-2021-26084 (published) https://www.cve.org/CVERecord?id=CVE-2021-26084 and https://nvd.nist.gov/vuln/detail/CVE-2021-26084; supporting sources https://confluence.atlassian.com/pages/viewpage.action?pageId=1333335615, https://jira.atlassian.com/browse/CONFSERVER-67940; observed as 3 result row(s) across combination-hybrid-v1, dataset-component-mutations-v2.",
+      "rationale": "Both are pre-authentication OGNL/template injection flaws in Confluence Server and Data Center that yield remote code execution, and both are in the CISA Known Exploited Vulnerabilities catalog. CVE-2021-26084 injects through the Webwork /pages/doenterpagevariables.action endpoint, while the target reaches the same expression stack through a rendered template. The prediction is the earlier and far more widely weaponized instance of the identical weakness on the identical product.",
+      "target_cve": "CVE-2023-22527",
+      "tier": "closely_related",
+      "vendor": "Atlassian"
+    },
+    {
+      "predicted_cve": "CVE-2021-31805",
+      "product": "Confluence Data Center and Server (target) / Struts 2 (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22527 -> CVE-2021-31805; target CVE-2023-22527 (published) https://www.cve.org/CVERecord?id=CVE-2023-22527 and https://nvd.nist.gov/vuln/detail/CVE-2023-22527; prediction CVE-2021-31805 (published) https://www.cve.org/CVERecord?id=CVE-2021-31805 and https://nvd.nist.gov/vuln/detail/CVE-2021-31805; observed as 1 result row(s) across dataset-component-mutations.",
+      "rationale": "Different vendor and product: the prediction is an Apache Struts 2 framework vulnerability, while the target is Confluence template-injection remote code execution. Some Struts and Confluence flaws both involve OGNL expression handling, but they are separate products with separate advisories.",
+      "target_cve": "CVE-2023-22527",
+      "tier": "meaningfully_distinct",
+      "vendor": "Atlassian (target) / Apache Software Foundation (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2023-41835",
+      "product": "Confluence Data Center and Server (target) / Struts 2 (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22527 -> CVE-2023-41835; target CVE-2023-22527 (published) https://www.cve.org/CVERecord?id=CVE-2023-22527 and https://nvd.nist.gov/vuln/detail/CVE-2023-22527; prediction CVE-2023-41835 (published) https://www.cve.org/CVERecord?id=CVE-2023-41835 and https://nvd.nist.gov/vuln/detail/CVE-2023-41835; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product: the prediction is an Apache Struts 2 framework vulnerability, while the target is Confluence template-injection remote code execution. Some Struts and Confluence flaws both involve OGNL expression handling, but they are separate products with separate advisories.",
+      "target_cve": "CVE-2023-22527",
+      "tier": "meaningfully_distinct",
+      "vendor": "Atlassian (target) / Apache Software Foundation (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-53677",
+      "product": "Confluence Data Center and Server (target) / Struts 2 file upload (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-22527 -> CVE-2024-53677; target CVE-2023-22527 (published) https://www.cve.org/CVERecord?id=CVE-2023-22527 and https://nvd.nist.gov/vuln/detail/CVE-2023-22527; prediction CVE-2024-53677 (published) https://www.cve.org/CVERecord?id=CVE-2024-53677 and https://nvd.nist.gov/vuln/detail/CVE-2024-53677; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product: the prediction is an Apache Struts 2 framework vulnerability, while the target is Confluence template-injection remote code execution. Some Struts and Confluence flaws both involve OGNL expression handling, but they are separate products with separate advisories.",
+      "target_cve": "CVE-2023-22527",
+      "tier": "meaningfully_distinct",
+      "vendor": "Atlassian (target) / Apache Software Foundation (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2022-22972",
+      "product": "Joomla! webservice endpoints (target) / Workspace ONE Access, Identity Manager, vRealize Automation (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2022-22972; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2022-22972 (published) https://www.cve.org/CVERecord?id=CVE-2022-22972 and https://nvd.nist.gov/vuln/detail/CVE-2022-22972; observed as 2 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / VMware (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2023-48365",
+      "product": "Joomla! webservice endpoints (target) / Qlik Sense Enterprise for Windows (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2023-48365; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2023-48365 (published) https://www.cve.org/CVERecord?id=CVE-2023-48365 and https://nvd.nist.gov/vuln/detail/CVE-2023-48365; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / Qlik (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-12356",
+      "product": "Joomla! webservice endpoints (target) / Privileged Remote Access / Remote Support (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2024-12356; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2024-12356 (published) https://www.cve.org/CVERecord?id=CVE-2024-12356 and https://nvd.nist.gov/vuln/detail/CVE-2024-12356; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / BeyondTrust (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-25063",
+      "product": "Joomla! webservice endpoints (target) / HikCentral Professional (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2024-25063; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2024-25063 (published) https://www.cve.org/CVERecord?id=CVE-2024-25063 and https://nvd.nist.gov/vuln/detail/CVE-2024-25063; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / Hikvision (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-28255",
+      "product": "Joomla! webservice endpoints (target) / OpenMetadata JwtFilter (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2024-28255; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2024-28255 (published) https://www.cve.org/CVERecord?id=CVE-2024-28255 and https://nvd.nist.gov/vuln/detail/CVE-2024-28255; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / OpenMetadata (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-42323",
+      "product": "Joomla! webservice endpoints (target) / HertzBeat (incubating) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2024-42323; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2024-42323 (published) https://www.cve.org/CVERecord?id=CVE-2024-42323 and https://nvd.nist.gov/vuln/detail/CVE-2024-42323; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / Apache Software Foundation (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-4577",
+      "product": "Joomla! webservice endpoints (target) / PHP CGI on Windows (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2024-4577; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2024-4577 (published) https://www.cve.org/CVERecord?id=CVE-2024-4577 and https://nvd.nist.gov/vuln/detail/CVE-2024-4577; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different product: CVE-2024-4577 is argument injection in PHP-CGI on Windows. PHP is the runtime Joomla! executes on, but it is a separate product with its own advisory and a different weakness from the target's improper access check on Joomla! webservice endpoints.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / PHP Group (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-50623",
+      "product": "Joomla! webservice endpoints (target) / Harmony, VLTrader, LexiCom (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2024-50623; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2024-50623 (published) https://www.cve.org/CVERecord?id=CVE-2024-50623 and https://nvd.nist.gov/vuln/detail/CVE-2024-50623; observed as 2 result row(s) across combination-hybrid-v1, dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / Cleo (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-55956",
+      "product": "Joomla! webservice endpoints (target) / Harmony, VLTrader, LexiCom Autorun (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2024-55956; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2024-55956 (published) https://www.cve.org/CVERecord?id=CVE-2024-55956 and https://nvd.nist.gov/vuln/detail/CVE-2024-55956; observed as 2 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / Cleo (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-5806",
+      "product": "Joomla! webservice endpoints (target) / MOVEit Transfer SFTP module (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2024-5806; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2024-5806 (published) https://www.cve.org/CVERecord?id=CVE-2024-5806 and https://nvd.nist.gov/vuln/detail/CVE-2024-5806; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / Progress Software (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-5910",
+      "product": "Joomla! webservice endpoints (target) / Expedition (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2024-5910; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2024-5910 (published) https://www.cve.org/CVERecord?id=CVE-2024-5910 and https://nvd.nist.gov/vuln/detail/CVE-2024-5910; observed as 4 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / Palo Alto Networks (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-7569",
+      "product": "Joomla! webservice endpoints (target) / ITSM on-prem / Neurons for ITSM (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2024-7569; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2024-7569 (published) https://www.cve.org/CVERecord?id=CVE-2024-7569 and https://nvd.nist.gov/vuln/detail/CVE-2024-7569; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / Ivanti (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2025-0108",
+      "product": "Joomla! webservice endpoints (target) / PAN-OS management web interface (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2023-23752 -> CVE-2025-0108; target CVE-2023-23752 (published) https://www.cve.org/CVERecord?id=CVE-2023-23752 and https://nvd.nist.gov/vuln/detail/CVE-2023-23752; prediction CVE-2025-0108 (published) https://www.cve.org/CVERecord?id=CVE-2025-0108 and https://nvd.nist.gov/vuln/detail/CVE-2025-0108; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target Joomla! CMS improper-access-check flaw on the /api/index.php webservice endpoints; the prediction affects an unrelated product even where its weakness is also an authentication or authorization bypass.",
+      "target_cve": "CVE-2023-23752",
+      "tier": "meaningfully_distinct",
+      "vendor": "Joomla! Project (target) / Palo Alto Networks (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-3400",
+      "product": "PAN-OS management web interface (target) / PAN-OS GlobalProtect feature (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0012 -> CVE-2024-3400; target CVE-2024-0012 (published) https://www.cve.org/CVERecord?id=CVE-2024-0012 and https://nvd.nist.gov/vuln/detail/CVE-2024-0012; prediction CVE-2024-3400 (published) https://www.cve.org/CVERecord?id=CVE-2024-3400 and https://nvd.nist.gov/vuln/detail/CVE-2024-3400; supporting sources https://security.paloaltonetworks.com/CVE-2024-0012, https://security.paloaltonetworks.com/CVE-2024-3400; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor and product family (Palo Alto Networks PAN-OS) but a distinct vulnerability on a different attack surface: the target is an authentication bypass on the PAN-OS management web interface (CWE-306), whereas CVE-2024-3400 is command injection via arbitrary file creation in the GlobalProtect feature (CWE-77, CVSS 10.0). Verified against both Palo Alto Networks advisories.",
+      "target_cve": "CVE-2024-0012",
+      "tier": "same_ecosystem",
+      "vendor": "Palo Alto Networks"
+    },
+    {
+      "predicted_cve": "CVE-2025-29927",
+      "product": "PAN-OS management web interface (target) / Next.js middleware (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0012 -> CVE-2025-29927; target CVE-2024-0012 (published) https://www.cve.org/CVERecord?id=CVE-2024-0012 and https://nvd.nist.gov/vuln/detail/CVE-2024-0012; prediction CVE-2025-29927 (published) https://www.cve.org/CVERecord?id=CVE-2025-29927 and https://nvd.nist.gov/vuln/detail/CVE-2025-29927; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product: a Next.js middleware authorization bypass versus a PAN-OS management interface authentication bypass.",
+      "target_cve": "CVE-2024-0012",
+      "tier": "meaningfully_distinct",
+      "vendor": "Palo Alto Networks (target) / Vercel (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2013-4857",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DIR-865L router (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2013-4857; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2013-4857 (published) https://www.cve.org/CVERecord?id=CVE-2013-4857 and https://nvd.nist.gov/vuln/detail/CVE-2013-4857; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2013-6026",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DIR-100 and DI-524UP class router web interface (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2013-6026; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2013-6026 (published) https://www.cve.org/CVERecord?id=CVE-2013-6026 and https://nvd.nist.gov/vuln/detail/CVE-2013-6026; observed as 1 result row(s) across dataset-clue-baseline-v1.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link (target) / D-Link / Planex / Alpha Networks (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2013-7389",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DIR-645 router (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2013-7389; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2013-7389 (published) https://www.cve.org/CVERecord?id=CVE-2013-7389 and https://nvd.nist.gov/vuln/detail/CVE-2013-7389; observed as 10 result row(s) across dataset-component-mutations, dataset-component-mutations-v2.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2017-13772",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / WR940N wireless router (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2017-13772; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2017-13772 (published) https://www.cve.org/CVERecord?id=CVE-2017-13772 and https://nvd.nist.gov/vuln/detail/CVE-2017-13772; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product: a TP-Link WR940N authenticated stack overflow versus D-Link DIR-859 path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / TP-Link (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2017-14422",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DIR-850L router (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2017-14422; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2017-14422 (published) https://www.cve.org/CVERecord?id=CVE-2017-14422 and https://nvd.nist.gov/vuln/detail/CVE-2017-14422; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2017-6190",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DWR-116 router web interface (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2017-6190; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2017-6190 (published) https://www.cve.org/CVERecord?id=CVE-2017-6190 and https://nvd.nist.gov/vuln/detail/CVE-2017-6190; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2018-19986",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DIR-818LW and DIR-822 HNAP interface (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2018-19986; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2018-19986 (published) https://www.cve.org/CVERecord?id=CVE-2018-19986 and https://nvd.nist.gov/vuln/detail/CVE-2018-19986; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2019-17506",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DIR-868L and DIR-817LW routers (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2019-17506; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2019-17506 (published) https://www.cve.org/CVERecord?id=CVE-2019-17506 and https://nvd.nist.gov/vuln/detail/CVE-2019-17506; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2019-17621",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DIR-859 router UPnP service (/gena.cgi) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2019-17621; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2019-17621 (published) https://www.cve.org/CVERecord?id=CVE-2019-17621 and https://nvd.nist.gov/vuln/detail/CVE-2019-17621; supporting sources https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10371, https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10146; observed as 11 result row(s) across dataset-component-mutations, dataset-component-mutations-v2.",
+      "rationale": "Same product (D-Link DIR-859) but a distinct vulnerability on a different service and of a different class: the target is HTTP POST path traversal in /hedwig.cgi (CWE-22, CVSS 5.3), while CVE-2019-17621 is unauthenticated OS command injection as root through the UPnP SUBSCRIBE handler /gena.cgi (CWE-78, CVSS 9.8). Same-product overlap without a confusable exploit family, so same_ecosystem rather than closely_related.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2019-20215",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DIR-859 router SSDP handler (ssdpcgi) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2019-20215; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2019-20215 (published) https://www.cve.org/CVERecord?id=CVE-2019-20215 and https://nvd.nist.gov/vuln/detail/CVE-2019-20215; supporting sources https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10371; observed as 6 result row(s) across dataset-component-mutations, dataset-component-mutations-v2.",
+      "rationale": "Same product (D-Link DIR-859) but a distinct vulnerability: CVE-2019-20215 is OS command injection in ssdpcgi() via a crafted SSDP M-SEARCH urn: value, not the HTTP path traversal in /hedwig.cgi that the target rule detects.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2020-8864",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DIR-867, DIR-878 and DIR-882 routers (HNAP login) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2020-8864; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2020-8864 (published) https://www.cve.org/CVERecord?id=CVE-2020-8864 and https://nvd.nist.gov/vuln/detail/CVE-2020-8864; observed as 1 result row(s) across dataset-component-mutations.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2021-46381",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DAP-1620 access point (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2021-46381; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2021-46381 (published) https://www.cve.org/CVERecord?id=CVE-2021-46381 and https://nvd.nist.gov/vuln/detail/CVE-2021-46381; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2024-10914",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / DNS-320/320LW/325/340L NAS (account_mgr.cgi) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2024-10914; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2024-6045",
+      "product": "DIR-859 router (/hedwig.cgi) (target) / certain D-Link wireless routers (factory test backdoor) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-0769 -> CVE-2024-6045; target CVE-2024-0769 (published) https://www.cve.org/CVERecord?id=CVE-2024-0769 and https://nvd.nist.gov/vuln/detail/CVE-2024-0769; prediction CVE-2024-6045 (published) https://www.cve.org/CVERecord?id=CVE-2024-6045 and https://nvd.nist.gov/vuln/detail/CVE-2024-6045; observed as 1 result row(s) across dataset-component-mutations.",
+      "rationale": "Same vendor (D-Link consumer networking and storage devices) but a different product than the target's DIR-859, and a distinct vulnerability from the /hedwig.cgi path traversal.",
+      "target_cve": "CVE-2024-0769",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2013-4980",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / AVN801 DVR (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2013-4980; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2013-4980 (published) https://www.cve.org/CVERecord?id=CVE-2013-4980 and https://nvd.nist.gov/vuln/detail/CVE-2013-4980; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / AVTECH (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2013-4982",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / AVN801 DVR (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2013-4982; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2013-4982 (published) https://www.cve.org/CVERecord?id=CVE-2013-4982 and https://nvd.nist.gov/vuln/detail/CVE-2013-4982; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / AVTECH (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2016-10108",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / My Cloud NAS (/web/google_analytics.php) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2016-10108; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2016-10108 (published) https://www.cve.org/CVERecord?id=CVE-2016-10108 and https://nvd.nist.gov/vuln/detail/CVE-2016-10108; first observed in the SID-free dataset-clue-baseline-v2 calibration and absent from the 145-pair historical draft, so it was researched for this review.",
+      "rationale": "Different vendor and different product. Both are unauthenticated root command injection in a consumer NAS web interface, but the prediction is in the Western Digital My Cloud google_analytics.php handler and shares no code, endpoint or advisory with the D-Link account_mgr.cgi cgi_user_add flaw. Consistent with the other Western Digital predictions already reviewed for this target.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / Western Digital (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2016-5674",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / NVRmini 2, NVRsolo, ReadyNAS Surveillance (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2016-5674; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2016-5674 (published) https://www.cve.org/CVERecord?id=CVE-2016-5674 and https://nvd.nist.gov/vuln/detail/CVE-2016-5674; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / NUUO / NETGEAR (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2017-10700",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / QTS medialibrary component (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2017-10700; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2017-10700 (published) https://www.cve.org/CVERecord?id=CVE-2017-10700 and https://nvd.nist.gov/vuln/detail/CVE-2017-10700; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / QNAP (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2017-11610",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / supervisord XML-RPC server (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2017-11610; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2017-11610 (published) https://www.cve.org/CVERecord?id=CVE-2017-11610 and https://nvd.nist.gov/vuln/detail/CVE-2017-11610; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / Supervisor project (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2018-1150",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / NVRMini2 (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2018-1150; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2018-1150 (published) https://www.cve.org/CVERecord?id=CVE-2018-1150 and https://nvd.nist.gov/vuln/detail/CVE-2018-1150; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / NUUO (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2018-15716",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / NVRMini2 (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2018-15716; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2018-15716 (published) https://www.cve.org/CVERecord?id=CVE-2018-15716 and https://nvd.nist.gov/vuln/detail/CVE-2018-15716; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / NUUO (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2018-17153",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / My Cloud NAS (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2018-17153; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2018-17153 (published) https://www.cve.org/CVERecord?id=CVE-2018-17153 and https://nvd.nist.gov/vuln/detail/CVE-2018-17153; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / Western Digital (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2018-17154",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / FreeBSD kernel freebsd4_getfsstat (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2018-17154; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2018-17154 (published) https://www.cve.org/CVERecord?id=CVE-2018-17154 and https://nvd.nist.gov/vuln/detail/CVE-2018-17154; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / FreeBSD Project (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2019-10999",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / DCS series Wi-Fi cameras (alphapd) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2019-10999; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2019-10999 (published) https://www.cve.org/CVERecord?id=CVE-2019-10999 and https://nvd.nist.gov/vuln/detail/CVE-2019-10999; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Same vendor (D-Link) but a different product line than the target NAS devices: these affect D-Link DCS-series network cameras, and the weaknesses (stack overflow, credential disclosure, authenticated command injection in ddns_enc.cgi) differ from unauthenticated command injection in account_mgr.cgi.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2019-16057",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / DNS-320 NAS (login_mgr.cgi) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2019-16057; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2019-16057 (published) https://www.cve.org/CVERecord?id=CVE-2019-16057 and https://nvd.nist.gov/vuln/detail/CVE-2019-16057; supporting sources https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2019-16057, https://netsecfish.notion.site/Command-Injection-Vulnerability-in-name-parameter-for-D-Link-NAS-12d6b683e67c80c49ffcc9214c239a07?pvs=4; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Same product (D-Link DNS-320 NAS) and the same closely confusable exploit family: both are remote OS command injection through an unauthenticated CGI handler in the NAS web interface (login_mgr.cgi for CVE-2019-16057, account_mgr.cgi cgi_user_add name parameter for the target). Both are CISA Known Exploited Vulnerabilities against the same end-of-life D-Link NAS line.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "closely_related",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2020-10550",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / no published CVE record (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2020-10550; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2020-10550 (no_published_record) https://www.cve.org/CVERecord?id=CVE-2020-10550; no published CVE record as of 2026-08-04 exists for CVE-2020-10550 in NVD or the CVE Program catalog, so the tier records an absence of evidence rather than a confirmed product fact; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "The predicted identifier has no published CVE record in NVD or the CVE Program catalog, so no product or vulnerability relationship to the target can be substantiated from public evidence; reviewed as non-close.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / unknown (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2020-25078",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / DCS-2530L and DCS-2670L cameras (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2020-25078; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2020-25078 (published) https://www.cve.org/CVERecord?id=CVE-2020-25078 and https://nvd.nist.gov/vuln/detail/CVE-2020-25078; observed as 3 result row(s) across combination-hybrid-v1, dataset-component-mutations.",
+      "rationale": "Same vendor (D-Link) but a different product line than the target NAS devices: these affect D-Link DCS-series network cameras, and the weaknesses (stack overflow, credential disclosure, authenticated command injection in ddns_enc.cgi) differ from unauthenticated command injection in account_mgr.cgi.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2020-25079",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / DCS-2530L and DCS-2670L cameras (ddns_enc.cgi) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2020-25079; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2020-25079 (published) https://www.cve.org/CVERecord?id=CVE-2020-25079 and https://nvd.nist.gov/vuln/detail/CVE-2020-25079; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Same vendor (D-Link) but a different product line than the target NAS devices: these affect D-Link DCS-series network cameras, and the weaknesses (stack overflow, credential disclosure, authenticated command injection in ddns_enc.cgi) differ from unauthenticated command injection in account_mgr.cgi.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "same_ecosystem",
+      "vendor": "D-Link"
+    },
+    {
+      "predicted_cve": "CVE-2023-27992",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / NAS326, NAS540, NAS542 (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2023-27992; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2023-27992 (published) https://www.cve.org/CVERecord?id=CVE-2023-27992 and https://nvd.nist.gov/vuln/detail/CVE-2023-27992; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / Zyxel (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2023-4714",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / PlayTube redirect handler (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2023-4714; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2023-4714 (published) https://www.cve.org/CVERecord?id=CVE-2023-4714 and https://nvd.nist.gov/vuln/detail/CVE-2023-4714; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / PlayTube (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-11120",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / end-of-life GeoVision devices (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2024-11120; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2024-11120 (published) https://www.cve.org/CVERecord?id=CVE-2024-11120 and https://nvd.nist.gov/vuln/detail/CVE-2024-11120; observed as 4 result row(s) across combination-hybrid-v1, dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / GeoVision (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-22170",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / My Cloud (ddns-start) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2024-22170; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2024-22170 (published) https://www.cve.org/CVERecord?id=CVE-2024-22170 and https://nvd.nist.gov/vuln/detail/CVE-2024-22170; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / Western Digital (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-29973",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / NAS326 and NAS542 (setCookie parameter) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2024-29973; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2024-29973 (published) https://www.cve.org/CVERecord?id=CVE-2024-29973 and https://nvd.nist.gov/vuln/detail/CVE-2024-29973; observed as 9 result row(s) across combination-hybrid-v1, dataset-component-mutations, dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / Zyxel (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-29974",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / NAS326 and NAS542 (file_upload-cgi) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2024-29974; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2024-29974 (published) https://www.cve.org/CVERecord?id=CVE-2024-29974 and https://nvd.nist.gov/vuln/detail/CVE-2024-29974; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / Zyxel (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-29976",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / NAS326 and NAS542 (show_allsessions) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2024-29976; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2024-29976 (published) https://www.cve.org/CVERecord?id=CVE-2024-29976 and https://nvd.nist.gov/vuln/detail/CVE-2024-29976; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / Zyxel (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-7029",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / AVM1203 IP camera (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2024-7029; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2024-7029 (published) https://www.cve.org/CVERecord?id=CVE-2024-7029 and https://nvd.nist.gov/vuln/detail/CVE-2024-7029; observed as 2 result row(s) across combination-hybrid-v1, dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / AVTECH (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-8956",
+      "product": "DNS-320/320LW/325/340L NAS (account_mgr.cgi) (target) / PT30X-SDI/NDI cameras (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-10914 -> CVE-2024-8956; target CVE-2024-10914 (published) https://www.cve.org/CVERecord?id=CVE-2024-10914 and https://nvd.nist.gov/vuln/detail/CVE-2024-10914; prediction CVE-2024-8956 (published) https://www.cve.org/CVERecord?id=CVE-2024-8956 and https://nvd.nist.gov/vuln/detail/CVE-2024-8956; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target D-Link DNS-series NAS: the prediction affects an unrelated appliance, NAS or software product. Several are also unauthenticated command injection in an embedded web interface, but a shared weakness class on a different vendor's product is not a product relationship.",
+      "target_cve": "CVE-2024-10914",
+      "tier": "meaningfully_distinct",
+      "vendor": "D-Link (target) / PTZOptics (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2018-16167",
+      "product": "ProjectSend options.php (target) / LogonTracer (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2018-16167; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2018-16167 (published) https://www.cve.org/CVERecord?id=CVE-2018-16167 and https://nvd.nist.gov/vuln/detail/CVE-2018-16167; first observed in the SID-free dataset-clue-baseline-v2 calibration and absent from the 145-pair historical draft, so it was researched for this review.",
+      "rationale": "Different vendor, product and weakness. The target is missing authentication for a critical function in ProjectSend's options.php configuration writer. The prediction is OS command injection in JPCERT/CC's LogonTracer log-analysis application. The only shared trait is that both are web applications.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / JPCERT Coordination Center (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2020-12078",
+      "product": "ProjectSend options.php (target) / Open-AudIT open-audit/configuration/ (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2020-12078; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2020-12078 (published) https://www.cve.org/CVERecord?id=CVE-2020-12078 and https://nvd.nist.gov/vuln/detail/CVE-2020-12078; first observed in the SID-free dataset-clue-baseline-v2 calibration and absent from the 145-pair historical draft, so it was researched for this review.",
+      "rationale": "Different vendor and product. The prediction is shell metacharacter injection through the exclude_ip global discovery setting of Open-AudIT 3.3.1, which reaches exec() in discoveries_helper.php. The superficial similarity is that both are reached through an application settings page; the target is an authentication defect rather than command injection and the products are unrelated.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Opmantek / Open-AudIT (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2020-28870",
+      "product": "ProjectSend options.php (target) / InoERP (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2020-28870; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2020-28870 (published) https://www.cve.org/CVERecord?id=CVE-2020-28870 and https://nvd.nist.gov/vuln/detail/CVE-2020-28870; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / InoIdeas (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2020-28872",
+      "product": "ProjectSend options.php (target) / Monitorr (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2020-28872; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2020-28872 (published) https://www.cve.org/CVERecord?id=CVE-2020-28872 and https://nvd.nist.gov/vuln/detail/CVE-2020-28872; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Monitorr (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2022-24637",
+      "product": "ProjectSend options.php (target) / Open Web Analytics (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2022-24637; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2022-24637 (published) https://www.cve.org/CVERecord?id=CVE-2022-24637 and https://nvd.nist.gov/vuln/detail/CVE-2022-24637; observed as 1 result row(s) across dataset-component-mutations.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Open Web Analytics (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2022-24638",
+      "product": "ProjectSend options.php (target) / no published CVE record (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2022-24638; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2022-24638 (no_published_record) https://www.cve.org/CVERecord?id=CVE-2022-24638; no published CVE record as of 2026-08-04 exists for CVE-2022-24638 in NVD or the CVE Program catalog, so the tier records an absence of evidence rather than a confirmed product fact; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "The predicted identifier has no published CVE record in NVD or the CVE Program catalog, so no product or vulnerability relationship to the target can be substantiated from public evidence; reviewed as non-close.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / unknown (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2022-36113",
+      "product": "ProjectSend options.php (target) / Cargo package manager (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2022-36113; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2022-36113 (published) https://www.cve.org/CVERecord?id=CVE-2022-36113 and https://nvd.nist.gov/vuln/detail/CVE-2022-36113; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Rust project (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2023-24788",
+      "product": "ProjectSend options.php (target) / NotrinosERP (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2023-24788; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2023-24788 (published) https://www.cve.org/CVERecord?id=CVE-2023-24788 and https://nvd.nist.gov/vuln/detail/CVE-2023-24788; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / NotrinosERP (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2023-36253",
+      "product": "ProjectSend options.php (target) / no published CVE record (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2023-36253; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2023-36253 (no_published_record) https://www.cve.org/CVERecord?id=CVE-2023-36253; no published CVE record as of 2026-08-04 exists for CVE-2023-36253 in NVD or the CVE Program catalog, so the tier records an absence of evidence rather than a confirmed product fact; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "The predicted identifier has no published CVE record in NVD or the CVE Program catalog, so no product or vulnerability relationship to the target can be substantiated from public evidence; reviewed as non-close.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / unknown (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2023-39159",
+      "product": "ProjectSend options.php (target) / Fraud Prevention For WooCommerce plugin (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2023-39159; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2023-39159 (published) https://www.cve.org/CVERecord?id=CVE-2023-39159 and https://nvd.nist.gov/vuln/detail/CVE-2023-39159; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / theDotstore (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-11320",
+      "product": "ProjectSend options.php (target) / Pandora FMS LDAP authentication (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-11320; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-11320 (published) https://www.cve.org/CVERecord?id=CVE-2024-11320 and https://nvd.nist.gov/vuln/detail/CVE-2024-11320; observed as 5 result row(s) across combination-hybrid-v1, dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Pandora FMS (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-12971",
+      "product": "ProjectSend options.php (target) / Pandora FMS (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-12971; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-12971 (published) https://www.cve.org/CVERecord?id=CVE-2024-12971 and https://nvd.nist.gov/vuln/detail/CVE-2024-12971; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Pandora FMS (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-13209",
+      "product": "ProjectSend options.php (target) / REDAXO CMS structure management (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-13209; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-13209 (published) https://www.cve.org/CVERecord?id=CVE-2024-13209 and https://nvd.nist.gov/vuln/detail/CVE-2024-13209; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / REDAXO (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-24188",
+      "product": "ProjectSend options.php (target) / Jsish interpreter (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-24188; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-24188 (published) https://www.cve.org/CVERecord?id=CVE-2024-24188 and https://nvd.nist.gov/vuln/detail/CVE-2024-24188; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Jsish project (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-24401",
+      "product": "ProjectSend options.php (target) / Nagios XI (monitoringwizard.php) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-24401; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-24401 (published) https://www.cve.org/CVERecord?id=CVE-2024-24401 and https://nvd.nist.gov/vuln/detail/CVE-2024-24401; observed as 8 result row(s) across combination-hybrid-v1, dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Nagios (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-24402",
+      "product": "ProjectSend options.php (target) / Nagios XI (npcd) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-24402; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-24402 (published) https://www.cve.org/CVERecord?id=CVE-2024-24402 and https://nvd.nist.gov/vuln/detail/CVE-2024-24402; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Nagios (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-24403",
+      "product": "ProjectSend options.php (target) / CVE record rejected as duplicate of CVE-2024-30176 (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-24403; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-24403 (rejected) https://www.cve.org/CVERecord?id=CVE-2024-24403 and https://nvd.nist.gov/vuln/detail/CVE-2024-24403; the CVE-2024-24403 record is REJECTED as a reservation duplicate of CVE-2024-30176, so there is no published CVE record as of 2026-08-04 describing an affected product and the tier records an absence of evidence rather than a confirmed product fact; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "The predicted identifier is a rejected CVE record: the CVE Program marks CVE-2024-24403 as a reservation duplicate of CVE-2024-30176 with all descriptions removed, so no product or vulnerability relationship to the target ProjectSend flaw can be substantiated.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / n/a (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-25366",
+      "product": "ProjectSend options.php (target) / libiec61850 (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-25366; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-25366 (published) https://www.cve.org/CVERecord?id=CVE-2024-25366 and https://nvd.nist.gov/vuln/detail/CVE-2024-25366; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / MZ Automation (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-25642",
+      "product": "ProjectSend options.php (target) / SAP Cloud Connector (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-25642; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-25642 (published) https://www.cve.org/CVERecord?id=CVE-2024-25642 and https://nvd.nist.gov/vuln/detail/CVE-2024-25642; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / SAP (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-27413",
+      "product": "ProjectSend options.php (target) / efi/capsule-loader (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-27413; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-27413 (published) https://www.cve.org/CVERecord?id=CVE-2024-27413 and https://nvd.nist.gov/vuln/detail/CVE-2024-27413; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Linux kernel (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-27443",
+      "product": "ProjectSend options.php (target) / Zimbra Collaboration CalendarInvite (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-27443; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-27443 (published) https://www.cve.org/CVERecord?id=CVE-2024-27443 and https://nvd.nist.gov/vuln/detail/CVE-2024-27443; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Zimbra (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-28114",
+      "product": "ProjectSend options.php (target) / Peering Manager (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-28114; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-28114 (published) https://www.cve.org/CVERecord?id=CVE-2024-28114 and https://nvd.nist.gov/vuln/detail/CVE-2024-28114; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Peering Manager (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-28255",
+      "product": "ProjectSend options.php (target) / OpenMetadata JwtFilter (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-28255; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-28255 (published) https://www.cve.org/CVERecord?id=CVE-2024-28255 and https://nvd.nist.gov/vuln/detail/CVE-2024-28255; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / OpenMetadata (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-29317",
+      "product": "ProjectSend options.php (target) / no published CVE record (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-29317; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-29317 (no_published_record) https://www.cve.org/CVERecord?id=CVE-2024-29317; no published CVE record as of 2026-08-04 exists for CVE-2024-29317 in NVD or the CVE Program catalog, so the tier records an absence of evidence rather than a confirmed product fact; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "The predicted identifier has no published CVE record in NVD or the CVE Program catalog, so no product or vulnerability relationship to the target can be substantiated from public evidence; reviewed as non-close.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / unknown (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-31219",
+      "product": "ProjectSend options.php (target) / discourse-reactions plugin (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-31219; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-31219 (published) https://www.cve.org/CVERecord?id=CVE-2024-31219 and https://nvd.nist.gov/vuln/detail/CVE-2024-31219; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Discourse (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-31459",
+      "product": "ProjectSend options.php (target) / Cacti (lib/plugin.php) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-31459; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-31459 (published) https://www.cve.org/CVERecord?id=CVE-2024-31459 and https://nvd.nist.gov/vuln/detail/CVE-2024-31459; observed as 4 result row(s) across combination-hybrid-v1, dataset-component-mutations.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Cacti (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-31819",
+      "product": "ProjectSend options.php (target) / AVideo (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-31819; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-31819 (published) https://www.cve.org/CVERecord?id=CVE-2024-31819 and https://nvd.nist.gov/vuln/detail/CVE-2024-31819; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / WWBN (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-31889",
+      "product": "ProjectSend options.php (target) / Planning Analytics Local (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-31889; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-31889 (published) https://www.cve.org/CVERecord?id=CVE-2024-31889 and https://nvd.nist.gov/vuln/detail/CVE-2024-31889; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / IBM (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-34340",
+      "product": "ProjectSend options.php (target) / Cacti password verification (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-34340; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-34340 (published) https://www.cve.org/CVERecord?id=CVE-2024-34340 and https://nvd.nist.gov/vuln/detail/CVE-2024-34340; observed as 2 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Cacti (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-34962",
+      "product": "ProjectSend options.php (target) / no published CVE record (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-34962; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-34962 (no_published_record) https://www.cve.org/CVERecord?id=CVE-2024-34962; no published CVE record as of 2026-08-04 exists for CVE-2024-34962 in NVD or the CVE Program catalog, so the tier records an absence of evidence rather than a confirmed product fact; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "The predicted identifier has no published CVE record in NVD or the CVE Program catalog, so no product or vulnerability relationship to the target can be substantiated from public evidence; reviewed as non-close.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / unknown (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-36813",
+      "product": "ProjectSend options.php (target) / no published CVE record (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-36813; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-36813 (no_published_record) https://www.cve.org/CVERecord?id=CVE-2024-36813; no published CVE record as of 2026-08-04 exists for CVE-2024-36813 in NVD or the CVE Program catalog, so the tier records an absence of evidence rather than a confirmed product fact; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "The predicted identifier has no published CVE record in NVD or the CVE Program catalog, so no product or vulnerability relationship to the target can be substantiated from public evidence; reviewed as non-close.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / unknown (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-36837",
+      "product": "ProjectSend options.php (target) / CRMEB (ProductController.php) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-36837; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-36837 (published) https://www.cve.org/CVERecord?id=CVE-2024-36837 and https://nvd.nist.gov/vuln/detail/CVE-2024-36837; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / CRMEB (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-41638",
+      "product": "ProjectSend options.php (target) / no published CVE record (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-41638; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-41638 (no_published_record) https://www.cve.org/CVERecord?id=CVE-2024-41638; no published CVE record as of 2026-08-04 exists for CVE-2024-41638 in NVD or the CVE Program catalog, so the tier records an absence of evidence rather than a confirmed product fact; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "The predicted identifier has no published CVE record in NVD or the CVE Program catalog, so no product or vulnerability relationship to the target can be substantiated from public evidence; reviewed as non-close.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / unknown (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-43362",
+      "product": "ProjectSend options.php (target) / Cacti (links.php) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-43362; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-43362 (published) https://www.cve.org/CVERecord?id=CVE-2024-43362 and https://nvd.nist.gov/vuln/detail/CVE-2024-43362; observed as 2 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Cacti (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-43363",
+      "product": "ProjectSend options.php (target) / Cacti device hostname handling (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-43363; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-43363 (published) https://www.cve.org/CVERecord?id=CVE-2024-43363 and https://nvd.nist.gov/vuln/detail/CVE-2024-43363; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Cacti (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-46249",
+      "product": "ProjectSend options.php (target) / no published CVE record (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-46249; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-46249 (no_published_record) https://www.cve.org/CVERecord?id=CVE-2024-46249; no published CVE record as of 2026-08-04 exists for CVE-2024-46249 in NVD or the CVE Program catalog, so the tier records an absence of evidence rather than a confirmed product fact; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "The predicted identifier has no published CVE record in NVD or the CVE Program catalog, so no product or vulnerability relationship to the target can be substantiated from public evidence; reviewed as non-close.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / unknown (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-46506",
+      "product": "ProjectSend options.php (target) / NetAlertX settings update (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-46506; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-46506 (published) https://www.cve.org/CVERecord?id=CVE-2024-46506 and https://nvd.nist.gov/vuln/detail/CVE-2024-46506; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / NetAlertX (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-47069",
+      "product": "ProjectSend options.php (target) / Contao Cookie Bar (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-47069; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-47069 (published) https://www.cve.org/CVERecord?id=CVE-2024-47069 and https://nvd.nist.gov/vuln/detail/CVE-2024-47069; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Oveleon (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-47075",
+      "product": "ProjectSend options.php (target) / LayUI component library (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-47075; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-47075 (published) https://www.cve.org/CVERecord?id=CVE-2024-47075 and https://nvd.nist.gov/vuln/detail/CVE-2024-47075; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / LayUI (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-47089",
+      "product": "ProjectSend options.php (target) / LD Geo / LD DP Back Office (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-47089; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-47089 (published) https://www.cve.org/CVERecord?id=CVE-2024-47089 and https://nvd.nist.gov/vuln/detail/CVE-2024-47089; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Apex Softcell (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-49376",
+      "product": "ProjectSend options.php (target) / Autolab (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-49376; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-49376 (published) https://www.cve.org/CVERecord?id=CVE-2024-49376 and https://nvd.nist.gov/vuln/detail/CVE-2024-49376; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Autolab project (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-51092",
+      "product": "ProjectSend options.php (target) / LibreNMS (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-51092; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-51092 (published) https://www.cve.org/CVERecord?id=CVE-2024-51092 and https://nvd.nist.gov/vuln/detail/CVE-2024-51092; observed as 2 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / LibreNMS (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-51378",
+      "product": "ProjectSend options.php (target) / CyberPanel (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-51378; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-51378 (published) https://www.cve.org/CVERecord?id=CVE-2024-51378 and https://nvd.nist.gov/vuln/detail/CVE-2024-51378; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / CyberPanel (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-51492",
+      "product": "ProjectSend options.php (target) / Zusam (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-51492; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-51492 (published) https://www.cve.org/CVERecord?id=CVE-2024-51492 and https://nvd.nist.gov/vuln/detail/CVE-2024-51492; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Zusam (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-51747",
+      "product": "ProjectSend options.php (target) / Kanboard (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-51747; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-51747 (published) https://www.cve.org/CVERecord?id=CVE-2024-51747 and https://nvd.nist.gov/vuln/detail/CVE-2024-51747; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Kanboard (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-53526",
+      "product": "ProjectSend options.php (target) / composio Python SDK (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-53526; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-53526 (published) https://www.cve.org/CVERecord?id=CVE-2024-53526 and https://nvd.nist.gov/vuln/detail/CVE-2024-53526; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Composio (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-54145",
+      "product": "ProjectSend options.php (target) / Cacti (automation_devices.php) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-54145; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-54145 (published) https://www.cve.org/CVERecord?id=CVE-2024-54145 and https://nvd.nist.gov/vuln/detail/CVE-2024-54145; observed as 5 result row(s) across combination-hybrid-v1, dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Cacti (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-54146",
+      "product": "ProjectSend options.php (target) / Cacti (host_templates.php) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-54146; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-54146 (published) https://www.cve.org/CVERecord?id=CVE-2024-54146 and https://nvd.nist.gov/vuln/detail/CVE-2024-54146; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Cacti (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-54961",
+      "product": "ProjectSend options.php (target) / Nagios XI (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-54961; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-54961 (published) https://www.cve.org/CVERecord?id=CVE-2024-54961 and https://nvd.nist.gov/vuln/detail/CVE-2024-54961; observed as 1 result row(s) across dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Nagios (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-57435",
+      "product": "ProjectSend options.php (target) / mall-tiny (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-57435; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-57435 (published) https://www.cve.org/CVERecord?id=CVE-2024-57435 and https://nvd.nist.gov/vuln/detail/CVE-2024-57435; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / macrozheng (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-9194",
+      "product": "ProjectSend options.php (target) / Octopus Server (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2024-9194; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2024-9194 (published) https://www.cve.org/CVERecord?id=CVE-2024-9194 and https://nvd.nist.gov/vuln/detail/CVE-2024-9194; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Octopus Deploy (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2025-22604",
+      "product": "ProjectSend options.php (target) / Cacti SNMP result parser (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2025-22604; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2025-22604 (published) https://www.cve.org/CVERecord?id=CVE-2025-22604 and https://nvd.nist.gov/vuln/detail/CVE-2025-22604; observed as 2 result row(s) across dataset-component-mutations, dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Cacti (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2025-24367",
+      "product": "ProjectSend options.php (target) / Cacti graph/template functionality (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2025-24367; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2025-24367 (published) https://www.cve.org/CVERecord?id=CVE-2025-24367 and https://nvd.nist.gov/vuln/detail/CVE-2025-24367; observed as 15 result row(s) across combination-hybrid-v1, dataset-component-mutations, dataset-component-mutations-v2.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Cacti (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2025-27591",
+      "product": "ProjectSend options.php (target) / Below service (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2025-27591; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2025-27591 (published) https://www.cve.org/CVERecord?id=CVE-2025-27591 and https://nvd.nist.gov/vuln/detail/CVE-2025-27591; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Meta (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2025-2900",
+      "product": "ProjectSend options.php (target) / Semeru Runtime (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2025-2900; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2025-2900 (published) https://www.cve.org/CVERecord?id=CVE-2025-2900 and https://nvd.nist.gov/vuln/detail/CVE-2025-2900; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / IBM (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2025-31115",
+      "product": "ProjectSend options.php (target) / XZ Utils liblzma multithreaded decoder (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-11680 -> CVE-2025-31115; target CVE-2024-11680 (published) https://www.cve.org/CVERecord?id=CVE-2024-11680 and https://nvd.nist.gov/vuln/detail/CVE-2024-11680; prediction CVE-2025-31115 (published) https://www.cve.org/CVERecord?id=CVE-2025-31115 and https://nvd.nist.gov/vuln/detail/CVE-2025-31115; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product from the target ProjectSend improper-authentication flaw in options.php; the prediction affects an unrelated web application, library or system component. Being another self-hosted PHP application or another authorization/injection weakness is not a product relationship.",
+      "target_cve": "CVE-2024-11680",
+      "tier": "meaningfully_distinct",
+      "vendor": "ProjectSend (target) / Tukaani (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2024-12085",
+      "product": "rsync daemon checksum handling (target) / rsync daemon checksum comparison (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2024-12084 -> CVE-2024-12085; target CVE-2024-12084 (published) https://www.cve.org/CVERecord?id=CVE-2024-12084 and https://nvd.nist.gov/vuln/detail/CVE-2024-12084; prediction CVE-2024-12085 (published) https://www.cve.org/CVERecord?id=CVE-2024-12085 and https://nvd.nist.gov/vuln/detail/CVE-2024-12085; supporting sources https://kb.cert.org/vuls/id/952657, https://access.redhat.com/security/cve/CVE-2024-12084; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Same product (the rsync daemon) and the same closely confusable vulnerability family: both are attacker-controlled checksum-length (s2length) handling defects reported together in rsync <= 3.3.0 and fixed in the same 3.4.0 release. CERT/CC VU#952657 states the two are chained in practice - the heap overflow (CVE-2024-12084) plus the uninitialised-stack information leak (CVE-2024-12085) - to achieve remote code execution against an rsync server with anonymous read access.",
+      "target_cve": "CVE-2024-12084",
+      "tier": "closely_related",
+      "vendor": "rsync project"
+    },
+    {
+      "predicted_cve": "CVE-2024-0012",
+      "product": "PAN-OS management web interface",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2025-0108 -> CVE-2024-0012; target CVE-2025-0108 (published) https://www.cve.org/CVERecord?id=CVE-2025-0108 and https://nvd.nist.gov/vuln/detail/CVE-2025-0108; prediction CVE-2024-0012 (published) https://www.cve.org/CVERecord?id=CVE-2024-0012 and https://nvd.nist.gov/vuln/detail/CVE-2024-0012; supporting sources https://security.paloaltonetworks.com/CVE-2025-0108, https://security.paloaltonetworks.com/CVE-2024-0012; observed as 62 result row(s) across combination-hybrid-v1, dataset-component-mutations-v2.",
+      "rationale": "Same product (Palo Alto Networks PAN-OS) and the same closely confusable family: both are unauthenticated authentication bypasses reachable on the PAN-OS management web interface that grant an attacker the ability to invoke privileged management functionality (both CWE-306, both in CISA KEV). Confirms the existing registry entry.",
+      "target_cve": "CVE-2025-0108",
+      "tier": "closely_related",
+      "vendor": "Palo Alto Networks"
+    },
+    {
+      "predicted_cve": "CVE-2006-0144",
+      "product": "PostgreSQL libpq quoting functions (target) / PEAR go-pear.php proxy feature (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2025-1094 -> CVE-2006-0144; target CVE-2025-1094 (published) https://www.cve.org/CVERecord?id=CVE-2025-1094 and https://nvd.nist.gov/vuln/detail/CVE-2025-1094; prediction CVE-2006-0144 (published) https://www.cve.org/CVERecord?id=CVE-2006-0144 and https://nvd.nist.gov/vuln/detail/CVE-2006-0144; observed as 1 result row(s) across combination-hybrid-v1.",
+      "rationale": "Different vendor and product: remote PHP code execution through the PEAR go-pear.php proxy feature versus a PostgreSQL libpq quoting flaw.",
+      "target_cve": "CVE-2025-1094",
+      "tier": "meaningfully_distinct",
+      "vendor": "PostgreSQL project (target) / PHP PEAR / Apache2Triad (prediction)"
+    },
+    {
+      "predicted_cve": "CVE-2019-9193",
+      "product": "libpq quoting functions and psql (target) / PostgreSQL COPY TO/FROM PROGRAM (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2025-1094 -> CVE-2019-9193; target CVE-2025-1094 (published) https://www.cve.org/CVERecord?id=CVE-2025-1094 and https://nvd.nist.gov/vuln/detail/CVE-2025-1094; prediction CVE-2019-9193 (published) https://www.cve.org/CVERecord?id=CVE-2019-9193 and https://nvd.nist.gov/vuln/detail/CVE-2019-9193; first observed in the SID-free dataset-clue-baseline-v2 calibration and absent from the 145-pair historical draft, so it was researched for this review.",
+      "rationale": "Same product but a distinct issue. The target is improper neutralization of quoting syntax in libpq's escape functions that yields SQL injection, and in practice psql meta-command execution, from untrusted input. The prediction covers COPY TO/FROM PROGRAM, which third parties dispute as a vulnerability because it is intended superuser functionality and requires membership of pg_execute_server_program. Both end in operating-system command execution through PostgreSQL, which is why the confusion happens, but the defects and preconditions are not the same family.",
+      "target_cve": "CVE-2025-1094",
+      "tier": "same_ecosystem",
+      "vendor": "PostgreSQL Global Development Group"
+    },
+    {
+      "predicted_cve": "CVE-2022-4223",
+      "product": "libpq quoting functions and psql (target) / pgAdmin 4 server utility-path validation API (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2025-1094 -> CVE-2022-4223; target CVE-2025-1094 (published) https://www.cve.org/CVERecord?id=CVE-2025-1094 and https://nvd.nist.gov/vuln/detail/CVE-2025-1094; prediction CVE-2022-4223 (published) https://www.cve.org/CVERecord?id=CVE-2022-4223 and https://nvd.nist.gov/vuln/detail/CVE-2022-4223; first observed in the SID-free dataset-clue-baseline-v2 calibration and absent from the 145-pair historical draft, so it was researched for this review.",
+      "rationale": "Same PostgreSQL project ecosystem, different component and weakness. The prediction is an unauthenticated code execution flaw in the pgAdmin 4 HTTP API that validates paths to external PostgreSQL utilities, fixed in pgAdmin 6.17. Graded consistently with the existing same_ecosystem entry for the PostgreSQL JDBC driver against this target.",
+      "target_cve": "CVE-2025-1094",
+      "tier": "same_ecosystem",
+      "vendor": "PostgreSQL Global Development Group"
+    },
+    {
+      "predicted_cve": "CVE-2024-1597",
+      "product": "PostgreSQL libpq quoting functions (target) / PostgreSQL JDBC driver (pgjdbc) (prediction)",
+      "provenance": "Public-record review on 2026-08-04 of the directional pair CVE-2025-1094 -> CVE-2024-1597; target CVE-2025-1094 (published) https://www.cve.org/CVERecord?id=CVE-2025-1094 and https://nvd.nist.gov/vuln/detail/CVE-2025-1094; prediction CVE-2024-1597 (published) https://www.cve.org/CVERecord?id=CVE-2024-1597 and https://nvd.nist.gov/vuln/detail/CVE-2024-1597; observed as 6 result row(s) across combination-hybrid-v1, dataset-component-mutations-v2.",
+      "rationale": "Same PostgreSQL project ecosystem and both are SQL injection, but different client components: the target is improper neutralisation of quoting syntax in the libpq PQescape* functions (with psql follow-on impact), while CVE-2024-1597 is placeholder handling in the pgjdbc JDBC driver in PreferQueryMode=SIMPLE. Confirms the existing registry entry.",
+      "target_cve": "CVE-2025-1094",
+      "tier": "same_ecosystem",
+      "vendor": "PostgreSQL project"
+    }
+  ],
+  "version": 1
+}

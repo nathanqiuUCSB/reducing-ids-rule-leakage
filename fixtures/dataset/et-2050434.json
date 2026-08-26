@@ -1,0 +1,9 @@
+{
+  "name": "et-2050434",
+  "sid": 2050434,
+  "revision": 1,
+  "cve": "CVE-2024-0204",
+  "pcap": "pcap/dataset/et-2050434/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2050434_suite.json",
+  "rule": "alert http any any -> $HOME_NET any ( flow:established,to_server; http.request_line; content:\"GET /goanywhere/\"; startswith; pcre:\"/^.{0,10}(?:(?:\\x2e|%2[Ee]){1,2}(?:\\x3b|%3[Bb]){1,})/R\"; content:\"/wizard/InitialAccountSetup.xhtml\"; within:60; fast_pattern; sid:2050434; rev:1;)"
+}

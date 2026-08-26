@@ -1,0 +1,9 @@
+{
+  "name": "et-2050340",
+  "sid": 2050340,
+  "revision": 1,
+  "cve": "CVE-2023-22527",
+  "pcap": "pcap/dataset/et-2050340/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2050340_suite.json",
+  "rule": "alert http $EXTERNAL_NET any -> [$HOME_NET,$HTTP_SERVERS] any ( flow:established,to_server; http.method; content:\"POST\"; http.uri; content:\".vm\"; endswith; http.request_body; content:\".KEY_velocity.struts2\"; fast_pattern; content:\"|7b|\"; distance:0; content:\"|7d|\"; distance:0; sid:2050340; rev:1;)"
+}

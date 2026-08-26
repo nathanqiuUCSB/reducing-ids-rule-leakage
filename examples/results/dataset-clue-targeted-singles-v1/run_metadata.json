@@ -1,0 +1,11 @@
+{
+  "attacker_model": "gpt-5.5",
+  "attacker_prompt_version": "ranked-clues-sanitized-rule-v2",
+  "attacker_response_schema_version": 3,
+  "attacker_rule_sanitizer_version": "suricata-metadata-options-v2",
+  "attacker_trial_count": 3,
+  "experiment_id": "single-clue-targeted-v1",
+  "experiment_manifest_hash": "82c45256f095723ebe54f483865f9211013406d60bdb9ae93ebc0dc4f9549ab5",
+  "example": true,
+  "note": "Sanitized public demo subset for the mutation explorer."
+}

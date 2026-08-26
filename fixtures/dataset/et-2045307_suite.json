@@ -1,0 +1,146 @@
+{
+  "cases": [
+    {
+      "name": "P0-canonical",
+      "pcap": "pcap/dataset/et-2045307/P0-canonical.pcap",
+      "expected_alert": true,
+      "reason": "canonical signature-positive payload in a single TCP segment"
+    },
+    {
+      "name": "P1-boundary-segments",
+      "pcap": "pcap/dataset/et-2045307/P1-boundary-segments.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload split at parser and required-content boundaries"
+    },
+    {
+      "name": "P2-many-small-segments",
+      "pcap": "pcap/dataset/et-2045307/P2-many-small-segments.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload split into many small TCP segments"
+    },
+    {
+      "name": "P3-retransmission",
+      "pcap": "pcap/dataset/et-2045307/P3-retransmission.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload with one byte-identical retransmitted data segment"
+    },
+    {
+      "name": "P4-lowercase-uri",
+      "pcap": "pcap/dataset/et-2045307/P4-lowercase-uri.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive endpoint literal replayed in lower case, which nocase accepts"
+    },
+    {
+      "name": "N-wrong-method",
+      "pcap": "pcap/dataset/et-2045307/N-wrong-method.pcap",
+      "expected_alert": false,
+      "reason": "GET replaces the required POST method",
+      "predicate_id": "content-0"
+    },
+    {
+      "name": "N-uri-endpoint-changed",
+      "pcap": "pcap/dataset/et-2045307/N-uri-endpoint-changed.pcap",
+      "expected_alert": false,
+      "reason": "URI targets a different receiver endpoint",
+      "predicate_id": "content-1"
+    },
+    {
+      "name": "N-uri-not-at-start",
+      "pcap": "pcap/dataset/et-2045307/N-uri-not-at-start.pcap",
+      "expected_alert": false,
+      "reason": "endpoint literal is present but preceded by a proxy path",
+      "predicate_id": "content-1-startswith"
+    },
+    {
+      "name": "N-pcre-not-micros-path",
+      "pcap": "pcap/dataset/et-2045307/N-pcre-not-micros-path.pcap",
+      "expected_alert": false,
+      "reason": "filename parameter points outside the MICROS install path",
+      "predicate_id": "pcre-0"
+    },
+    {
+      "name": "N-pcre-other-six-byte-install-path",
+      "pcap": "pcap/dataset/et-2045307/N-pcre-other-six-byte-install-path.pcap",
+      "expected_alert": false,
+      "reason": "filename parameter keeps the Windows drive path shape and a six-byte directory, but the directory is not MICROS",
+      "predicate_id": "pcre-0"
+    },
+    {
+      "name": "N-jndiname-parameter-absent",
+      "pcap": "pcap/dataset/et-2045307/N-jndiname-parameter-absent.pcap",
+      "expected_alert": false,
+      "reason": "URI carries a differently named jndi parameter",
+      "predicate_id": "content-2"
+    },
+    {
+      "name": "N-username-parameter-absent",
+      "pcap": "pcap/dataset/et-2045307/N-username-parameter-absent.pcap",
+      "expected_alert": false,
+      "reason": "URI carries a differently named user parameter",
+      "predicate_id": "content-3"
+    },
+    {
+      "name": "N-parameters-out-of-order",
+      "pcap": "pcap/dataset/et-2045307/N-parameters-out-of-order.pcap",
+      "expected_alert": false,
+      "reason": "username precedes jndiname, so the ordered distance constraint fails",
+      "predicate_id": "content-3-distance"
+    },
+    {
+      "name": "N-content-type-changed",
+      "pcap": "pcap/dataset/et-2045307/N-content-type-changed.pcap",
+      "expected_alert": false,
+      "reason": "upload is form-urlencoded instead of multipart",
+      "predicate_id": "content-4"
+    },
+    {
+      "name": "N-content-type-not-at-start",
+      "pcap": "pcap/dataset/et-2045307/N-content-type-not-at-start.pcap",
+      "expected_alert": false,
+      "reason": "multipart literal is present but not at the start of http.content_type",
+      "predicate_id": "content-4-startswith"
+    },
+    {
+      "name": "N-referer-header-present",
+      "pcap": "pcap/dataset/et-2045307/N-referer-header-present.pcap",
+      "expected_alert": false,
+      "reason": "a Referer header is present, which the negated predicate forbids",
+      "predicate_id": "content-5"
+    },
+    {
+      "name": "N-internal-source-address",
+      "pcap": "pcap/dataset/et-2045307/N-internal-source-address.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload originates inside the monitored network",
+      "predicate_id": "header-src-address"
+    },
+    {
+      "name": "N-wrong-destination-address",
+      "pcap": "pcap/dataset/et-2045307/N-wrong-destination-address.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is sent to a server outside the monitored network",
+      "predicate_id": "header-dst-address"
+    },
+    {
+      "name": "N-flow-not-established",
+      "pcap": "pcap/dataset/et-2045307/N-flow-not-established.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is sent without a completed TCP handshake",
+      "predicate_id": "flow-established"
+    },
+    {
+      "name": "N-wrong-direction",
+      "pcap": "pcap/dataset/et-2045307/N-wrong-direction.pcap",
+      "expected_alert": false,
+      "reason": "canonical request bytes replayed to client, so the source is internal and request buffers stay empty",
+      "predicate_id": "header-src-address"
+    },
+    {
+      "name": "N-random-http-request",
+      "pcap": "pcap/dataset/et-2045307/N-random-http-request.pcap",
+      "expected_alert": false,
+      "reason": "protocol-valid HTTP request that satisfies no combination of rule predicates",
+      "predicate_id": "rule-baseline"
+    }
+  ]
+}

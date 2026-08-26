@@ -1,0 +1,179 @@
+{
+  "cases": [
+    {
+      "name": "P0-canonical",
+      "pcap": "pcap/dataset/et-2049007/P0-canonical.pcap",
+      "expected_alert": true,
+      "reason": "canonical signature-positive payload in a single TCP segment"
+    },
+    {
+      "name": "P1-boundary-segments",
+      "pcap": "pcap/dataset/et-2049007/P1-boundary-segments.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload split at parser and required-content boundaries"
+    },
+    {
+      "name": "P2-many-small-segments",
+      "pcap": "pcap/dataset/et-2049007/P2-many-small-segments.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload split into many small TCP segments"
+    },
+    {
+      "name": "P3-retransmission",
+      "pcap": "pcap/dataset/et-2049007/P3-retransmission.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive canonical payload with one byte-identical retransmitted data segment"
+    },
+    {
+      "name": "P4-lowercase-uri",
+      "pcap": "pcap/dataset/et-2049007/P4-lowercase-uri.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive install endpoint replayed in lower case, which nocase accepts"
+    },
+    {
+      "name": "P5-lowercase-csrf-header",
+      "pcap": "pcap/dataset/et-2049007/P5-lowercase-csrf-header.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive CSRF header name replayed in lower case, which nocase accepts"
+    },
+    {
+      "name": "P6-uppercase-ipaddress-key",
+      "pcap": "pcap/dataset/et-2049007/P6-uppercase-ipaddress-key.pcap",
+      "expected_alert": true,
+      "reason": "signature-positive JSON key replayed in upper case, which nocase accepts"
+    },
+    {
+      "name": "N-wrong-method",
+      "pcap": "pcap/dataset/et-2049007/N-wrong-method.pcap",
+      "expected_alert": false,
+      "reason": "GET replaces the required POST method",
+      "predicate_id": "content-0"
+    },
+    {
+      "name": "N-uri-endpoint-changed",
+      "pcap": "pcap/dataset/et-2049007/N-uri-endpoint-changed.pcap",
+      "expected_alert": false,
+      "reason": "URI stops short of the install endpoint literal",
+      "predicate_id": "content-1"
+    },
+    {
+      "name": "N-uri-not-at-start",
+      "pcap": "pcap/dataset/et-2049007/N-uri-not-at-start.pcap",
+      "expected_alert": false,
+      "reason": "endpoint literal is present but preceded by a proxy path",
+      "predicate_id": "content-1-startswith"
+    },
+    {
+      "name": "N-cookie-name-changed",
+      "pcap": "pcap/dataset/et-2049007/N-cookie-name-changed.pcap",
+      "expected_alert": false,
+      "reason": "request carries a different session cookie name",
+      "predicate_id": "content-2"
+    },
+    {
+      "name": "N-cookie-not-at-start",
+      "pcap": "pcap/dataset/et-2049007/N-cookie-not-at-start.pcap",
+      "expected_alert": false,
+      "reason": "authentication cookie is present but not first in http.cookie",
+      "predicate_id": "content-2-startswith"
+    },
+    {
+      "name": "N-csrf-header-absent",
+      "pcap": "pcap/dataset/et-2049007/N-csrf-header-absent.pcap",
+      "expected_alert": false,
+      "reason": "request omits the CSRF token header name",
+      "predicate_id": "content-3"
+    },
+    {
+      "name": "N-body-json-key-changed",
+      "pcap": "pcap/dataset/et-2049007/N-body-json-key-changed.pcap",
+      "expected_alert": false,
+      "reason": "body uses a different JSON key",
+      "predicate_id": "content-4"
+    },
+    {
+      "name": "N-body-value-quote-absent",
+      "pcap": "pcap/dataset/et-2049007/N-body-value-quote-absent.pcap",
+      "expected_alert": false,
+      "reason": "body value is unquoted, so the required quote never follows the key",
+      "predicate_id": "content-5"
+    },
+    {
+      "name": "N-body-value-quote-beyond-within",
+      "pcap": "pcap/dataset/et-2049007/N-body-value-quote-beyond-within.pcap",
+      "expected_alert": false,
+      "reason": "quote appears more than 5 bytes after the JSON key",
+      "predicate_id": "content-5-within"
+    },
+    {
+      "name": "N-body-first-separator-beyond-within",
+      "pcap": "pcap/dataset/et-2049007/N-body-first-separator-beyond-within.pcap",
+      "expected_alert": false,
+      "reason": "first separator appears more than 5 bytes after the opening quote",
+      "predicate_id": "content-6-within"
+    },
+    {
+      "name": "N-body-second-separator-beyond-within",
+      "pcap": "pcap/dataset/et-2049007/N-body-second-separator-beyond-within.pcap",
+      "expected_alert": false,
+      "reason": "second separator appears more than 5 bytes after the first",
+      "predicate_id": "content-7-within"
+    },
+    {
+      "name": "N-body-third-separator-absent",
+      "pcap": "pcap/dataset/et-2049007/N-body-third-separator-absent.pcap",
+      "expected_alert": false,
+      "reason": "address carries only two separators instead of the required three",
+      "predicate_id": "content-8"
+    },
+    {
+      "name": "N-body-third-separator-beyond-within",
+      "pcap": "pcap/dataset/et-2049007/N-body-third-separator-beyond-within.pcap",
+      "expected_alert": false,
+      "reason": "third separator appears more than 5 bytes after the second",
+      "predicate_id": "content-8-within"
+    },
+    {
+      "name": "N-body-no-injection-metacharacter",
+      "pcap": "pcap/dataset/et-2049007/N-body-no-injection-metacharacter.pcap",
+      "expected_alert": false,
+      "reason": "address value ends with a benign assignment instead of an injectable metacharacter",
+      "predicate_id": "pcre-0"
+    },
+    {
+      "name": "N-body-metacharacter-beyond-pcre-bound",
+      "pcap": "pcap/dataset/et-2049007/N-body-metacharacter-beyond-pcre-bound.pcap",
+      "expected_alert": false,
+      "reason": "injectable metacharacter appears past the PCRE's five-byte bound",
+      "predicate_id": "pcre-0"
+    },
+    {
+      "name": "N-flow-not-established",
+      "pcap": "pcap/dataset/et-2049007/N-flow-not-established.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is sent without a completed TCP handshake",
+      "predicate_id": "flow-established"
+    },
+    {
+      "name": "N-wrong-direction",
+      "pcap": "pcap/dataset/et-2049007/N-wrong-direction.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is replayed to client; request buffers stay empty in the response direction",
+      "predicate_id": "flow-to_server"
+    },
+    {
+      "name": "N-wrong-destination-address",
+      "pcap": "pcap/dataset/et-2049007/N-wrong-destination-address.pcap",
+      "expected_alert": false,
+      "reason": "canonical payload is sent to a server outside the monitored network",
+      "predicate_id": "header-dst-address"
+    },
+    {
+      "name": "N-random-http-request",
+      "pcap": "pcap/dataset/et-2049007/N-random-http-request.pcap",
+      "expected_alert": false,
+      "reason": "protocol-valid HTTP request that satisfies no combination of rule predicates",
+      "predicate_id": "rule-baseline"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "et-2045307",
+  "sid": 2045307,
+  "revision": 1,
+  "cve": "CVE-2023-21932",
+  "pcap": "pcap/dataset/et-2045307/P0-canonical.pcap",
+  "suite": "fixtures/dataset/et-2045307_suite.json",
+  "rule": "alert http $EXTERNAL_NET any -> $HOME_NET any ( flow:established; http.method; content:\"POST\"; http.uri; content:\"/Operajserv/webarchive/FileReceiver?filename=\"; fast_pattern; nocase; startswith; pcre:\"/^[a-zA-Z]\\x3a\\x5cMICROS\\x5c/R\"; content:\"&jndiname=\"; distance:0; content:\"&username=\"; distance:0; http.content_type; content:\"multipart/form-data|3b 20|boundary=\"; startswith; http.header_names; content:!\"Referer|0d 0a|\"; sid:2045307; rev:1;)"
+}
