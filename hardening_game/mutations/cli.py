@@ -285,6 +285,15 @@ def run_experiment(
         )
         rejected = ()
     else:
+        if not fixture.validation_cases:
+            raise ValueError(
+                f"fixture {fixture.name!r} has no validation suite (no 'suite' "
+                "key, or its cases list is empty), so a full mutation matrix "
+                "has no positive case to check recall against. Add a suite "
+                "with at least one case where expected_alert is true, or pass "
+                "baseline_only=True (--baseline-only on the CLI) to evaluate "
+                "only the unmodified rule."
+            )
         candidates = (
             generate_smart_install_candidates(
                 fixture.sanitized_rule, revision=fixture.revision

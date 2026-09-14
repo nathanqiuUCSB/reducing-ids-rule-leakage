@@ -16,3 +16,4 @@ ui/dist/
 ui/*.tsbuildinfo
 .DS_Store
 *.log
+.claude/settings.local.json

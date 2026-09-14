@@ -375,6 +375,44 @@ def test_positive_failure_skips_attacker_and_is_persisted(tmp_path: Path) -> Non
     assert json.loads((tmp_path / "run" / "results.jsonl").read_text())["status"] == result.status
 
 
+def test_a_fixture_with_no_validation_suite_does_not_auto_fail_recall(
+    tmp_path: Path,
+) -> None:
+    """A fixture with no suite has nothing to replay a positive-recall check
+    against. validate_baseline already treats an empty case list as passing
+    (an empty loop raises no failures); _evaluate_one's recall gate must be
+    consistent with that instead of dividing zero-by-zero into a default
+    failure that silently rejects every candidate, baseline included."""
+    fixture = GameFixture(
+        name="demo-rule",
+        sid=9000001,
+        revision=1,
+        cve="CVE-2024-99999",
+        pcap_path=tmp_path / "positive.pcap",
+        rule=RULE,
+        validation_cases=(),
+    )
+    replay_calls: list[str] = []
+    attacker_calls: list[str] = []
+    evaluator = MutationEvaluator(
+        fixture=fixture,
+        syntax_check=lambda _rule: SyntaxResult(True, None),
+        replay=lambda rule, case: replay_calls.append(rule)
+        or ReplayResult(fired=True, error=None, alerts=[]),
+        attacker=lambda rule: attacker_calls.append(rule) or "CVE-2018-0171",
+        output_dir=tmp_path / "run",
+    )
+
+    result = evaluator.evaluate(
+        [generate_smart_install_candidates(RULE, revision=1)[0]]
+    )[0]
+
+    assert result.status != "positive_recall_failed"
+    assert result.positive_recall == 1.0
+    assert replay_calls == []  # nothing to replay against, so nothing is replayed
+    assert attacker_calls  # the candidate actually reached the attacker
+
+
 def test_attacker_provider_failure_has_distinct_status(tmp_path: Path) -> None:
     fixture = _fixture(tmp_path)
 

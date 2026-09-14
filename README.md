@@ -53,6 +53,24 @@ pytest -q -m "not integration"
 No API key is required for deterministic generation, traffic tests, reports, or
 the included explorer demo.
 
+## Run your own experiment
+
+Everything below reproduces *this project's* locked result. To run the same
+pipeline against your own rules, with any OpenAI-compatible attacker model,
+there is one path — `hardening-experiment`:
+
+```bash
+hardening-experiment add-dataset path/to/rules.jsonl --dataset-id my-set
+hardening-experiment run-all my-set --attacker-model gpt-4.1
+```
+
+That chains the mandatory baseline gate (keep only rules the attacker already
+identifies 3/3), automatic mutation and PCAP-suite generation, the experiment
+itself, and the report. See
+**[docs/running-your-own-experiment.md](docs/running-your-own-experiment.md)**
+for the stage-by-stage walkthrough, the rule-format requirements, and what to
+do with a rule that needs a hand-supplied PCAP.
+
 ## Reproduce deterministic mutation generation
 
 ```bash
@@ -98,7 +116,7 @@ Open the UI and select `example-clue-targeted`.
 | `experiments/single-clue-targeted-v1/` | Locked final experiment manifest |
 | `examples/results/` | Sanitized explorer demo |
 | `ui/` | Mutation Explorer frontend |
-| `docs/` | Architecture, methodology, reproducibility |
+| `docs/` | Architecture, methodology, reproducibility, running your own experiment |
 
 ## Methodological limitations
 

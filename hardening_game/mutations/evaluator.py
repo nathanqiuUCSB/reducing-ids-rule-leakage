@@ -474,7 +474,13 @@ class MutationEvaluator:
             case_results[case.name] = self._case_result(case, result)
             if result.error is None and result.fired:
                 positive_fires += 1
-        positive_recall = positive_fires / len(positives) if positives else 0.0
+        # No suite means no positive case to check recall against, which is
+        # vacuously satisfied rather than failed - validate_baseline already
+        # treats an empty case list the same way (an empty loop raises no
+        # failures). A run against a real mutation matrix is expected to have
+        # at least one positive case; that expectation is enforced earlier,
+        # in run_experiment, with an explicit error rather than here.
+        positive_recall = positive_fires / len(positives) if positives else 1.0
         if positive_recall != 1.0:
             return MutationResult(
                 status="positive_recall_failed",

@@ -22,6 +22,7 @@ dashboard = ["fastapi", "uvicorn", "httpx"]
 [project.scripts]
 hardening-dashboard = "hardening_game.api:main"
 hardening-dataset-suites = "hardening_game.dataset_suites:main"
+hardening-experiment = "hardening_game.dataset_pipeline.cli:main"
 hardening-mutations = "hardening_game.mutations.cli:main"
 hardening-mutations-combinations = "hardening_game.mutations.combination_cli:main"
 hardening-mutations-report = "hardening_game.mutations.report_cli:main"

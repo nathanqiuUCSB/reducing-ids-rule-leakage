@@ -219,6 +219,22 @@ def test_mutation_cli_selects_generic_candidates_from_fixture_json_path(
                     'alert tcp any any -> any 8080 (flow:established,to_server; '
                     'content:"POST"; sid:1; rev:1;)'
                 ),
+                "suite": "fixtures/dataset-example_suite.json",
+            }
+        )
+    )
+    (fixtures / "dataset-example_suite.json").write_text(
+        json.dumps(
+            {
+                "cases": [
+                    {
+                        "name": "P0",
+                        "pcap": "positive.pcap",
+                        "expected_alert": True,
+                        "reason": "must fire",
+                        "predicate_id": None,
+                    }
+                ]
             }
         )
     )
@@ -357,6 +373,100 @@ def test_run_experiment_finds_the_baseline_by_component_not_position(
     assert captured["baseline"].component == "baseline"
 
 
+def test_run_experiment_rejects_a_full_mutation_run_against_a_suite_less_fixture(
+    tmp_path: Path,
+) -> None:
+    """Without a suite there is no positive case to check a mutation's recall
+    against, so a full mutation matrix run must fail loudly up front rather
+    than silently produce a run with zero evaluated candidates."""
+    fixture_path = tmp_path / "fixtures" / "no-suite-example.json"
+    fixture_path.parent.mkdir()
+    fixture_path.write_text(
+        json.dumps(
+            {
+                "name": "no-suite-example",
+                "sid": 1,
+                "revision": 1,
+                "cve": "CVE-2023-0001",
+                "pcap": "positive.pcap",
+                "rule": (
+                    'alert tcp any any -> any 8080 (flow:established,to_server; '
+                    'content:"POST"; sid:1; rev:1;)'
+                ),
+            }
+        )
+    )
+
+    with pytest.raises(ValueError, match="no-suite-example.*suite|suite.*no-suite-example"):
+        run_experiment(
+            fixture_name="fixtures/no-suite-example.json",
+            attacker_model="unused",
+            api_key="unused",
+            run_id="unused",
+            project_root=tmp_path,
+            client_factory=lambda **_kwargs: object(),
+            skip_benign=True,
+        )
+
+    assert not (tmp_path / "runs").exists()
+
+
+def test_run_experiment_baseline_only_works_against_a_suite_less_fixture(
+    tmp_path: Path, monkeypatch
+) -> None:
+    """--baseline-only never claims a mutation preserves recall, so it should
+    still work for a fixture with no suite - matching fixture.py's own
+    documented 'legacy single-PCAP contract'."""
+    fixture_path = tmp_path / "fixtures" / "no-suite-example.json"
+    fixture_path.parent.mkdir()
+    fixture_path.write_text(
+        json.dumps(
+            {
+                "name": "no-suite-example",
+                "sid": 1,
+                "revision": 1,
+                "cve": "CVE-2023-0001",
+                "pcap": "positive.pcap",
+                "rule": (
+                    'alert tcp any any -> any 8080 (flow:established,to_server; '
+                    'content:"POST"; sid:1; rev:1;)'
+                ),
+            }
+        )
+    )
+    captured: dict[str, object] = {}
+
+    class FakeEvaluator:
+        def __init__(self, **kwargs: object) -> None:
+            captured.update(kwargs)
+
+        def validate_baseline(self, candidate: object) -> None:
+            captured["baseline"] = candidate
+
+        def persist_rejections(self, rejections: object) -> None:
+            pass
+
+        def evaluate(self, candidates: list[object], *, resume: bool) -> list[object]:
+            captured["candidates"] = candidates
+            return []
+
+    monkeypatch.setattr(mutation_cli, "MutationEvaluator", FakeEvaluator)
+
+    run_experiment(
+        fixture_name="fixtures/no-suite-example.json",
+        attacker_model="unused",
+        api_key="unused",
+        run_id="unused",
+        project_root=tmp_path,
+        client_factory=lambda **_kwargs: object(),
+        skip_benign=True,
+        baseline_only=True,
+    )
+
+    assert captured["baseline"].component == "baseline"
+    assert len(captured["candidates"]) == 1
+
+
 def test_mutation_cli_loads_only_available_mapped_benign_cases(
     tmp_path: Path, monkeypatch
 ) -> None:
@@ -371,6 +481,22 @@ def test_mutation_cli_loads_only_available_mapped_benign_cases(
                 "cve": "CVE-2023-0001",
                 "pcap": "positive.pcap",
                 "rule": 'alert http any any -> any 80 (sid:1; rev:1;)',
+                "suite": "fixtures/dataset-example_suite.json",
+            }
+        )
+    )
+    (fixture_path.parent / "dataset-example_suite.json").write_text(
+        json.dumps(
+            {
+                "cases": [
+                    {
+                        "name": "P0",
+                        "pcap": "positive.pcap",
+                        "expected_alert": True,
+                        "reason": "must fire",
+                        "predicate_id": None,
+                    }
+                ]
             }
         )
     )
